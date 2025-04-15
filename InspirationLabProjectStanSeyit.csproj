@@ -55,6 +55,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Features.xaml.cs">
+      <DependentUpon>Features.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management.xaml.cs">
+      <DependentUpon>Management.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Planner.xaml.cs">
+      <DependentUpon>Planner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Profile.xaml.cs">
+      <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterWindow.xaml.cs">
+      <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudyGroups.xaml.cs">
+      <DependentUpon>StudyGroups.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudyMaterial.xaml.cs">
+      <DependentUpon>StudyMaterial.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Features.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,10 +99,37 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Management.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Planner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Profile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudyGroups.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudyMaterial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,6 +149,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Images\App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +157,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\contactcarouselimage.jpg" />
+    <Resource Include="Images\featurescarouselimage.jpg" />
+    <Resource Include="Images\gamescarouselimage.jpg" />
+    <Resource Include="Images\groupscarouselimage.jpg" />
+    <Resource Include="Images\homepagecarouselimage.jpg" />
+    <Resource Include="Images\managementcarouselimage.jpg" />
+    <Resource Include="Images\notescarouselimage.jpg" />
+    <Resource Include="Images\plannercarouselimage.jpg" />
+    <Resource Include="Images\profilecarouselimage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\images\contactcarouselimage.jpg" />
+    <Resource Include="Images\images\featurescarouselimage.jpg" />
+    <Resource Include="Images\images\gamescarouselimage.jpg" />
+    <Resource Include="Images\images\groupscarouselimage.jpg" />
+    <Resource Include="Images\images\homepagecarouselimage.jpg" />
+    <Resource Include="Images\images\logo.png" />
+    <Resource Include="Images\images\managementcarouselimage.jpg" />
+    <Resource Include="Images\images\notescarouselimage.jpg" />
+    <Resource Include="Images\images\plannercarouselimage.jpg" />
+    <Resource Include="Images\images\profilecarouselimage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
