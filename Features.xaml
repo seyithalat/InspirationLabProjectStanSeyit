@@ -1,0 +1,115 @@
+﻿<Window x:Class="InspirationLabProjectStanSeyit.Features"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
+        mc:Ignorable="d"
+        Title="Features" Height="800" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Background="White" Margin="20">
+
+            <!--  FEATURES HEADER -->
+            <TextBlock Text="FEATURES" FontSize="24" FontWeight="Bold" Foreground="#61be63"
+                       HorizontalAlignment="Center" Margin="0,10"/>
+
+            <!--  MULTI-IMAGE CAROUSEL (Clickable with Overlay Text) -->
+            <TextBlock Text="Explore Features" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
+                    <!-- Image 1 with Button + Overlay Text -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Button Name="ImageButton1" BorderThickness="0" Background="Transparent">
+                            <Image Name="Image1" Stretch="UniformToFill"/>
+                        </Button>
+                        <TextBlock Name="Label1"
+                                   Text="Feature 1"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Image 2 -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Image Name="Image2" Stretch="UniformToFill"/>
+                        <TextBlock Name="Label2"
+                                   Text="Feature 2"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Image 3 -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Image Name="Image3" Stretch="UniformToFill"/>
+                        <TextBlock Name="Label3"
+                                   Text="Feature 3"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+
+                <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
+            </Grid>
+
+            <!--  PROFILE SECTION -->
+            <TextBlock Text="PROFILE" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
+                       HorizontalAlignment="Center"/>
+            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Name: Jane Doe" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock Text="Age: 22" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock Text="School: Thomas More Hogeschool" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock Text="Course: Software Engineering " FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock Text="Schoolyear: 1st Year " FontSize="16" Margin="0,0,0,5"/>
+                </StackPanel>
+            </Border>
+
+            <!-- NEARBY STUDY LOCATIONS -->
+            <WrapPanel HorizontalAlignment="Center" Margin="0,0,0,10">
+                <Border Background="#F5F5F5" Width="120" Height="100" Margin="5"
+                        CornerRadius="10" Padding="5">
+                    <TextBlock Text="STUDY GROUPS" TextAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+                <Border Background="#F5F5F5" Width="120" Height="100" Margin="5"
+                        CornerRadius="10" Padding="5">
+                    <TextBlock Text="FRIENDS" TextAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+                <Border Background="#F5F5F5" Width="120" Height="100" Margin="5"
+                        CornerRadius="10" Padding="5">
+                    <Image Source="Images/mappreview.jpg" Stretch="UniformToFill"/>
+                </Border>
+                <Border Background="#F5F5F5" Width="120" Height="100" Margin="5"
+                        CornerRadius="10" Padding="5">
+                    <Image Source="Images/usericon.png" Stretch="Uniform"/>
+                </Border>
+            </WrapPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
