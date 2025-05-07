@@ -90,5 +90,27 @@ namespace InspirationLabProjectStanSeyit
         {
             // TODO: Implement next image if needed
         }
+        private void DeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlannerCalendar.SelectedDate.HasValue)
+            {
+                DateTime selectedDate = PlannerCalendar.SelectedDate.Value.Date;
+                if (notes.ContainsKey(selectedDate))
+                {
+                    notes.Remove(selectedDate);
+                    SavedNoteText.Text = "(No notes for this date yet.)";
+                    MessageBox.Show("Note deleted!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("There is no note to delete for this date.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a date first.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
     }
 }

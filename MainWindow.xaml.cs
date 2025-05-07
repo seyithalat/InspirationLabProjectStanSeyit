@@ -7,7 +7,6 @@ namespace InspirationLabProjectStanSeyit
 {
     public partial class MainWindow : Window
     {
-        // ?? Carousel images
         private readonly List<string> imagePaths = new List<string>
         {
             "Images/homepagecarouselimage.jpg",
@@ -33,28 +32,6 @@ namespace InspirationLabProjectStanSeyit
             "Contact",
             "Settings"
         };
-
-        private void Image1_Click(object sender, RoutedEventArgs e)
-        {
-            var featuresWindow = new Features();
-            featuresWindow.Show();
-            this.Close();
-        }
-
-        private void Image2_Click(object sender, RoutedEventArgs e)
-        {
-            var profileWindow = new Profile();
-            profileWindow.Show();
-            this.Close();
-        }
-
-        private void Image3_Click(object sender, RoutedEventArgs e)
-        {
-            var plannerWindow = new Planner();
-            plannerWindow.Show();
-            this.Close();
-        }
-
 
         private int startIndex = 0;
 
@@ -111,6 +88,68 @@ namespace InspirationLabProjectStanSeyit
         {
             startIndex = (startIndex + 1) % imagePaths.Count;
             UpdateImageSet();
+        }
+
+        private void Image1_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage(startIndex % imagePaths.Count);
+        }
+
+        private void Image2_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage((startIndex + 1) % imagePaths.Count);
+        }
+
+        private void Image3_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage((startIndex + 2) % imagePaths.Count);
+        }
+
+        private void NavigateToPage(int index)
+        {
+            Window newWindow = null;
+
+            switch (index)
+            {
+                case 0: // Features
+                    newWindow = new Features();
+                    break;
+                case 1: // Profile
+                    newWindow = new Profile();
+                    break;
+                case 2: // Planner
+                    newWindow = new Planner();
+                    break;
+                case 3: // Groups
+                    newWindow = new StudyGroups();
+                    break;
+                case 4: // Focus Games
+                    newWindow = new GamePage();
+                    break;
+                case 5: // Notes
+                    newWindow = new StudyMaterial();
+                    break;
+                case 6: // Management
+                    newWindow = new Management();
+                    break;
+                case 7: // Contact
+                    // You might want to create a Contact window
+                    MessageBox.Show("Contact page would open here");
+                    return;
+                case 8: // Settings
+                    // You might want to create a Settings window
+                    MessageBox.Show("Settings page would open here");
+                    return;
+                default:
+                    newWindow = new Features();
+                    break;
+            }
+
+            if (newWindow != null)
+            {
+                newWindow.Show();
+                this.Close();
+            }
         }
     }
 }

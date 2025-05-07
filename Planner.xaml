@@ -81,14 +81,14 @@
                        HorizontalAlignment="Center"/>
             <Border Background="#bbeaba" CornerRadius="10" Padding="15">
                 <StackPanel>
-
+                    <TextBlock Text="Here you can make a planning keep notes and never lose track of your tasks!" HorizontalAlignment="Center" ></TextBlock>
                 </StackPanel>
             </Border>
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-                    <Button Content="◀ Previous" Width="100" Margin="5" Click="PreviousMonth_Click"/>
+
                     <TextBlock x:Name="MonthYearText" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="10"/>
-                    <Button Content="Next ▶" Width="100" Margin="5" Click="NextMonth_Click"/>
+
                 </StackPanel>
 
                 <Calendar 
@@ -103,7 +103,11 @@
                 <TextBlock Text="Add Note:" FontWeight="Bold" Margin="10,10,0,5"/>
                 <TextBox x:Name="NoteTextBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Margin="10"/>
 
-                <Button Content="Save Note" Width="100" HorizontalAlignment="Center" Margin="10" Click="SaveNote_Click"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Save Note" Width="100" Margin="10" Click="SaveNote_Click"/>
+                    <Button Content="Delete Note" Width="100" Margin="10" Click="DeleteNote_Click"/>
+                </StackPanel>
+
 
                 <TextBlock Text="Notes for Selected Date:" FontWeight="Bold" Margin="10,10,0,5"/>
                 <TextBlock x:Name="SavedNoteText" TextWrapping="Wrap" Margin="10" Background="White" Padding="10" />
