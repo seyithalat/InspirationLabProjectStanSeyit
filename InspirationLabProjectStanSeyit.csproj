@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -170,7 +170,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Images\App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,18 +191,6 @@
     <Resource Include="Images\notescarouselimage.jpg" />
     <Resource Include="Images\plannercarouselimage.jpg" />
     <Resource Include="Images\profilecarouselimage.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\images\contactcarouselimage.jpg" />
-    <Resource Include="Images\images\featurescarouselimage.jpg" />
-    <Resource Include="Images\images\gamescarouselimage.jpg" />
-    <Resource Include="Images\images\groupscarouselimage.jpg" />
-    <Resource Include="Images\images\homepagecarouselimage.jpg" />
-    <Resource Include="Images\images\logo.png" />
-    <Resource Include="Images\images\managementcarouselimage.jpg" />
-    <Resource Include="Images\images\notescarouselimage.jpg" />
-    <Resource Include="Images\images\plannercarouselimage.jpg" />
-    <Resource Include="Images\images\profilecarouselimage.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\studyfriends.jpeg" />
