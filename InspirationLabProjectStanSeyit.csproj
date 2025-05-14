@@ -212,5 +212,10 @@
   <ItemGroup>
     <Resource Include="Images\gamecharacter.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\focusgame.png" />
+    <Resource Include="Images\mathrace.png" />
+    <Resource Include="Images\quizsprint.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
