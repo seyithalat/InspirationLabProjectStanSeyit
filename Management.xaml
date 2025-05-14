@@ -5,8 +5,168 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
-        Title="Management" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Management" Height="800" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Background="White" Margin="20">
+
+            <!-- HEADER -->
+            <TextBlock Text="STUDY GROUPS MANAGEMENT" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#61be63"
+                       HorizontalAlignment="Center" 
+                       Margin="0,10"/>
+
+            <!-- CAROUSEL -->
+            <TextBlock Text="Explore Features" 
+                       FontSize="20" 
+                       FontWeight="Bold" 
+                       Foreground="Gray" 
+                       Margin="0,10,0,10" 
+                       TextAlignment="Center"/>
+
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
+                    <!-- Carousel Item 1 -->
+                    <Grid Width="200" Height="120" Margin="5">
+                        <Button Name="CarouselButton1" BorderThickness="0" Background="Transparent" Click="CarouselItem1_Click">
+                            <Image Name="CarouselImage1" Stretch="UniformToFill"/>
+                        </Button>
+                        <TextBlock Name="CarouselLabel1"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Carousel Item 2 -->
+                    <Grid Width="200" Height="120" Margin="5">
+                        <Button Name="CarouselButton2" BorderThickness="0" Background="Transparent" Click="CarouselItem2_Click">
+                            <Image Name="CarouselImage2" Stretch="UniformToFill"/>
+                        </Button>
+                        <TextBlock Name="CarouselLabel2"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+
+                <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
+            </Grid>
+
+            <!-- MY GROUPS SECTION -->
+            <TextBlock Text="MY GROUPS" 
+                       FontSize="22" 
+                       Foreground="#61be63" 
+                       FontWeight="Bold" 
+                       Margin="0,20,0,10"
+                       HorizontalAlignment="Center"/>
+
+            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+                <ListView>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Text="Study Group Alpha" FontWeight="Bold"/>
+                            <TextBlock Text="Location: Campus Library"/>
+                            <TextBlock Text="Thickness: 85% Attendance"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Text="Math Masters" FontWeight="Bold"/>
+                            <TextBlock Text="Location: Online"/>
+                            <TextBlock Text="Thickness: 92% Attendance"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </Border>
+
+            <!-- REGISTER NEW SECTION -->
+            <TextBlock Text="REGISTER NEW GROUP" 
+                       FontSize="22" 
+                       Foreground="#61be63" 
+                       FontWeight="Bold" 
+                       Margin="0,20,0,10"
+                       HorizontalAlignment="Center"/>
+
+            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                            <TextBlock Text="Location:" Margin="0,0,0,5"/>
+                            <TextBox Width="200" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Population:" Margin="0,0,0,5"/>
+                            <ComboBox Width="200">
+                                <ComboBoxItem>High</ComboBoxItem>
+                                <ComboBoxItem>Medium</ComboBoxItem>
+                                <ComboBoxItem>Low</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Button Grid.Column="1" 
+                                Content="CREATE GROUP" 
+                                Width="150" 
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Click="CreateGroup_Click"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- INVITE SECTION -->
+            <TextBlock Text="INVITE MEMBERS" 
+                       FontSize="22" 
+                       Foreground="#61be63" 
+                       FontWeight="Bold" 
+                       Margin="0,20,0,10"
+                       HorizontalAlignment="Center"/>
+
+            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" 
+                                 Margin="0,0,10,0" 
+                                 Height="30"
+                                 Text="Enter email address"/>
+
+                        <Button Grid.Column="1" 
+                                Content="SEND INVITE" 
+                                Width="120" 
+                                Height="30"
+                                Click="SendInvite_Click"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
 </Window>
