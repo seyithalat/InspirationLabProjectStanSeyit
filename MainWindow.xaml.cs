@@ -133,9 +133,8 @@ namespace InspirationLabProjectStanSeyit
                     newWindow = new Management();
                     break;
                 case 7: // Contact
-                    // You might want to create a Contact window
-                    MessageBox.Show("Contact page would open here");
-                    return;
+                    newWindow = new Contact();
+                    break;
                 case 8: // Settings
                     // You might want to create a Settings window
                     MessageBox.Show("Settings page would open here");
