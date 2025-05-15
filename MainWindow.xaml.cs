@@ -137,8 +137,8 @@ namespace InspirationLabProjectStanSeyit
                     break;
                 case 8: // Settings
                     // You might want to create a Settings window
-                    MessageBox.Show("Settings page would open here");
-                    return;
+                    newWindow = new Settings();
+                    break;
                 default:
                     newWindow = new Features();
                     break;
