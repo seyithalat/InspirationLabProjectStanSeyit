@@ -17,6 +17,43 @@
                        HorizontalAlignment="Center" 
                        Margin="0,10"/>
 
+            <!-- STUDY LOCATIONS MAP -->
+            <TextBlock Text="STUDY LOCATIONS" 
+                       FontSize="22" 
+                       Foreground="#61be63" 
+                       FontWeight="Bold" 
+                       Margin="0,20,0,10"
+                       HorizontalAlignment="Center"/>
+
+            <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="0,0,0,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="300"/>
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                        <TextBlock Text="Find study locations near you" 
+                                  FontSize="16" 
+                                  Margin="0,0,0,10"/>
+                        <Button x:Name="RefreshLocationButton" 
+                                Content="Refresh Location" 
+                                Width="150" 
+                                Click="RefreshLocation_Click"/>
+                    </StackPanel>
+                    
+                    <Border Grid.Row="1" 
+                            Background="White" 
+                            BorderBrush="Gray" 
+                            BorderThickness="1">
+                        <WebBrowser x:Name="MapBrowser" 
+                                    Grid.Row="1" 
+                                    Margin="10" 
+                                    Loaded="MapBrowser_Loaded"/>
+                    </Border>
+                </Grid>
+            </Border>
+
             <!-- CAROUSEL -->
             <TextBlock Text="Explore Features" 
                        FontSize="20" 
@@ -37,10 +74,10 @@
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
                     <!-- Carousel Item 1 -->
                     <Grid Width="200" Height="120" Margin="5">
-                        <Button Name="CarouselButton1" BorderThickness="0" Background="Transparent" Click="CarouselItem1_Click">
-                            <Image Name="CarouselImage1" Stretch="UniformToFill"/>
+                        <Button x:Name="CarouselButton1" BorderThickness="0" Background="Transparent" Click="CarouselItem1_Click">
+                            <Image x:Name="CarouselImage1" Stretch="UniformToFill"/>
                         </Button>
-                        <TextBlock Name="CarouselLabel1"
+                        <TextBlock x:Name="CarouselLabel1"
                                    Foreground="White"
                                    Background="#80000000"
                                    FontWeight="Bold"
@@ -53,10 +90,10 @@
 
                     <!-- Carousel Item 2 -->
                     <Grid Width="200" Height="120" Margin="5">
-                        <Button Name="CarouselButton2" BorderThickness="0" Background="Transparent" Click="CarouselItem2_Click">
-                            <Image Name="CarouselImage2" Stretch="UniformToFill"/>
+                        <Button x:Name="CarouselButton2" BorderThickness="0" Background="Transparent" Click="CarouselItem2_Click">
+                            <Image x:Name="CarouselImage2" Stretch="UniformToFill"/>
                         </Button>
-                        <TextBlock Name="CarouselLabel2"
+                        <TextBlock x:Name="CarouselLabel2"
                                    Foreground="White"
                                    Background="#80000000"
                                    FontWeight="Bold"
