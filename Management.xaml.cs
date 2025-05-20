@@ -7,66 +7,13 @@ namespace InspirationLabProjectStanSeyit
 {
     public partial class Management : Window
     {
-        private List<string> locationImages = new List<string>
-        {
-            "Images/location1.jpg",
-            "Images/location2.jpg",
-            "Images/location3.jpg",
-            "Images/location4.jpg"
-        };
-
-        private List<string> locationNames = new List<string>
-        {
-            "Main Campus Library",
-            "Science Wing",
-            "Online Groups",
-            "Study Cafe"
-        };
-
-        private int currentCarouselIndex = 0;
+        
 
         public Management()
         {
             InitializeComponent();
-            Loaded += Management_Loaded;
-        }
+            UpdateImageSet();
 
-        private void Management_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateCarousel();
-        }
-
-        private void UpdateCarousel()
-        {
-            if (locationImages.Count < 2) return;
-
-            int index1 = currentCarouselIndex % locationImages.Count;
-            int index2 = (currentCarouselIndex + 1) % locationImages.Count;
-
-            try
-            {
-                CarouselImage1.Source = new BitmapImage(new Uri(locationImages[index1], UriKind.Relative));
-                CarouselImage2.Source = new BitmapImage(new Uri(locationImages[index2], UriKind.Relative));
-
-                CarouselLabel1.Text = locationNames[index1];
-                CarouselLabel2.Text = locationNames[index2];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading images: {ex.Message}");
-            }
-        }
-
-        private void PrevImage_Click(object sender, RoutedEventArgs e)
-        {
-            currentCarouselIndex = (currentCarouselIndex - 1 + locationImages.Count) % locationImages.Count;
-            UpdateCarousel();
-        }
-
-        private void NextImage_Click(object sender, RoutedEventArgs e)
-        {
-            currentCarouselIndex = (currentCarouselIndex + 1) % locationImages.Count;
-            UpdateCarousel();
         }
 
         private void CreateGroup_Click(object sender, RoutedEventArgs e)
@@ -78,15 +25,129 @@ namespace InspirationLabProjectStanSeyit
         {
             MessageBox.Show("Invitation sent successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-
-        private void CarouselItem1_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"Selected location: {CarouselLabel1.Text}", "Location Selected");
+            UpdateImageSet();
         }
 
-        private void CarouselItem2_Click(object sender, RoutedEventArgs e)
+        private readonly List<string> imagePaths = new List<string>
         {
-            MessageBox.Show($"Selected location: {CarouselLabel2.Text}", "Location Selected");
+            "Images/homepagecarouselimage.jpg",
+            "Images/featurescarouselimage.jpg",
+            "Images/profilecarouselimage.jpg",
+            "Images/plannercarouselimage.jpg",
+            "Images/groupscarouselimage.jpg",
+            "Images/gamescarouselimage.jpg",
+            "Images/notescarouselimage.jpg",
+            "Images/managementcarouselimage.jpg",
+            "Images/contactcarouselimage.jpg"
+        };
+
+        private List<string> imageTitles = new List<string>
+        {
+            "Features",
+            "Profile",
+            "Planner",
+            "Groups",
+            "Focus Games",
+            "Notes",
+            "Management",
+            "Contact",
+            "Settings"
+        };
+
+        private int startIndex = 0;
+
+        public void UpdateImageSet()
+        {
+            if (imagePaths.Count < 3) return;
+
+            int i1 = startIndex % imagePaths.Count;
+            int i2 = (startIndex + 1) % imagePaths.Count;
+            int i3 = (startIndex + 2) % imagePaths.Count;
+
+            Image1.Source = new BitmapImage(new Uri(imagePaths[i1], UriKind.Relative));
+            Image2.Source = new BitmapImage(new Uri(imagePaths[i2], UriKind.Relative));
+            Image3.Source = new BitmapImage(new Uri(imagePaths[i3], UriKind.Relative));
+
+            Label1.Text = imageTitles[i1];
+            Label2.Text = imageTitles[i2];
+            Label3.Text = imageTitles[i3];
         }
+
+        private void PrevImage_Click(object sender, RoutedEventArgs e)
+        {
+            startIndex = (startIndex - 1 + imagePaths.Count) % imagePaths.Count;
+            UpdateImageSet();
+        }
+
+        private void NextImage_Click(object sender, RoutedEventArgs e)
+        {
+            startIndex = (startIndex + 1) % imagePaths.Count;
+            UpdateImageSet();
+        }
+
+        private void Image1_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage(startIndex % imagePaths.Count);
+        }
+
+        private void Image2_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage((startIndex + 1) % imagePaths.Count);
+        }
+
+        private void Image3_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage((startIndex + 2) % imagePaths.Count);
+        }
+
+        private void NavigateToPage(int index)
+        {
+            Window newWindow = null;
+
+            switch (index)
+            {
+                case 0: // Features
+                    newWindow = new Features();
+                    break;
+                case 1: // Profile
+                    newWindow = new Profile();
+                    break;
+                case 2: // Planner
+                    newWindow = new Planner();
+                    break;
+                case 3: // Groups
+                    newWindow = new StudyGroups();
+                    break;
+                case 4: // Focus Games
+                    newWindow = new GamePage();
+                    break;
+                case 5: // Notes
+                    newWindow = new StudyMaterial();
+                    break;
+                case 6: // Management
+                    newWindow = new Management();
+                    break;
+                case 7: // Contact
+                    newWindow = new Contact();
+                    break;
+                case 8: // Settings
+                    newWindow = new Settings();
+                    break;
+                default:
+                    newWindow = new Features();
+                    break;
+            }
+
+            if (newWindow != null)
+            {
+                newWindow.Show();
+                this.Close();
+            }
+
+        }
+
+
     }
 }
