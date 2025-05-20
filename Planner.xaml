@@ -1,12 +1,119 @@
-﻿<Window x:Class="InspirationLabProjectStanSeyit.Planner"
+<Window x:Class="InspirationLabProjectStanSeyit.Planner"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
-        Title="Planner" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Planner" Height="800" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Background="White" Margin="20">
+
+            <!--  FEATURES HEADER -->
+            <TextBlock Text="Planner" FontSize="24" FontWeight="Bold" Foreground="#61be63"
+                       HorizontalAlignment="Center" Margin="0,10"/>
+
+            <!--  MULTI-IMAGE CAROUSEL (Clickable with Overlay Text) -->
+            <TextBlock Text="Explore Features" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
+                    <!-- Image 1 with Button + Overlay Text -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Button Name="ImageButton1" BorderThickness="0" Background="Transparent">
+                            <Image Name="Image1" Stretch="UniformToFill"/>
+                        </Button>
+                        <TextBlock Name="Label1"
+                                   Text="Feature 1"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Image 2 -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Image Name="Image2" Stretch="UniformToFill"/>
+                        <TextBlock Name="Label2"
+                                   Text="Feature 2"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Image 3 -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Image Name="Image3" Stretch="UniformToFill"/>
+                        <TextBlock Name="Label3"
+                                   Text="Feature 3"
+                                   Foreground="White"
+                                   Background="#80000000"
+                                   FontWeight="Bold"
+                                   FontSize="12"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Padding="4"
+                                   TextAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+
+                <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
+            </Grid>
+
+            <!--  Calender SECTION -->
+            <TextBlock Text="Calender" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
+                       HorizontalAlignment="Center"/>
+            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Here you can make a planning keep notes and never lose track of your tasks!" HorizontalAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Border>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+
+                    <TextBlock x:Name="MonthYearText" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="10"/>
+
+                </StackPanel>
+
+                <Calendar 
+    x:Name="PlannerCalendar" 
+    SelectedDatesChanged="PlannerCalendar_SelectedDatesChanged"
+    DisplayDateChanged="PlannerCalendar_DisplayDateChanged"
+    Margin="10" 
+    BorderThickness="1" 
+    BorderBrush="Gray" />
+
+
+                <TextBlock Text="Add Note:" FontWeight="Bold" Margin="10,10,0,5"/>
+                <TextBox x:Name="NoteTextBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Margin="10"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Save Note" Width="100" Margin="10" Click="SaveNote_Click"/>
+                    <Button Content="Delete Note" Width="100" Margin="10" Click="DeleteNote_Click"/>
+                </StackPanel>
+
+
+                <TextBlock Text="Notes for Selected Date:" FontWeight="Bold" Margin="10,10,0,5"/>
+                <TextBlock x:Name="SavedNoteText" TextWrapping="Wrap" Margin="10" Background="White" Padding="10" />
+            </StackPanel>
+
+
+        </StackPanel>
+    </ScrollViewer>
 </Window>
