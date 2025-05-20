@@ -104,39 +104,17 @@
                     </Button>
                 </Border>
 
-                <!-- Character -->
-                <Border Background="#F5F5F5" Width="120" Height="130" Margin="5" CornerRadius="10" Padding="5">
-                    <Button Background="Transparent" BorderThickness="0" Click="CharacterButton_Click">
-                        <StackPanel>
-                            <Image Source="/Images/character.jpg" Stretch="Uniform" Height="80"/>
-                            <TextBlock Text="CHARACTER" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Border>
-
             </WrapPanel>
 
             <!-- 🧑‍🤝‍🧑 Study Group Invite Section -->
             <TextBlock Text="Invite Friends" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,30,0,10"
                        HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-
-                <!-- Invite Email Textbox + Placeholder -->
-                <Grid>
-                    <TextBox Name="InviteEmailTextBox" Width="200" Height="30" Margin="0,0,10,0"
-                             TextChanged="InviteEmailTextBox_TextChanged"/>
-                    <TextBlock Name="PlaceholderText" Text="Enter email..." Foreground="Gray" Margin="5,0,0,0"
-                               VerticalAlignment="Center" IsHitTestVisible="False" Visibility="Visible"/>
-                </Grid>
-
-                <!-- Send Invite Button -->
-                <Button Content="Send Invite" Width="100" Height="30" Click="SendInvite_Click"/>
+                <!-- Placeholder for Invitations (future functionality) -->
+                <Border Background="#f0f0f0" CornerRadius="10" Padding="10" Margin="0,0,0,20">
+                    <TextBlock Text="Pending Invitations will appear here..." FontStyle="Italic" Foreground="Gray"/>
+                </Border>
             </StackPanel>
-
-            <!-- Placeholder for Invitations (future functionality) -->
-            <Border Background="#f0f0f0" CornerRadius="10" Padding="10" Margin="0,0,0,20">
-                <TextBlock Text="Pending Invitations will appear here..." FontStyle="Italic" Foreground="Gray"/>
-            </Border>
 
         </StackPanel>
     </ScrollViewer>

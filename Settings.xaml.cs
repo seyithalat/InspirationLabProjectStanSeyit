@@ -61,22 +61,20 @@ namespace InspirationLabProjectStanSeyit
 
         private void DarkModeToggle_Checked(object sender, RoutedEventArgs e)
         {
-            var darkResource = new ResourceDictionary
-            {
-                Source = new Uri("DarkTheme.xaml", UriKind.Relative)
-            };
+            // Apply dark theme
+            var darkTheme = new ResourceDictionary();
+            darkTheme.Source = new Uri("Darktheme.xaml", UriKind.Relative);
             Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(darkResource);
+            Application.Current.Resources.MergedDictionaries.Add(darkTheme);
         }
 
         private void DarkModeToggle_Unchecked(object sender, RoutedEventArgs e)
         {
-            var lightResource = new ResourceDictionary
-            {
-                Source = new Uri("LightTheme.xaml", UriKind.Relative)
-            };
+            // Apply light theme
+            var lightTheme = new ResourceDictionary();
+            lightTheme.Source = new Uri("lighttheme.xaml", UriKind.Relative);
             Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(lightResource);
+            Application.Current.Resources.MergedDictionaries.Add(lightTheme);
         }
 
         private void DeleteAccount_Click(object sender, RoutedEventArgs e)
@@ -138,7 +136,6 @@ namespace InspirationLabProjectStanSeyit
         private void NavigateToPage(int index)
         {
             Window newWindow = null;
-
             switch (index)
             {
                 case 0: // Features
@@ -167,9 +164,6 @@ namespace InspirationLabProjectStanSeyit
                     break;
                 case 8: // Settings
                     newWindow = new Settings();
-                    break;
-                default:
-                    newWindow = new Features();
                     break;
             }
 

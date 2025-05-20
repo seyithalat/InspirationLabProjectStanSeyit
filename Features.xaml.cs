@@ -42,6 +42,10 @@ namespace InspirationLabProjectStanSeyit
             Loaded += Features_Loaded;
         }
 
+        private void Features_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateImageSet();
+        }
 
         private void StudyGroupsButton_Click(object sender, RoutedEventArgs e)
         {
@@ -62,46 +66,6 @@ namespace InspirationLabProjectStanSeyit
             var mapPage = new Map();
             mapPage.Show();
             this.Hide(); // Hide the Features window
-        }
-        private void InviteEmailTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // If textbox is empty, show placeholder, otherwise hide it
-            if (string.IsNullOrWhiteSpace(InviteEmailTextBox.Text))
-            {
-                PlaceholderText.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                PlaceholderText.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void SendInvite_Click(object sender, RoutedEventArgs e)
-        {
-            string email = InviteEmailTextBox.Text.Trim();
-            if (!string.IsNullOrEmpty(email))
-            {
-                MessageBox.Show($"Invitation sent to: {email}", "Invite Sent", MessageBoxButton.OK, MessageBoxImage.Information);
-                InviteEmailTextBox.Text = string.Empty; // Clear the textbox
-            }
-            else
-            {
-                MessageBox.Show("Please enter a valid email address.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        private void CharacterButton_Click(object sender, RoutedEventArgs e)
-        {
-            var characterPage = new Character();
-            characterPage.Show();
-            this.Hide(); // Hide the Features window
-        }
-
-
-
-        private void Features_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateImageSet();
         }
 
         private void UpdateImageSet()

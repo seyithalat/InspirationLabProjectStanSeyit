@@ -94,6 +94,15 @@
     <Compile Include="StudyMaterial.xaml.cs">
       <DependentUpon>StudyMaterial.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Games\TriviaGame.xaml.cs">
+      <DependentUpon>Games\TriviaGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Games\MathGame.xaml.cs">
+      <DependentUpon>Games\MathGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Games\WordScrambleGame.xaml.cs">
+      <DependentUpon>Games\WordScrambleGame.xaml</DependentUpon>
+    </Compile>
     <Page Include="Character.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,6 +179,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StudyMaterial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Games\TriviaGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Games\MathGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Games\WordScrambleGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
