@@ -85,11 +85,23 @@
     <Compile Include="RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StudyGroups.xaml.cs">
       <DependentUpon>StudyGroups.xaml</DependentUpon>
     </Compile>
     <Compile Include="StudyMaterial.xaml.cs">
       <DependentUpon>StudyMaterial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Games\TriviaGame.xaml.cs">
+      <DependentUpon>Games\TriviaGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Games\MathGame.xaml.cs">
+      <DependentUpon>Games\MathGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Games\WordScrambleGame.xaml.cs">
+      <DependentUpon>Games\WordScrambleGame.xaml</DependentUpon>
     </Compile>
     <Page Include="Character.xaml">
       <SubType>Designer</SubType>
@@ -99,11 +111,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Darktheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="lighttheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -150,11 +170,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StudyGroups.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StudyMaterial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Games\TriviaGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Games\MathGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Games\WordScrambleGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,75 @@
+<Window x:Class="InspirationLabProjectStanSeyit.Games.TriviaGame"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Trivia Game" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Trivia Game" 
+                   FontSize="32" 
+                   FontWeight="Bold" 
+                   Foreground="#61be63"
+                   HorizontalAlignment="Center" 
+                   Margin="0,20"/>
+
+        <!-- Game Content -->
+        <StackPanel Grid.Row="1" Margin="40">
+            <TextBlock Name="QuestionText" 
+                       Text="Question will appear here" 
+                       FontSize="24" 
+                       TextWrapping="Wrap" 
+                       Margin="0,0,0,20"
+                       HorizontalAlignment="Center"/>
+
+            <StackPanel Name="AnswerPanel" Margin="0,20">
+                <Button Name="Answer1" 
+                        Content="Answer 1" 
+                        Height="50" 
+                        Margin="0,5" 
+                        Background="#bbeaba"
+                        Click="Answer_Click"/>
+                <Button Name="Answer2" 
+                        Content="Answer 2" 
+                        Height="50" 
+                        Margin="0,5" 
+                        Background="#bbeaba"
+                        Click="Answer_Click"/>
+                <Button Name="Answer3" 
+                        Content="Answer 3" 
+                        Height="50" 
+                        Margin="0,5" 
+                        Background="#bbeaba"
+                        Click="Answer_Click"/>
+                <Button Name="Answer4" 
+                        Content="Answer 4" 
+                        Height="50" 
+                        Margin="0,5" 
+                        Background="#bbeaba"
+                        Click="Answer_Click"/>
+            </StackPanel>
+
+            <TextBlock Name="ScoreText" 
+                       Text="Score: 0" 
+                       FontSize="20" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,20"/>
+        </StackPanel>
+
+        <!-- Footer -->
+        <StackPanel Grid.Row="2" Margin="20">
+            <Button Name="NextQuestionButton" 
+                    Content="Next Question" 
+                    Height="40" 
+                    Background="#61be63"
+                    Foreground="White"
+                    FontSize="16"
+                    Click="NextQuestion_Click"/>
+        </StackPanel>
+    </Grid>
+</Window> 

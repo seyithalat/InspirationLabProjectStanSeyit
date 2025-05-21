@@ -1,28 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using InspirationLabProjectStanSeyit.Games;
 
 namespace InspirationLabProjectStanSeyit
 {
     public partial class GamePage : Window
     {
-        private List<string> gameImages = new List<string>
+        private List<string> navImages = new List<string>
         {
-            "Images/gamescarouselimage.jpg",
+            "Images/featurescarouselimage.jpg",
             "Images/profilecarouselimage.jpg",
-            "Images/plannercarouselimage.jpg"
+            "Images/plannercarouselimage.jpg",
+            "Images/groupscarouselimage.jpg",
+            "Images/gamescarouselimage.jpg",
+            "Images/notescarouselimage.jpg",
+            "Images/managementcarouselimage.jpg",
+            "Images/contactcarouselimage.jpg"
         };
 
-        private List<string> gameTitles = new List<string>
+        private List<string> navTitles = new List<string>
         {
-            "Focus Game",
-            "Profile Challenge",
-            "Planner Puzzle"
+            "Features",
+            "Profile",
+            "Planner",
+            "Groups",
+            "Games",
+            "Notes",
+            "Management",
+            "Contact"
         };
 
-        private int startIndex = 0;
+        private int currentNavIndex = 0;
 
         public GamePage()
         {
@@ -32,51 +42,121 @@ namespace InspirationLabProjectStanSeyit
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
-            UpdateImageSet();
+            try
+            {
+                UpdateNavCarousel();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during initialization: {ex.Message}", "Initialization Error");
+            }
         }
 
-        private void UpdateImageSet()
+        private void UpdateNavCarousel()
         {
-            if (gameImages.Count < 3) return;
+            if (navImages.Count < 3) return;
 
-            int i1 = startIndex % gameImages.Count;
-            int i2 = (startIndex + 1) % gameImages.Count;
-            int i3 = (startIndex + 2) % gameImages.Count;
+            int i1 = currentNavIndex % navImages.Count;
+            int i2 = (currentNavIndex + 1) % navImages.Count;
+            int i3 = (currentNavIndex + 2) % navImages.Count;
 
-            Image1.Source = new BitmapImage(new Uri(gameImages[i1], UriKind.Relative));
-            Image2.Source = new BitmapImage(new Uri(gameImages[i2], UriKind.Relative));
-            Image3.Source = new BitmapImage(new Uri(gameImages[i3], UriKind.Relative));
+            try
+            {
+                NavImage1.Source = new BitmapImage(new Uri(navImages[i1], UriKind.Relative));
+                NavImage2.Source = new BitmapImage(new Uri(navImages[i2], UriKind.Relative));
+                NavImage3.Source = new BitmapImage(new Uri(navImages[i3], UriKind.Relative));
 
-            Label1.Text = gameTitles[i1];
-            Label2.Text = gameTitles[i2];
-            Label3.Text = gameTitles[i3];
+                NavLabel1.Text = navTitles[i1];
+                NavLabel2.Text = navTitles[i2];
+                NavLabel3.Text = navTitles[i3];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading navigation images: {ex.Message}");
+            }
         }
 
-        private void PrevImage_Click(object sender, RoutedEventArgs e)
+        private void NavPrevImage_Click(object sender, RoutedEventArgs e)
         {
-            startIndex = (startIndex - 1 + gameImages.Count) % gameImages.Count;
-            UpdateImageSet();
+            currentNavIndex = (currentNavIndex - 1 + navImages.Count) % navImages.Count;
+            UpdateNavCarousel();
         }
 
-        private void NextImage_Click(object sender, RoutedEventArgs e)
+        private void NavNextImage_Click(object sender, RoutedEventArgs e)
         {
-            startIndex = (startIndex + 1) % gameImages.Count;
-            UpdateImageSet();
+            currentNavIndex = (currentNavIndex + 1) % navImages.Count;
+            UpdateNavCarousel();
         }
 
-        private void Image1_Click(object sender, RoutedEventArgs e)
+        private void NavImage1_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"You clicked on: {Label1.Text}", "Game Selected");
+            NavigateToPage(NavLabel1.Text);
         }
 
-        private void Image2_Click(object sender, RoutedEventArgs e)
+        private void NavImage2_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"You clicked on: {Label2.Text}", "Game Selected");
+            NavigateToPage(NavLabel2.Text);
         }
 
-        private void Image3_Click(object sender, RoutedEventArgs e)
+        private void NavImage3_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"You clicked on: {Label3.Text}", "Game Selected");
+            NavigateToPage(NavLabel3.Text);
+        }
+
+        private void NavigateToPage(string pageName)
+        {
+            Window newWindow = null;
+            switch (pageName.ToLower())
+            {
+                case "features":
+                    newWindow = new Features();
+                    break;
+                case "profile":
+                    newWindow = new Profile();
+                    break;
+                case "planner":
+                    newWindow = new Planner();
+                    break;
+                case "groups":
+                    newWindow = new StudyGroups();
+                    break;
+                case "games":
+                    newWindow = new GamePage();
+                    break;
+                case "notes":
+                    newWindow = new StudyMaterial();
+                    break;
+                case "management":
+                    newWindow = new Management();
+                    break;
+                case "contact":
+                    newWindow = new Contact();
+                    break;
+            }
+
+            if (newWindow != null)
+            {
+                newWindow.Show();
+                this.Close();
+            }
+        }
+
+        private void PlayTrivia_Click(object sender, RoutedEventArgs e)
+        {
+            var triviaGame = new TriviaGame();
+            triviaGame.Show();
+        }
+
+        private void PlayMath_Click(object sender, RoutedEventArgs e)
+        {
+            var mathGame = new MathGame();
+            mathGame.Show();
+        }
+
+        private void PlayWordScramble_Click(object sender, RoutedEventArgs e)
+        {
+            var wordScrambleGame = new WordScrambleGame();
+            wordScrambleGame.Show();
         }
     }
 }
