@@ -8,31 +8,7 @@ namespace InspirationLabProjectStanSeyit
 {
     public partial class GamePage : Window
     {
-        private List<string> navImages = new List<string>
-        {
-            "Images/featurescarouselimage.jpg",
-            "Images/profilecarouselimage.jpg",
-            "Images/plannercarouselimage.jpg",
-            "Images/groupscarouselimage.jpg",
-            "Images/gamescarouselimage.jpg",
-            "Images/notescarouselimage.jpg",
-            "Images/managementcarouselimage.jpg",
-            "Images/contactcarouselimage.jpg"
-        };
-
-        private List<string> navTitles = new List<string>
-        {
-            "Features",
-            "Profile",
-            "Planner",
-            "Groups",
-            "Games",
-            "Notes",
-            "Management",
-            "Contact"
-        };
-
-        private int currentNavIndex = 0;
+        
 
         public GamePage()
         {
