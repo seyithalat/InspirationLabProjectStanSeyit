@@ -1,17 +1,25 @@
 ﻿<Window x:Class="InspirationLabProjectStanSeyit.GamePage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Game Page" Height="800" Width="800">
+        Title="Game Page" Height="800" Width="800"
+        WindowState="Maximized">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
-
+        <StackPanel Background="White" Margin="40">
             <!-- HEADER -->
-            <TextBlock Text="Game Page" FontSize="28" FontWeight="Bold" Foreground="#61be63"
-                       HorizontalAlignment="Center" Margin="0,10"/>
+            <TextBlock Text="GAMES" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#61be63"
+                       HorizontalAlignment="Center" 
+                       Margin="0,10"/>
 
+            <!-- Navigation Carousel -->
+            <TextBlock Text="Planner" FontSize="24" FontWeight="Bold" Foreground="#61be63"
+           HorizontalAlignment="Center" Margin="0,10"/>
             <TextBlock Text="Explore App Pages" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
 
+            <!-- Navigation Buttons -->
             <Grid HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -22,91 +30,70 @@
                 <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
-
                     <Button Click="Image1_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
                         <Grid>
                             <Image Name="Image1" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label1"
-               Text="Features"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
+                            <TextBlock Name="Label1" Text="Features" Foreground="White" Background="#80000000"
+                           FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
                         </Grid>
                     </Button>
-
                     <Button Click="Image2_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
                         <Grid>
                             <Image Name="Image2" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label2"
-               Text="Profile"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
+                            <TextBlock Name="Label2" Text="Profile" Foreground="White" Background="#80000000"
+                           FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
                         </Grid>
                     </Button>
-
                     <Button Click="Image3_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
                         <Grid>
                             <Image Name="Image3" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label3"
-               Text="Planner"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
+                            <TextBlock Name="Label3" Text="Planner" Foreground="White" Background="#80000000"
+                           FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
                         </Grid>
                     </Button>
-
                 </StackPanel>
 
                 <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
             </Grid>
 
+            <!-- GAMES SECTION -->
+            <TextBlock Text="Games" FontSize="24" FontWeight="Bold" Foreground="#61be63"
+           HorizontalAlignment="Center" Margin="0,30,0,10"/>
+
             <!-- STATS SECTION -->
-            <TextBlock Text="Game Stats" FontSize="22" FontWeight="Bold" Foreground="#61be63"
-                       HorizontalAlignment="Center" Margin="0,20,0,10"/>
+            <TextBlock Text="Game Stats" FontSize="28" FontWeight="Bold" Foreground="#61be63"
+                       HorizontalAlignment="Center" Margin="0,30,0,20"/>
             <WrapPanel HorizontalAlignment="Center">
-                <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="10">
+                <Border Background="#bbeaba" CornerRadius="15" Padding="25" Margin="15">
                     <StackPanel>
-                        <TextBlock Text="Leaderboard" FontSize="18" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock Text="1. Player1 - 5000 pts"/>
-                        <TextBlock Text="2. Player2 - 4500 pts"/>
-                        <TextBlock Text="3. Player3 - 4000 pts"/>
-                        <TextBlock Text="4. You - 3500 pts"/>
-                        <TextBlock Text="5. Player5 - 3000 pts"/>
+                        <TextBlock Text="Leaderboard" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                        <TextBlock Text="1. Player1 - 5000 pts" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="2. Player2 - 4500 pts" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="3. Player3 - 4000 pts" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="4. You - 3500 pts" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="5. Player5 - 3000 pts" FontSize="16" Margin="0,5"/>
                     </StackPanel>
                 </Border>
-                <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="10">
+                <Border Background="#bbeaba" CornerRadius="15" Padding="25" Margin="15">
                     <StackPanel>
-                        <TextBlock Text="Achievements" FontSize="18" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock Text="⭐ Study Streak (3 days)"/>
-                        <TextBlock Text="⭐ Focus Master (2 hrs)"/>
-                        <TextBlock Text="⭐ Note Taker (10 notes)"/>
-                        <TextBlock Text="🔒 Early Bird"/>
-                        <TextBlock Text="🔒 Night Owl"/>
+                        <TextBlock Text="Achievements" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                        <TextBlock Text="⭐ Study Streak (3 days)" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="⭐ Focus Master (2 hrs)" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="⭐ Note Taker (10 notes)" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="🔒 Early Bird" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="🔒 Night Owl" FontSize="16" Margin="0,5"/>
                     </StackPanel>
                 </Border>
-                <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="10">
+                <Border Background="#bbeaba" CornerRadius="15" Padding="25" Margin="15">
                     <StackPanel>
-                        <TextBlock Text="Stats" FontSize="18" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock Text="Months: 0.03"/>
-                        <TextBlock Text="Points: 3500"/>
-                        <TextBlock Text="Level: 5"/>
-                        <TextBlock Text="Streak: 3 days"/>
+                        <TextBlock Text="Stats" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                        <TextBlock Text="Months: 0.03" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="Points: 3500" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="Level: 5" FontSize="16" Margin="0,5"/>
+                        <TextBlock Text="Streak: 3 days" FontSize="16" Margin="0,5"/>
                     </StackPanel>
                 </Border>
             </WrapPanel>
@@ -144,41 +131,44 @@
                     </StackPanel>
                 </Border>
             </WrapPanel>
-            <!-- GAMES SECTION -->
-            <TextBlock Text="Games" FontSize="24" FontWeight="Bold" Foreground="#61be63"
-           HorizontalAlignment="Center" Margin="0,30,0,10"/>
 
             <WrapPanel HorizontalAlignment="Center">
                 <!-- GAME CARD 1 -->
-                <Border Width="180" Height="250" Margin="10" CornerRadius="15" Background="#bbeaba" Padding="10">
+                <Border Width="250" Height="300" Margin="15" CornerRadius="15" Background="#bbeaba" Padding="15">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="8" ShadowDepth="2" Opacity="0.3"/>
                     </Border.Effect>
                     <StackPanel>
-                        <Image Source="/Images/focusgame.png" Height="120" Stretch="UniformToFill" Margin="0,0,0,10" />
-                        <TextBlock Text="Focus Game" FontWeight="Bold" FontSize="16" Foreground="White" TextAlignment="Center" Margin="0,5"/>
-                        <TextBlock Text="Train your attention skills!" FontSize="12" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,10"/>
-                        <Button Content="Play Now" Width="100" HorizontalAlignment="Center" Background="White" Foreground="#61be63" />
+                        <Image Source="/Images/focusgame.png" Height="150" Stretch="UniformToFill" Margin="0,0,0,15" />
+                        <TextBlock Text="Focus Game" FontWeight="Bold" FontSize="20" Foreground="White" TextAlignment="Center" Margin="0,5"/>
+                        <TextBlock Text="Train your attention skills!" FontSize="16" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,15"/>
+                        <Button Content="Play Now" Width="120" Height="40" HorizontalAlignment="Center" 
+                                Background="White" Foreground="#61be63" FontSize="16" FontWeight="Bold"
+                                Click="PlayTrivia_Click"/>
                     </StackPanel>
                 </Border>
 
                 <!-- GAME CARD 2 -->
-                <Border Width="180" Height="250" Margin="10" CornerRadius="15" Background="#bbeaba" Padding="10">
+                <Border Width="250" Height="300" Margin="15" CornerRadius="15" Background="#bbeaba" Padding="15">
                     <StackPanel>
-                        <Image Source="/Images/mathrace.png" Height="108" Stretch="UniformToFill" Margin="0,0,0,10" Width="104" />
-                        <TextBlock Text="Math Race" FontWeight="Bold" FontSize="16" Foreground="White" TextAlignment="Center" Margin="0,5"/>
-                        <TextBlock Text="Solve fast, beat the timer!" FontSize="12" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,10"/>
-                        <Button Content="Play Now" Width="100" HorizontalAlignment="Center" Background="White" Foreground="#61be63"/>
+                        <Image Source="/Images/mathrace.png" Height="150" Stretch="UniformToFill" Margin="0,0,0,15" />
+                        <TextBlock Text="Math Race" FontWeight="Bold" FontSize="20" Foreground="White" TextAlignment="Center" Margin="0,5"/>
+                        <TextBlock Text="Solve fast, beat the timer!" FontSize="16" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,15"/>
+                        <Button Content="Play Now" Width="120" Height="40" HorizontalAlignment="Center" 
+                                Background="White" Foreground="#61be63" FontSize="16" FontWeight="Bold"
+                                Click="PlayMath_Click"/>
                     </StackPanel>
                 </Border>
 
                 <!-- GAME CARD 3 -->
-                <Border Width="180" Height="250" Margin="10" CornerRadius="15" Background="#bbeaba" Padding="10">
+                <Border Width="250" Height="300" Margin="15" CornerRadius="15" Background="#bbeaba" Padding="15">
                     <StackPanel>
-                        <Image Source="/Images/quizsprint.png" Height="110" Stretch="UniformToFill" Margin="0,0,0,10" Width="116" />
-                        <TextBlock Text="Quiz Sprint" FontWeight="Bold" FontSize="16" Foreground="White" TextAlignment="Center" Margin="0,5"/>
-                        <TextBlock Text="Answer questions, earn points!" FontSize="12" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,10"/>
-                        <Button Content="Play Now" Width="100" HorizontalAlignment="Center" Background="White" Foreground="#61be63"/>
+                        <Image Source="/Images/quizsprint.png" Height="150" Stretch="UniformToFill" Margin="0,0,0,15" />
+                        <TextBlock Text="Word Scramble" FontWeight="Bold" FontSize="20" Foreground="White" TextAlignment="Center" Margin="0,5"/>
+                        <TextBlock Text="Unscramble the words!" FontSize="16" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,15"/>
+                        <Button Content="Play Now" Width="120" Height="40" HorizontalAlignment="Center" 
+                                Background="White" Foreground="#61be63" FontSize="16" FontWeight="Bold"
+                                Click="PlayWordScramble_Click"/>
                     </StackPanel>
                 </Border>
             </WrapPanel>
@@ -213,3 +203,4 @@
         </StackPanel>
     </ScrollViewer>
 </Window>
+

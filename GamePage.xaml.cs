@@ -1,27 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using InspirationLabProjectStanSeyit.Games;
 
 namespace InspirationLabProjectStanSeyit
 {
     public partial class GamePage : Window
     {
-        private List<string> gameImages = new List<string>
+        private List<string> navImages = new List<string>
         {
-            "Images/gamescarouselimage.jpg",
+            "Images/featurescarouselimage.jpg",
             "Images/profilecarouselimage.jpg",
-            "Images/plannercarouselimage.jpg"
+            "Images/plannercarouselimage.jpg",
+            "Images/groupscarouselimage.jpg",
+            "Images/gamescarouselimage.jpg",
+            "Images/notescarouselimage.jpg",
+            "Images/managementcarouselimage.jpg",
+            "Images/contactcarouselimage.jpg"
         };
 
-        private List<string> gameTitles = new List<string>
+        private List<string> navTitles = new List<string>
         {
-            "Focus Game",
-            "Profile Challenge",
-            "Planner Puzzle"
+            "Features",
+            "Profile",
+            "Planner",
+            "Groups",
+            "Games",
+            "Notes",
+            "Management",
+            "Contact"
         };
 
+        private int currentNavIndex = 0;
 
         public GamePage()
         {
@@ -30,6 +41,24 @@ namespace InspirationLabProjectStanSeyit
         }
 
         
+
+        private void PlayTrivia_Click(object sender, RoutedEventArgs e)
+        {
+            var triviaGame = new TriviaGame();
+            triviaGame.Show();
+        }
+
+        private void PlayMath_Click(object sender, RoutedEventArgs e)
+        {
+            var mathGame = new MathGame();
+            mathGame.Show();
+        }
+
+        private void PlayWordScramble_Click(object sender, RoutedEventArgs e)
+        {
+            var wordScrambleGame = new WordScrambleGame();
+            wordScrambleGame.Show();
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateImageSet();

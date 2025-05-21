@@ -67,6 +67,9 @@
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Games\MathGame.xaml.cs" />
+    <Compile Include="Games\TriviaGame.xaml.cs" />
+    <Compile Include="Games\WordScrambleGame.xaml.cs" />
     <Compile Include="Management.xaml.cs">
       <DependentUpon>Management.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,18 @@
     <Page Include="GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Games\MathGame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Games\TriviaGame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Games\WordScrambleGame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="lighttheme.xaml">
       <SubType>Designer</SubType>
@@ -232,5 +247,6 @@
     <Resource Include="Images\mathrace.png" />
     <Resource Include="Images\quizsprint.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
