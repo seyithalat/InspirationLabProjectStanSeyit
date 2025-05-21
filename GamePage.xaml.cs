@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -8,6 +8,7 @@ namespace InspirationLabProjectStanSeyit
 {
     public partial class GamePage : Window
     {
+
         
 
         public GamePage()
@@ -52,6 +53,7 @@ namespace InspirationLabProjectStanSeyit
             "Images/managementcarouselimage.jpg",
             "Images/contactcarouselimage.jpg"
         };
+
 
         private List<string> imageTitles = new List<string>
         {

@@ -108,7 +108,6 @@ namespace InspirationLabProjectStanSeyit
         private void NavigateToPage(int index)
         {
             Window newWindow = null;
-
             switch (index)
             {
                 case 0: // Features
@@ -136,11 +135,7 @@ namespace InspirationLabProjectStanSeyit
                     newWindow = new Contact();
                     break;
                 case 8: // Settings
-                    // You might want to create a Settings window
                     newWindow = new Settings();
-                    break;
-                default:
-                    newWindow = new Features();
                     break;
             }
 
