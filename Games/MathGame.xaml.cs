@@ -87,15 +87,5 @@ namespace InspirationLabProjectStanSeyit.Games
                 MessageBox.Show("Please enter a valid number!", "Invalid Input");
             }
         }
-
-        private void NewGame_Click(object sender, RoutedEventArgs e)
-        {
-            score = 0;
-            timeLeft = 30;
-            ScoreText.Text = $"Score: {score}";
-            TimerText.Text = $"Time: {timeLeft}";
-            timer.Start();
-            GenerateNewProblem();
-        }
     }
 } 

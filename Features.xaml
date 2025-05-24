@@ -14,8 +14,7 @@
                        HorizontalAlignment="Center" Margin="0,10"/>
 
             <!-- 🔁 SLIDING IMAGE CAROUSEL -->
-            <TextBlock Text="Explore App Pages" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
-
+            <TextBlock Text="Explore Features" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
             <Grid HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -27,51 +26,30 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
 
-                    <Button Click="Image1_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
+                    <!-- Image 1 -->
+                    <Button Name="ImageButton1" Click="ImageButton1_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
                         <Grid>
                             <Image Name="Image1" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label1"
-               Text="Features"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
+                            <TextBlock Name="Label1" Text="Feature 1" Foreground="White" Background="#80000000"
+                                       FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="4" />
                         </Grid>
                     </Button>
 
-                    <Button Click="Image2_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
+                    <!-- Image 2 -->
+                    <Button BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
                         <Grid>
                             <Image Name="Image2" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label2"
-               Text="Profile"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
+                            <TextBlock Name="Label2" Text="Feature 2" Foreground="White" Background="#80000000"
+                                       FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="4" />
                         </Grid>
                     </Button>
 
-                    <Button Click="Image3_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
+                    <!-- Image 3 -->
+                    <Button BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
                         <Grid>
                             <Image Name="Image3" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label3"
-               Text="Planner"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
+                            <TextBlock Name="Label3" Text="Feature 3" Foreground="White" Background="#80000000"
+                                       FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="4" />
                         </Grid>
                     </Button>
 
@@ -84,11 +62,11 @@
             <TextBlock Text="PROFILE" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10" HorizontalAlignment="Center"/>
             <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="0,0,0,20">
                 <StackPanel>
-                    <TextBlock Text="Name: Jane Doe" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="Age: 22" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="School: Thomas More Hogeschool" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="Course: Software Engineering" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="Schoolyear: 1st Year" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileNameTextBlock" Text="Name: Jane Doe" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileAgeTextBlock" Text="Age: 22" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileSchoolTextBlock" Text="School: Thomas More Hogeschool" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileCourseTextBlock" Text="Course: Software Engineering" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileYearTextBlock" Text="Schoolyear: 1st Year" FontSize="16" Margin="0,0,0,5"/>
                 </StackPanel>
             </Border>
 
@@ -126,41 +104,18 @@
                     </Button>
                 </Border>
 
-                <!-- Character -->
-                <Border Background="#F5F5F5" Width="120" Height="130" Margin="5" CornerRadius="10" Padding="5">
-                    <Button Background="Transparent" BorderThickness="0" Click="CharacterButton_Click">
-                        <StackPanel>
-                            <Image Source="/Images/character.jpg" Stretch="Uniform" Height="80"/>
-                            <TextBlock Text="CHARACTER" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Border>
-
             </WrapPanel>
 
             <!-- 🧑‍🤝‍🧑 Study Group Invite Section -->
             <TextBlock Text="Invite Friends" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,30,0,10"
                        HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-
-                <!-- Invite Email Textbox + Placeholder -->
-                <Grid>
-                    <TextBox Name="InviteEmailTextBox" Width="200" Height="30" Margin="0,0,10,0"
-                             TextChanged="InviteEmailTextBox_TextChanged"/>
-                    <TextBlock Name="PlaceholderText" Text="Enter email..." Foreground="Gray" Margin="5,0,0,0"
-                               VerticalAlignment="Center" IsHitTestVisible="False" Visibility="Visible"/>
-                </Grid>
-
-                <!-- Send Invite Button -->
-                <Button Content="Send Invite" Width="100" Height="30" Click="SendInvite_Click"/>
+                <!-- Placeholder for Invitations (future functionality) -->
+                <Border Background="#f0f0f0" CornerRadius="10" Padding="10" Margin="0,0,0,20">
+                    <TextBlock Text="Pending Invitations will appear here..." FontStyle="Italic" Foreground="Gray"/>
+                </Border>
             </StackPanel>
-
-            <!-- Placeholder for Invitations (future functionality) -->
-            <Border Background="#f0f0f0" CornerRadius="10" Padding="10" Margin="0,0,0,20">
-                <TextBlock Text="Pending Invitations will appear here..." FontStyle="Italic" Foreground="Gray"/>
-            </Border>
 
         </StackPanel>
     </ScrollViewer>
 </Window>
-

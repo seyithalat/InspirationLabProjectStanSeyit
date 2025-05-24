@@ -106,17 +106,11 @@ namespace InspirationLabProjectStanSeyit.Games
             LoadQuestion();
         }
 
-        private void NextQuestion_Click(object sender, RoutedEventArgs e)
+        private class TriviaQuestion
         {
-            currentQuestionIndex++;
-            LoadQuestion();
+            public string Question { get; set; }
+            public List<string> Answers { get; set; }
+            public int CorrectAnswerIndex { get; set; }
         }
-    }
-
-    public class TriviaQuestion
-    {
-        public string Question { get; set; }
-        public List<string> Answers { get; set; }
-        public int CorrectAnswerIndex { get; set; }
     }
 } 

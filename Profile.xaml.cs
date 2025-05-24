@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -154,8 +147,7 @@ namespace InspirationLabProjectStanSeyit
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            // Here you would typically save the profile changes to a database
-            MessageBox.Show("Profile changes saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Profile changes saved! (Implement MySQL save logic here)", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void StudyGroups_Click(object sender, RoutedEventArgs e)

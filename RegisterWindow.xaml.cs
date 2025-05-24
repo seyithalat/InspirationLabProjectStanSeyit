@@ -1,4 +1,7 @@
 using System.Windows;
+using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -14,18 +17,62 @@ namespace InspirationLabProjectStanSeyit
             string username = UsernameBox.Text;
             string email = EmailBox.Text;
             string password = PasswordBox.Password;
+            string firstName = FirstNameBox.Text;
+            string lastName = LastNameBox.Text;
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(firstName) ||
+                string.IsNullOrWhiteSpace(lastName))
             {
                 MessageBox.Show("Please fill in all fields.", "Missing Info", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            MessageBox.Show($"Thanks for registering, {username}!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Store password as plain text (not recommended for production)
+            string passwordToStore = password;
 
-            var loginWindow = new LoginWindow();
-            Application.Current.MainWindow.Show(); 
-            this.Close();                          
+            string connStr = "Server=localhost;Port=3307;Database=inspirationlabdb;Uid=root;Pwd=;";
+            using (var conn = new MySqlConnection(connStr))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "INSERT INTO users (Username, Email, PasswordHash, FirstName, LastName) VALUES (@username, @email, @password, @first_name, @last_name)";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@password", passwordToStore);
+                        cmd.Parameters.AddWithValue("@first_name", firstName);
+                        cmd.Parameters.AddWithValue("@last_name", lastName);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    MessageBox.Show($"Registration successful! Welcome, {firstName}!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var loginWindow = new LoginWindow();
+                    loginWindow.Show();
+                    this.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    if (ex.Number == 1062) // Duplicate entry
+                        MessageBox.Show("Username or email already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    else
+                        MessageBox.Show("Database error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                    builder.Append(b.ToString("x2"));
+                return builder.ToString();
+            }
+        }
+
     }
 }
