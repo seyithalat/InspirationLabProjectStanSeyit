@@ -14,18 +14,21 @@ namespace InspirationLabProjectStanSeyit
             string username = UsernameBox.Text;
             string email = EmailBox.Text;
             string password = PasswordBox.Password;
+            string firstName = FirstNameBox.Text;
+            string lastName = LastNameBox.Text;
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || 
+                string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(firstName) || 
+                string.IsNullOrWhiteSpace(lastName))
             {
                 MessageBox.Show("Please fill in all fields.", "Missing Info", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            MessageBox.Show($"Thanks for registering, {username}!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
+            MessageBox.Show($"Registration successful! Welcome, {firstName}!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             var loginWindow = new LoginWindow();
-            Application.Current.MainWindow.Show(); 
-            this.Close();                          
+            loginWindow.Show();
+            this.Close();
         }
     }
 }

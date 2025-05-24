@@ -20,20 +20,7 @@ namespace InspirationLabProjectStanSeyit
                 return;
             }
 
-            if (username == "admin" && password == "password")
-            {
-                MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                var mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Hide();
-            }
-            else
-            {
-                MessageBox.Show("Invalid credentials.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            Application.Current.MainWindow.Show(); 
-            this.Close(); 
+            MessageBox.Show("Login logic not implemented yet.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

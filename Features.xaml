@@ -62,11 +62,11 @@
             <TextBlock Text="PROFILE" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10" HorizontalAlignment="Center"/>
             <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="0,0,0,20">
                 <StackPanel>
-                    <TextBlock Text="Name: Jane Doe" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="Age: 22" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="School: Thomas More Hogeschool" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="Course: Software Engineering" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="Schoolyear: 1st Year" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileNameTextBlock" Text="Name: Jane Doe" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileAgeTextBlock" Text="Age: 22" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileSchoolTextBlock" Text="School: Thomas More Hogeschool" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileCourseTextBlock" Text="Course: Software Engineering" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="ProfileYearTextBlock" Text="Schoolyear: 1st Year" FontSize="16" Margin="0,0,0,5"/>
                 </StackPanel>
             </Border>
 

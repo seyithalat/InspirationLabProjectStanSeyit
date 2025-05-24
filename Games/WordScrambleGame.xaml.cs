@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -109,21 +108,10 @@ namespace InspirationLabProjectStanSeyit.Games
             LoadPuzzle();
         }
 
-        private void NewGame_Click(object sender, RoutedEventArgs e)
+        private class WordPuzzle
         {
-            score = 0;
-            timeLeft = 60;
-            currentPuzzleIndex = 0;
-            ScoreText.Text = $"Score: {score}";
-            TimerText.Text = $"Time: {timeLeft}";
-            timer.Start();
-            LoadPuzzle();
+            public string Word { get; set; }
+            public string Hint { get; set; }
         }
-    }
-
-    public class WordPuzzle
-    {
-        public string Word { get; set; }
-        public string Hint { get; set; }
     }
 } 
