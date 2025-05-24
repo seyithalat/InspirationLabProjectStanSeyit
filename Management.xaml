@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Management" Height="800" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
             <!-- HEADER -->
             <TextBlock Text="STUDY GROUPS MANAGEMENT" 
@@ -16,6 +16,9 @@
                        Foreground="#61be63"
                        HorizontalAlignment="Center" 
                        Margin="0,10"/>
+
+            <!-- Static Map of Mechelen with Study Locations -->
+            <Image x:Name="StudyMapImage" Width="600" Height="400" Margin="0,20" Stretch="Uniform"/>
 
             <!-- Navigation Carousel -->
             <TextBlock Text="Navigate to Pages" 
@@ -126,43 +129,6 @@
                         BorderThickness="0"
                         Click="NavNextImage_Click"/>
             </Grid>
-
-            <!-- STUDY LOCATIONS MAP -->
-            <TextBlock Text="STUDY LOCATIONS" 
-                       FontSize="22" 
-                       Foreground="#61be63" 
-                       FontWeight="Bold" 
-                       Margin="0,20,0,10"
-                       HorizontalAlignment="Center"/>
-
-            <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="0,0,0,20">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="300"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Margin="0,0,0,10">
-                        <TextBlock Text="Find study locations near you" 
-                                  FontSize="16" 
-                                  Margin="0,0,0,10"/>
-                        <Button x:Name="RefreshLocationButton" 
-                                Content="Refresh Location" 
-                                Width="150" 
-                                Click="RefreshLocation_Click"/>
-                    </StackPanel>
-
-                    <Border Grid.Row="1" 
-                            Background="White" 
-                            BorderBrush="Gray" 
-                            BorderThickness="1">
-                        <WebBrowser x:Name="MapBrowser" 
-                                    Grid.Row="1" 
-                                    Margin="10" 
-                                    Loaded="MapBrowser_Loaded"/>
-                    </Border>
-                </Grid>
-            </Border>
 
             <!-- CAROUSEL -->
             <TextBlock Text="Explore Study Locations" 

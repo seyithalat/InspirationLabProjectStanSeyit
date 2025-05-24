@@ -65,54 +65,26 @@ namespace InspirationLabProjectStanSeyit
             Loaded += Management_Loaded;
         }
 
-        private void MapBrowser_Loaded(object sender, RoutedEventArgs e)
+        private string GetStaticMapUrl()
         {
-            try
-            {
-                // Suppress script errors
-                var fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-                if (fiComWebBrowser == null) return;
-                var objComWebBrowser = fiComWebBrowser.GetValue(MapBrowser);
-                objComWebBrowser?.GetType().InvokeMember("Silent", System.Reflection.BindingFlags.SetProperty, null, objComWebBrowser, new object[] { true });
+            // Center on Mechelen
+            string center = "Mechelen,Belgium";
+            int zoom = 14;
+            string size = "600x400";
+            string apiKey = "AIzaSyDWRmX1HI6B5-3vxI2f4jVLdmUUPomh3Wc";
 
-                MapBrowser.Navigating += MapBrowser_Navigating;
-                MapBrowser.Navigated += MapBrowser_Navigated;
-            }
-            catch (Exception ex)
+            // Add your study locations as markers (address or lat,lng)
+            var markers = new List<string>
             {
-                MessageBox.Show($"Browser initialization error: {ex.Message}", "Error");
-            }
-        }
+                "Mechelen,Belgium", // City center
+                "Hogeschool Thomas More Mechelen",
+                "Kruidtuin Mechelen"
+                // Add more locations as needed
+            };
 
-        private void MapBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
-        {
-            try
-            {
-                MessageBox.Show($"Navigating to: {e.Uri}", "Debug Info");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Navigation error: {ex.Message}", "Error");
-            }
-        }
-
-        private void MapBrowser_Navigated(object sender, NavigationEventArgs e)
-        {
-            try
-            {
-                if (e.Uri != null)
-                {
-                    MessageBox.Show($"Successfully navigated to: {e.Uri}", "Debug Info");
-                }
-                else
-                {
-                    MessageBox.Show("Navigation completed but URI is null", "Warning");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Post-navigation error: {ex.Message}", "Error");
-            }
+            string markerString = string.Join("|", markers.ConvertAll(Uri.EscapeDataString));
+            string url = $"https://maps.googleapis.com/maps/api/staticmap?center={Uri.EscapeDataString(center)}&zoom={zoom}&size={size}&markers={markerString}&key={apiKey}";
+            return url;
         }
 
         private void Management_Loaded(object sender, RoutedEventArgs e)
@@ -121,93 +93,12 @@ namespace InspirationLabProjectStanSeyit
             {
                 UpdateCarousel();
                 UpdateNavCarousel();
-                LoadDefaultMap();
+                string mapUrl = GetStaticMapUrl();
+                StudyMapImage.Source = new BitmapImage(new Uri(mapUrl));
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error during initialization: {ex.Message}", "Initialization Error");
-            }
-        }
-
-        private void LoadDefaultMap()
-        {
-            try
-            {
-                string defaultLocation = "University Library Rotterdam";
-                string encodedLocation = Uri.EscapeDataString(defaultLocation);
-                string htmlContent = $@"
-                    <html>
-                    <head>
-                        <style>
-                            body, html {{ margin: 0; padding: 0; height: 100%; }}
-                            iframe {{ width: 100%; height: 100%; border: none; }}
-                        </style>
-                    </head>
-                    <body>
-                        <iframe
-                            src=""https://www.google.com/maps/embed/v1/place?key={API_KEY}&q={encodedLocation}""
-                            allowfullscreen>
-                        </iframe>
-                    </body>
-                    </html>";
-
-                string tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "map.html");
-                System.IO.File.WriteAllText(tempPath, htmlContent);
-                MapBrowser.Navigate(new Uri(tempPath));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading map: {ex.Message}", "Map Error");
-            }
-        }
-
-        private void UpdateMap(string location)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(location))
-                {
-                    LoadDefaultMap();
-                    return;
-                }
-
-                string encodedLocation = Uri.EscapeDataString(location);
-                string htmlContent = $@"
-                    <html>
-                    <head>
-                        <style>
-                            body, html {{ margin: 0; padding: 0; height: 100%; }}
-                            iframe {{ width: 100%; height: 100%; border: none; }}
-                        </style>
-                    </head>
-                    <body>
-                        <iframe
-                            src=""https://www.google.com/maps/embed/v1/place?key={API_KEY}&q={encodedLocation}""
-                            allowfullscreen>
-                        </iframe>
-                    </body>
-                    </html>";
-
-                string tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "map.html");
-                System.IO.File.WriteAllText(tempPath, htmlContent);
-                MapBrowser.Navigate(new Uri(tempPath));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error updating map: {ex.Message}", "Map Error");
-            }
-        }
-
-        private void RefreshLocation_Click(object sender, RoutedEventArgs e)
-        {
-            // Show the selected location on the map
-            if (CarouselLabel1 != null && !string.IsNullOrEmpty(CarouselLabel1.Text))
-            {
-                UpdateMap(CarouselLabel1.Text);
-            }
-            else
-            {
-                LoadDefaultMap();
             }
         }
 
@@ -257,13 +148,11 @@ namespace InspirationLabProjectStanSeyit
         private void CarouselItem1_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show($"Selected location: {CarouselLabel1.Text}", "Location Selected");
-            UpdateMap(CarouselLabel1.Text);
         }
 
         private void CarouselItem2_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show($"Selected location: {CarouselLabel2.Text}", "Location Selected");
-            UpdateMap(CarouselLabel2.Text);
         }
 
         private void UpdateNavCarousel()
