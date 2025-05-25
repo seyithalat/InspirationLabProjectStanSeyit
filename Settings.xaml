@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="Settings" Height="800" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
             <!--  FEATURES HEADER -->
-            <TextBlock Text="Settings" FontSize="24" FontWeight="Bold" Foreground="#61be63"
+            <TextBlock Text="Settings" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}"
                        HorizontalAlignment="Center" Margin="0,10"/>
 
-            <TextBlock Text="Explore App Pages" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
+            <TextBlock Text="Explore App Pages" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}" Margin="0,10,0,10" TextAlignment="Center"/>
 
             <Grid HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -81,7 +81,7 @@
 
             <Border Background="#bbeaba" CornerRadius="15" Padding="20" Margin="0,30,0,0">
                 <StackPanel>
-                    <TextBlock Text="About Us" FontSize="22" FontWeight="Bold" Foreground="#61be63" TextAlignment="Center"/>
+                    <TextBlock Text="About Us" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}" TextAlignment="Center"/>
                     <TextBlock Text="Buddy To Study is your digital study companion. Our goal is to make studying social, organized, and efficient. Find peers, join sessions, and stay on top of your goals with ease."
                    FontSize="16" Foreground="#37474F" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,0,0"/>
                 </StackPanel>
@@ -89,7 +89,7 @@
 
 
             
-            <TextBlock Text="Settings manager" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
+            <TextBlock Text="Settings manager" FontSize="22" Foreground="{DynamicResource ForegroundBrush}" FontWeight="Bold" Margin="0,20,0,10"
                        HorizontalAlignment="Center"/>
             <Border Background="#bbeaba" CornerRadius="10" Padding="15">
                 <StackPanel>
@@ -102,7 +102,7 @@
                 <TextBlock Text="Appearance &amp; Account" 
                FontSize="18" 
                FontWeight="Bold" 
-               Foreground="Gray" 
+               Foreground="{DynamicResource ForegroundBrush}" 
                Margin="0,0,0,10" HorizontalAlignment="Center" />
 
                 <Border Background="#f0f0f0" CornerRadius="10" Padding="15" Margin="0,0,0,10">

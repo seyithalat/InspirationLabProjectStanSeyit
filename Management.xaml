@@ -8,7 +8,7 @@
         Title="Management" Height="800" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
-
+            <!-- Study groups management page -->
             <!-- HEADER -->
             <TextBlock Text="STUDY GROUPS MANAGEMENT" 
                        FontSize="24" 
@@ -16,6 +16,7 @@
                        Foreground="#61be63"
                        HorizontalAlignment="Center" 
                        Margin="0,10"/>
+
 
             <!-- Static Map of Mechelen with Study Locations -->
             <Image x:Name="StudyMapImage" Width="600" Height="400" Margin="0,20" Stretch="Uniform"/>

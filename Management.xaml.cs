@@ -18,6 +18,7 @@ namespace InspirationLabProjectStanSeyit
             "Images/location3.jpg",
             "Images/location4.jpg"
         };
+        //Comment
 
         private List<string> locationNames = new List<string>
         {

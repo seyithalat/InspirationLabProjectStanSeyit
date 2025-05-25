@@ -7,7 +7,7 @@
         mc:Ignorable="d">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
             <!-- 🔹 HEADER -->
             <TextBlock Text="FEATURES" FontSize="28" FontWeight="Bold" Foreground="#61be63"
