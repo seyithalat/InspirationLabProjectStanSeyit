@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Features" Height="800" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
             <!-- StudyGroups HEADER -->
             <TextBlock Text="Study Groups" FontSize="24" FontWeight="Bold" Foreground="#61be63"
@@ -79,7 +79,7 @@
             <!-- StudyGroups Overview Section -->
             <TextBlock Text="Study Group Overview" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
                        HorizontalAlignment="Center"/>
-            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+            <Border Background="{DynamicResource AccentBrush}" CornerRadius="10" Padding="15" Margin="0,0,0,20">
                 <TextBlock Text="Here you can find different study groups based on your interests, subjects, and goals. Join a group, collaborate, and grow together!" 
                            FontSize="16" Foreground="Black" TextWrapping="Wrap"/>
             </Border>

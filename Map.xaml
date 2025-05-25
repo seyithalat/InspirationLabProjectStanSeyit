@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
-        Title="Map" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Map" Height="600" Width="800">
+    <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
+        <TextBlock Text="Static Map" FontSize="24" FontWeight="Bold" Foreground="#61be63" HorizontalAlignment="Center" Margin="0,10"/>
+        <Image x:Name="StudyMapImage" Width="600" Height="400" Margin="0,20" Stretch="Uniform"/>
+    </StackPanel>
 </Window>

@@ -7,79 +7,22 @@
         mc:Ignorable="d"
         Title="Planner" Height="800" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{StaticResource BackgroundBrush}" Margin="20">
 
             <!--  FEATURES HEADER -->
             <TextBlock Text="Planner" FontSize="24" FontWeight="Bold" Foreground="#61be63"
                        HorizontalAlignment="Center" Margin="0,10"/>
 
             <!--  MULTI-IMAGE CAROUSEL (Clickable with Overlay Text) -->
-            <TextBlock Text="Explore Features" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
-            <Grid HorizontalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
-
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
-                    <!-- Image 1 with Button + Overlay Text -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Button Name="ImageButton1" BorderThickness="0" Background="Transparent">
-                            <Image Name="Image1" Stretch="UniformToFill"/>
-                        </Button>
-                        <TextBlock Name="Label1"
-                                   Text="Feature 1"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="12"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="4"
-                                   TextAlignment="Center"/>
-                    </Grid>
-
-                    <!-- Image 2 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Image Name="Image2" Stretch="UniformToFill"/>
-                        <TextBlock Name="Label2"
-                                   Text="Feature 2"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="12"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="4"
-                                   TextAlignment="Center"/>
-                    </Grid>
-
-                    <!-- Image 3 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Image Name="Image3" Stretch="UniformToFill"/>
-                        <TextBlock Name="Label3"
-                                   Text="Feature 3"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="12"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="4"
-                                   TextAlignment="Center"/>
-                    </Grid>
-                </StackPanel>
-
-                <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
-            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+                <Button Content="Back to Settings" Width="150" Margin="10" Click="BackToSettings_Click" />
+                <Button Content="Map" Width="100" Margin="10" Click="OpenMap_Click" />
+            </StackPanel>
 
             <!--  Calender SECTION -->
             <TextBlock Text="Calender" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
                        HorizontalAlignment="Center"/>
-            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+            <Border Background="{StaticResource AccentBrush}" CornerRadius="10" Padding="15">
                 <StackPanel>
                     <TextBlock Text="Here you can make a planning keep notes and never lose track of your tasks!" HorizontalAlignment="Center" ></TextBlock>
                 </StackPanel>
@@ -110,7 +53,7 @@
 
 
                 <TextBlock Text="Notes for Selected Date:" FontWeight="Bold" Margin="10,10,0,5"/>
-                <TextBlock x:Name="SavedNoteText" TextWrapping="Wrap" Margin="10" Background="White" Padding="10" />
+                <TextBlock x:Name="SavedNoteText" TextWrapping="Wrap" Margin="10" Background="{StaticResource ControlBackgroundBrush}" Padding="10" />
             </StackPanel>
 
 

@@ -112,5 +112,18 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        private void BackToSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new Settings();
+            settingsWindow.Show();
+            this.Close();
+        }
+
+        private void OpenMap_Click(object sender, RoutedEventArgs e)
+        {
+            var managementWindow = new Management();
+            managementWindow.Show();
+            this.Close();
+        }
     }
 }

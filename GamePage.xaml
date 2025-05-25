@@ -5,7 +5,7 @@
         WindowState="Maximized">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="40">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="40">
             <!-- HEADER -->
             <TextBlock Text="GAMES" 
                        FontSize="24" 

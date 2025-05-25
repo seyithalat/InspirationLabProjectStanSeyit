@@ -27,7 +27,7 @@ namespace InspirationLabProjectStanSeyit
             using (var conn = new MySqlConnection(connStr))
             {
                 conn.Open();
-                string query = "SELECT FirstName FROM users WHERE Username = @username AND PasswordHash = @password";
+                string query = "SELECT Id, FirstName FROM users WHERE Username = @username AND PasswordHash = @password";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@username", username);
@@ -37,7 +37,10 @@ namespace InspirationLabProjectStanSeyit
                     {
                         if (reader.Read())
                         {
+                            int userId = reader.GetInt32("Id");
                             string firstName = reader.GetString("FirstName");
+                            Session.CurrentUserId = userId; // <-- Set the current user ID here!
+                            Session.CurrentUsername = username; // Optionally set the username
                             MessageBox.Show($"Welcome back, {firstName}!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             var mainWindow = new MainWindow();
                             mainWindow.Show();

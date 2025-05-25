@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Profile" Height="800" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
             <!-- Comment -->
 
             <!-- HEADER -->
@@ -19,114 +19,10 @@
                        Margin="0,10"/>
 
             <!-- Navigation Carousel -->
-            <TextBlock Text="Navigate to Pages" 
-                       FontSize="20" 
-                       FontWeight="Bold" 
-                       Foreground="Gray" 
-                       Margin="0,20,0,10" 
-                       TextAlignment="Center"/>
-
-            <Grid HorizontalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" 
-                        Content="◀" 
-                        Width="40" 
-                        Height="40"
-                        FontSize="20"
-                        Background="#61be63"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Click="NavPrevImage_Click"/>
-
-                <StackPanel Grid.Column="1" 
-                           Orientation="Horizontal" 
-                           HorizontalAlignment="Center" 
-                           Margin="10,0">
-                    <!-- Nav Item 1 -->
-                    <Button Click="NavImage1_Click" 
-                            BorderThickness="0" 
-                            Background="Transparent" 
-                            Width="150" 
-                            Height="100" 
-                            Margin="5">
-                        <Grid>
-                            <Image Name="NavImage1" 
-                                   Stretch="UniformToFill"/>
-                            <TextBlock Name="NavLabel1"
-                                       Text="Features"
-                                       Foreground="White"
-                                       Background="#80000000"
-                                       FontWeight="Bold"
-                                       FontSize="12"
-                                       VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Center"
-                                       Padding="4"
-                                       TextAlignment="Center"/>
-                        </Grid>
-                    </Button>
-
-                    <!-- Nav Item 2 -->
-                    <Button Click="NavImage2_Click" 
-                            BorderThickness="0" 
-                            Background="Transparent" 
-                            Width="150" 
-                            Height="100" 
-                            Margin="5">
-                        <Grid>
-                            <Image Name="NavImage2" 
-                                   Stretch="UniformToFill"/>
-                            <TextBlock Name="NavLabel2"
-                                       Text="Profile"
-                                       Foreground="White"
-                                       Background="#80000000"
-                                       FontWeight="Bold"
-                                       FontSize="12"
-                                       VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Center"
-                                       Padding="4"
-                                       TextAlignment="Center"/>
-                        </Grid>
-                    </Button>
-
-                    <!-- Nav Item 3 -->
-                    <Button Click="NavImage3_Click" 
-                            BorderThickness="0" 
-                            Background="Transparent" 
-                            Width="150" 
-                            Height="100" 
-                            Margin="5">
-                        <Grid>
-                            <Image Name="NavImage3" 
-                                   Stretch="UniformToFill"/>
-                            <TextBlock Name="NavLabel3"
-                                       Text="Planner"
-                                       Foreground="White"
-                                       Background="#80000000"
-                                       FontWeight="Bold"
-                                       FontSize="12"
-                                       VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Center"
-                                       Padding="4"
-                                       TextAlignment="Center"/>
-                        </Grid>
-                    </Button>
-                </StackPanel>
-
-                <Button Grid.Column="2" 
-                        Content="▶" 
-                        Width="40" 
-                        Height="40"
-                        FontSize="20"
-                        Background="#61be63"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Click="NavNextImage_Click"/>
-            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,10">
+                <Button Content="Back to Settings" Width="150" Margin="10" Click="BackToSettings_Click" />
+                <Button Content="Map" Width="100" Margin="10" Click="OpenMap_Click" />
+            </StackPanel>
 
             <!-- PROFILE INFORMATION -->
             <TextBlock Text="Personal Information" 
@@ -136,7 +32,7 @@
                        Margin="0,20,0,10"
                        HorizontalAlignment="Center"/>
 
-            <Border Background="#bbeaba" CornerRadius="10" Padding="20" Margin="0,0,0,20">
+            <Border Background="{DynamicResource AccentBrush}" CornerRadius="10" Padding="20" Margin="0,0,0,20">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -147,7 +43,7 @@
                     <Border Grid.Column="0" 
                             Width="150" 
                             Height="150" 
-                            Background="White" 
+                            Background="{DynamicResource ControlBackgroundBrush}" 
                             CornerRadius="75" 
                             Margin="0,0,20,0">
                         <Image Name="ProfilePicture" 
@@ -233,7 +129,7 @@
                        Margin="0,20,0,10"
                        HorizontalAlignment="Center"/>
 
-            <Border Background="#bbeaba" CornerRadius="10" Padding="20" Margin="0,0,0,20">
+            <Border Background="{DynamicResource AccentBrush}" CornerRadius="10" Padding="20" Margin="0,0,0,20">
     <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
