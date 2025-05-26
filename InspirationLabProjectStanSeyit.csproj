@@ -127,6 +127,9 @@
     <Compile Include="Character.xaml.cs">
       <DependentUpon>Character.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Chat.xaml.cs">
+      <DependentUpon>Chat.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,7 @@
     </Compile>
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\GameScore.cs" />
+    <Compile Include="Models\Note.cs" />
     <Compile Include="Models\StudyGroup.cs" />
     <Compile Include="Models\StudyMaterial.cs" />
     <Compile Include="Models\User.cs" />
@@ -181,6 +185,10 @@
       <DependentUpon>StudyMaterial.xaml</DependentUpon>
     </Compile>
     <Page Include="Character.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Chat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

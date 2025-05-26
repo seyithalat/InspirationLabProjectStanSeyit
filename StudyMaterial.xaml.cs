@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using InspirationLabProjectStanSeyit.Models;
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -12,6 +13,18 @@ namespace InspirationLabProjectStanSeyit
         public StudyMaterial()
         {
             InitializeComponent();
+            MyNotesList.DisplayMemberPath = "Title";
+            LoadMyNotes();
+        }
+
+        private void LoadMyNotes()
+        {
+            MyNotesList.Items.Clear();
+            var notes = Data.GetNotesForUser(Session.CurrentUserId);
+            foreach (var note in notes)
+            {
+                MyNotesList.Items.Add(note);
+            }
         }
 
         private void PrevImage_Click(object sender, RoutedEventArgs e)
@@ -28,21 +41,41 @@ namespace InspirationLabProjectStanSeyit
 
         private void UploadMyNote_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog { Multiselect = true };
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "Text files (*.txt)|*.txt|PDF files (*.pdf)|*.pdf|PowerPoint files (*.ppt;*.pptx)|*.ppt;*.pptx"
+            };
             if (dlg.ShowDialog() == true)
             {
                 foreach (string file in dlg.FileNames)
                 {
-                    MyNotesList.Items.Add(file);
+                    string ext = System.IO.Path.GetExtension(file).ToLower();
+                    if (ext == ".txt" || ext == ".pdf" || ext == ".ppt" || ext == ".pptx")
+                    {
+                        var note = new Note
+                        {
+                            UserId = Session.CurrentUserId,
+                            Title = Path.GetFileNameWithoutExtension(file),
+                            Content = File.ReadAllBytes(file), // Save file content as byte[]
+                            FilePath = file
+                        };
+                        Data.AddNote(note);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Only .txt, .pdf, .ppt, and .pptx files are allowed.");
+                    }
                 }
+                LoadMyNotes();
             }
         }
 
         private void OpenMyNote_Click(object sender, RoutedEventArgs e)
         {
-            if (MyNotesList.SelectedItem is string path && File.Exists(path))
+            if (MyNotesList.SelectedItem is Note note && File.Exists(note.FilePath))
             {
-                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(note.FilePath) { UseShellExecute = true });
             }
             else
             {
@@ -52,11 +85,12 @@ namespace InspirationLabProjectStanSeyit
 
         private void DeleteMyNote_Click(object sender, RoutedEventArgs e)
         {
-            if (MyNotesList.SelectedItem != null)
+            if (MyNotesList.SelectedItem is Note note)
             {
-                if (MessageBox.Show("Delete this note from the list?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Delete this note from the database?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    MyNotesList.Items.Remove(MyNotesList.SelectedItem);
+                    Data.DeleteNote(note.Id);
+                    LoadMyNotes();
                 }
             }
             else
@@ -108,19 +142,65 @@ namespace InspirationLabProjectStanSeyit
 
         private void ShareNote_Click(object sender, RoutedEventArgs e)
         {
-            if (SharedNotesList.SelectedItem is string filePath && File.Exists(filePath))
+            if (MyNotesList.SelectedItem is Note noteToShare)
             {
-                string sharedFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SharedNotes");
-                if (!Directory.Exists(sharedFolder)) Directory.CreateDirectory(sharedFolder);
+                // Get friends list
+                var friends = Data.GetFriends(Session.CurrentUserId);
+                if (friends.Count == 0)
+                {
+                    MessageBox.Show("You have no friends to share with.");
+                    return;
+                }
 
-                string dest = Path.Combine(sharedFolder, Path.GetFileName(filePath));
-                File.Copy(filePath, dest, true);
-
-                MessageBox.Show($"Note shared to:\n{dest}");
+                // Prompt user to select a friend
+                var selectFriendWindow = new Window
+                {
+                    Title = "Select Friend to Share With",
+                    Width = 300,
+                    Height = 150,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    ResizeMode = ResizeMode.NoResize,
+                    Owner = this
+                };
+                var stack = new StackPanel { Margin = new Thickness(10) };
+                var combo = new ComboBox { ItemsSource = friends, SelectedIndex = 0, Margin = new Thickness(0,0,0,10) };
+                var okBtn = new Button { Content = "Share", Width = 80, IsDefault = true, HorizontalAlignment = HorizontalAlignment.Right };
+                stack.Children.Add(new TextBlock { Text = "Select a friend:", Margin = new Thickness(0,0,0,5) });
+                stack.Children.Add(combo);
+                stack.Children.Add(okBtn);
+                selectFriendWindow.Content = stack;
+                string selectedFriend = null;
+                okBtn.Click += (s, args) => {
+                    selectedFriend = combo.SelectedItem as string;
+                    selectFriendWindow.DialogResult = true;
+                    selectFriendWindow.Close();
+                };
+                if (selectFriendWindow.ShowDialog() == true && !string.IsNullOrEmpty(selectedFriend))
+                {
+                    // Get friend's userId
+                    int friendId = Data.GetUserIdByUsername(selectedFriend);
+                    if (friendId == -1)
+                    {
+                        MessageBox.Show("Could not find the selected friend.");
+                        return;
+                    }
+                    // Copy note to friend's account
+                    var sharedNote = new Note
+                    {
+                        UserId = friendId,
+                        Title = noteToShare.Title,
+                        Content = noteToShare.Content,
+                        FilePath = noteToShare.FilePath
+                    };
+                    Data.AddNote(sharedNote);
+                    MessageBox.Show($"Note shared with {selectedFriend}!");
+                    // Add to SharedNotesList for feedback (show title)
+                    SharedNotesList.Items.Add(noteToShare.Title);
+                }
             }
             else
             {
-                MessageBox.Show("Select a valid shared note to share.");
+                MessageBox.Show("Please select a note from 'My Notes' to share.");
             }
         }
     }
