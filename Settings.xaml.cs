@@ -64,8 +64,17 @@ namespace InspirationLabProjectStanSeyit
             // Apply dark theme
             var darkTheme = new ResourceDictionary();
             darkTheme.Source = new Uri("Darktheme.xaml", UriKind.Relative);
+            
+            // Clear existing dictionaries and add the new theme
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(darkTheme);
+
+            // Apply theme to all open windows
+            foreach (Window window in Application.Current.Windows)
+            {
+                window.Resources.MergedDictionaries.Clear();
+                window.Resources.MergedDictionaries.Add(darkTheme);
+            }
         }
 
         private void DarkModeToggle_Unchecked(object sender, RoutedEventArgs e)
@@ -73,8 +82,17 @@ namespace InspirationLabProjectStanSeyit
             // Apply light theme
             var lightTheme = new ResourceDictionary();
             lightTheme.Source = new Uri("lighttheme.xaml", UriKind.Relative);
+            
+            // Clear existing dictionaries and add the new theme
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(lightTheme);
+
+            // Apply theme to all open windows
+            foreach (Window window in Application.Current.Windows)
+            {
+                window.Resources.MergedDictionaries.Clear();
+                window.Resources.MergedDictionaries.Add(lightTheme);
+            }
         }
 
         private void DeleteAccount_Click(object sender, RoutedEventArgs e)

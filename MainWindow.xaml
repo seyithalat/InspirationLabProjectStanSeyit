@@ -21,6 +21,8 @@
                         Background="#61be63" Foreground="White" FontSize="16" FontWeight="Bold"/>
                 <Button Content="Register" Width="120" Height="40" Margin="10,0" Click="RegisterButton_Click"
                         Background="#61be63" Foreground="White" FontSize="16" FontWeight="Bold"/>
+                <Button Content="Friends" Width="120" Height="40" Margin="10,0" Click="OpenFriends_Click"
+                        Background="#61be63" Foreground="White" FontSize="16" FontWeight="Bold"/>
             </StackPanel>
         </StackPanel>
 

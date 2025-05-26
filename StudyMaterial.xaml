@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="StudyMaterial" Height="800" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
             <!-- FEATURES HEADER -->
             <TextBlock Text="StudyMaterial" FontSize="24" FontWeight="Bold" Foreground="#61be63"
                        HorizontalAlignment="Center" Margin="0,10"/>
 
-            <TextBlock Text="Explore App Pages" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
-
+            <!-- MULTI-IMAGE CAROUSEL -->
+            <TextBlock Text="Explore Features" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
             <Grid HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -25,55 +25,31 @@
                 <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
-
-                    <Button Click="Image1_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
-                        <Grid>
+                    <!-- Image 1 -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Button Name="ImageButton1" BorderThickness="0" Background="Transparent">
                             <Image Name="Image1" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label1"
-               Text="Features"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
-                        </Grid>
-                    </Button>
+                        </Button>
+                        <TextBlock Name="Label1" Text="Feature 1" Foreground="White" Background="#80000000"
+                                   FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
+                    </Grid>
 
-                    <Button Click="Image2_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
-                        <Grid>
-                            <Image Name="Image2" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label2"
-               Text="Profile"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
-                        </Grid>
-                    </Button>
+                    <!-- Image 2 -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Image Name="Image2" Stretch="UniformToFill"/>
+                        <TextBlock Name="Label2" Text="Feature 2" Foreground="White" Background="#80000000"
+                                   FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
+                    </Grid>
 
-                    <Button Click="Image3_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
-                        <Grid>
-                            <Image Name="Image3" Stretch="UniformToFill"/>
-                            <TextBlock Name="Label3"
-               Text="Planner"
-               Foreground="White"
-               Background="#80000000"
-               FontWeight="Bold"
-               FontSize="12"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Center"
-               Padding="4"
-               TextAlignment="Center"/>
-                        </Grid>
-                    </Button>
-
+                    <!-- Image 3 -->
+                    <Grid Width="150" Height="100" Margin="5">
+                        <Image Name="Image3" Stretch="UniformToFill"/>
+                        <TextBlock Name="Label3" Text="Feature 3" Foreground="White" Background="#80000000"
+                                   FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
+                    </Grid>
                 </StackPanel>
 
                 <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
@@ -82,7 +58,7 @@
             <!-- Notes Section -->
             <TextBlock Text="Notes" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
                        HorizontalAlignment="Center"/>
-            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+            <Border Background="{DynamicResource AccentBrush}" CornerRadius="10" Padding="15" Margin="0,0,0,20">
                 <StackPanel>
                     <TextBlock Text="Here you can take notes get organised and start learning your summaries!!!"
                                HorizontalAlignment="Center"/>

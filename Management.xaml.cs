@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Data.SqlClient;
 
 namespace InspirationLabProjectStanSeyit
 {

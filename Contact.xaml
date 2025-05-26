@@ -7,7 +7,7 @@
         mc:Ignorable="d">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White" Margin="20">
+        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
             <!-- 🔹 HEADER -->
             <TextBlock Text="Contact" FontSize="28" FontWeight="Bold" Foreground="#61be63"
@@ -82,7 +82,7 @@
 
             <TextBlock Text="Forum" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10" HorizontalAlignment="Center"/>
             
-            <Border Background="#bbeaba" CornerRadius="10" Padding="15" Margin="0,0,0,20">
+            <Border Background="{DynamicResource AccentBrush}" CornerRadius="10" Padding="15" Margin="0,0,0,20">
                 <StackPanel Margin="10">
                     <TextBlock Text="Get in Touch" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center"/>
 

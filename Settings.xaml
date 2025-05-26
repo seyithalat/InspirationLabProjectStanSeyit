@@ -79,7 +79,7 @@
                 <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
             </Grid>
 
-            <Border Background="#bbeaba" CornerRadius="15" Padding="20" Margin="0,30,0,0">
+            <Border Background="{DynamicResource AccentBrush}" CornerRadius="15" Padding="20" Margin="0,30,0,0">
                 <StackPanel>
                     <TextBlock Text="About Us" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}" TextAlignment="Center"/>
                     <TextBlock Text="Buddy To Study is your digital study companion. Our goal is to make studying social, organized, and efficient. Find peers, join sessions, and stay on top of your goals with ease."
@@ -91,7 +91,7 @@
             
             <TextBlock Text="Settings manager" FontSize="22" Foreground="{DynamicResource ForegroundBrush}" FontWeight="Bold" Margin="0,20,0,10"
                        HorizontalAlignment="Center"/>
-            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
+            <Border Background="{DynamicResource AccentBrush}" CornerRadius="10" Padding="15">
                 <StackPanel>
                     <TextBlock Text="Here you can customize your BuddyToStudy!" HorizontalAlignment="Center" ></TextBlock>
                 </StackPanel>
@@ -105,7 +105,7 @@
                Foreground="{DynamicResource ForegroundBrush}" 
                Margin="0,0,0,10" HorizontalAlignment="Center" />
 
-                <Border Background="#f0f0f0" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                <Border Background="{DynamicResource ControlBackgroundBrush}" CornerRadius="10" Padding="15" Margin="0,0,0,10">
                     <StackPanel>
                         <!-- Dark Mode Toggle -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Center">
