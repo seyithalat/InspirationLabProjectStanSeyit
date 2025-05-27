@@ -1,11 +1,10 @@
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using InspirationLabProjectStanSeyit.Models;
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -14,30 +13,69 @@ namespace InspirationLabProjectStanSeyit
         public StudyMaterial()
         {
             InitializeComponent();
-            UpdateImageSet();
+            MyNotesList.DisplayMemberPath = "Title";
+            LoadMyNotes();
         }
 
-        
+        private void LoadMyNotes()
+        {
+            MyNotesList.Items.Clear();
+            var notes = Data.GetNotesForUser(Session.CurrentUserId);
+            foreach (var note in notes)
+            {
+                MyNotesList.Items.Add(note);
+            }
+        }
+
+        private void PrevImage_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Previous image clicked.");
+        }
+
+        private void NextImage_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Next image clicked.");
+        }
 
         // ==== MY NOTES ====
 
         private void UploadMyNote_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog { Multiselect = true };
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "Text files (*.txt)|*.txt|PDF files (*.pdf)|*.pdf|PowerPoint files (*.ppt;*.pptx)|*.ppt;*.pptx"
+            };
             if (dlg.ShowDialog() == true)
             {
                 foreach (string file in dlg.FileNames)
                 {
-                    MyNotesList.Items.Add(file);
+                    string ext = System.IO.Path.GetExtension(file).ToLower();
+                    if (ext == ".txt" || ext == ".pdf" || ext == ".ppt" || ext == ".pptx")
+                    {
+                        var note = new Note
+                        {
+                            UserId = Session.CurrentUserId,
+                            Title = Path.GetFileNameWithoutExtension(file),
+                            Content = File.ReadAllBytes(file), // Save file content as byte[]
+                            FilePath = file
+                        };
+                        Data.AddNote(note);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Only .txt, .pdf, .ppt, and .pptx files are allowed.");
+                    }
                 }
+                LoadMyNotes();
             }
         }
 
         private void OpenMyNote_Click(object sender, RoutedEventArgs e)
         {
-            if (MyNotesList.SelectedItem is string path && File.Exists(path))
+            if (MyNotesList.SelectedItem is Note note && File.Exists(note.FilePath))
             {
-                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(note.FilePath) { UseShellExecute = true });
             }
             else
             {
@@ -47,11 +85,12 @@ namespace InspirationLabProjectStanSeyit
 
         private void DeleteMyNote_Click(object sender, RoutedEventArgs e)
         {
-            if (MyNotesList.SelectedItem != null)
+            if (MyNotesList.SelectedItem is Note note)
             {
-                if (MessageBox.Show("Delete this note from the list?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Delete this note from the database?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    MyNotesList.Items.Remove(MyNotesList.SelectedItem);
+                    Data.DeleteNote(note.Id);
+                    LoadMyNotes();
                 }
             }
             else
@@ -103,142 +142,66 @@ namespace InspirationLabProjectStanSeyit
 
         private void ShareNote_Click(object sender, RoutedEventArgs e)
         {
-            if (SharedNotesList.SelectedItem is string filePath && File.Exists(filePath))
+            if (MyNotesList.SelectedItem is Note noteToShare)
             {
-                string sharedFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SharedNotes");
-                if (!Directory.Exists(sharedFolder)) Directory.CreateDirectory(sharedFolder);
+                // Get friends list
+                var friends = Data.GetFriends(Session.CurrentUserId);
+                if (friends.Count == 0)
+                {
+                    MessageBox.Show("You have no friends to share with.");
+                    return;
+                }
 
-                string dest = Path.Combine(sharedFolder, Path.GetFileName(filePath));
-                File.Copy(filePath, dest, true);
-
-                MessageBox.Show($"Note shared to:\n{dest}");
+                // Prompt user to select a friend
+                var selectFriendWindow = new Window
+                {
+                    Title = "Select Friend to Share With",
+                    Width = 300,
+                    Height = 150,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    ResizeMode = ResizeMode.NoResize,
+                    Owner = this
+                };
+                var stack = new StackPanel { Margin = new Thickness(10) };
+                var combo = new ComboBox { ItemsSource = friends, SelectedIndex = 0, Margin = new Thickness(0,0,0,10) };
+                var okBtn = new Button { Content = "Share", Width = 80, IsDefault = true, HorizontalAlignment = HorizontalAlignment.Right };
+                stack.Children.Add(new TextBlock { Text = "Select a friend:", Margin = new Thickness(0,0,0,5) });
+                stack.Children.Add(combo);
+                stack.Children.Add(okBtn);
+                selectFriendWindow.Content = stack;
+                string selectedFriend = null;
+                okBtn.Click += (s, args) => {
+                    selectedFriend = combo.SelectedItem as string;
+                    selectFriendWindow.DialogResult = true;
+                    selectFriendWindow.Close();
+                };
+                if (selectFriendWindow.ShowDialog() == true && !string.IsNullOrEmpty(selectedFriend))
+                {
+                    // Get friend's userId
+                    int friendId = Data.GetUserIdByUsername(selectedFriend);
+                    if (friendId == -1)
+                    {
+                        MessageBox.Show("Could not find the selected friend.");
+                        return;
+                    }
+                    // Copy note to friend's account
+                    var sharedNote = new Note
+                    {
+                        UserId = friendId,
+                        Title = noteToShare.Title,
+                        Content = noteToShare.Content,
+                        FilePath = noteToShare.FilePath
+                    };
+                    Data.AddNote(sharedNote);
+                    MessageBox.Show($"Note shared with {selectedFriend}!");
+                    // Add to SharedNotesList for feedback (show title)
+                    SharedNotesList.Items.Add(noteToShare.Title);
+                }
             }
             else
             {
-                MessageBox.Show("Select a valid shared note to share.");
+                MessageBox.Show("Please select a note from 'My Notes' to share.");
             }
-        }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateImageSet();
-        }
-
-        private readonly List<string> imagePaths = new List<string>
-        {
-            "Images/homepagecarouselimage.jpg",
-            "Images/featurescarouselimage.jpg",
-            "Images/profilecarouselimage.jpg",
-            "Images/plannercarouselimage.jpg",
-            "Images/groupscarouselimage.jpg",
-            "Images/gamescarouselimage.jpg",
-            "Images/notescarouselimage.jpg",
-            "Images/managementcarouselimage.jpg",
-            "Images/contactcarouselimage.jpg"
-        };
-
-        private List<string> imageTitles = new List<string>
-        {
-            "Features",
-            "Profile",
-            "Planner",
-            "Groups",
-            "Focus Games",
-            "Notes",
-            "Management",
-            "Contact",
-            "Settings"
-        };
-
-        private int startIndex = 0;
-
-        public void UpdateImageSet()
-        {
-            if (imagePaths.Count < 3) return;
-
-            int i1 = startIndex % imagePaths.Count;
-            int i2 = (startIndex + 1) % imagePaths.Count;
-            int i3 = (startIndex + 2) % imagePaths.Count;
-
-            Image1.Source = new BitmapImage(new Uri(imagePaths[i1], UriKind.Relative));
-            Image2.Source = new BitmapImage(new Uri(imagePaths[i2], UriKind.Relative));
-            Image3.Source = new BitmapImage(new Uri(imagePaths[i3], UriKind.Relative));
-
-            Label1.Text = imageTitles[i1];
-            Label2.Text = imageTitles[i2];
-            Label3.Text = imageTitles[i3];
-        }
-
-        private void PrevImage_Click(object sender, RoutedEventArgs e)
-        {
-            startIndex = (startIndex - 1 + imagePaths.Count) % imagePaths.Count;
-            UpdateImageSet();
-        }
-
-        private void NextImage_Click(object sender, RoutedEventArgs e)
-        {
-            startIndex = (startIndex + 1) % imagePaths.Count;
-            UpdateImageSet();
-        }
-
-        private void Image1_Click(object sender, RoutedEventArgs e)
-        {
-            NavigateToPage(startIndex % imagePaths.Count);
-        }
-
-        private void Image2_Click(object sender, RoutedEventArgs e)
-        {
-            NavigateToPage((startIndex + 1) % imagePaths.Count);
-        }
-
-        private void Image3_Click(object sender, RoutedEventArgs e)
-        {
-            NavigateToPage((startIndex + 2) % imagePaths.Count);
-        }
-
-        private void NavigateToPage(int index)
-        {
-            Window newWindow = null;
-
-            switch (index)
-            {
-                case 0: // Features
-                    newWindow = new Features();
-                    break;
-                case 1: // Profile
-                    newWindow = new Profile();
-                    break;
-                case 2: // Planner
-                    newWindow = new Planner();
-                    break;
-                case 3: // Groups
-                    newWindow = new StudyGroups();
-                    break;
-                case 4: // Focus Games
-                    newWindow = new GamePage();
-                    break;
-                case 5: // Notes
-                    newWindow = new StudyMaterial();
-                    break;
-                case 6: // Management
-                    newWindow = new Management();
-                    break;
-                case 7: // Contact
-                    newWindow = new Contact();
-                    break;
-                case 8: // Settings
-                    newWindow = new Settings();
-                    break;
-                default:
-                    newWindow = new Features();
-                    break;
-            }
-
-            if (newWindow != null)
-            {
-                newWindow.Show();
-                this.Close();
-            }
-
         }
     }
 }
