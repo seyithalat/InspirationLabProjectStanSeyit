@@ -149,6 +149,9 @@
     <Compile Include="Games\WordScrambleGame.xaml.cs">
       <DependentUpon>WordScrambleGame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LocationSubmissionsAdmin.xaml.cs">
+      <DependentUpon>LocationSubmissionsAdmin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Management.xaml.cs">
       <DependentUpon>Management.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,7 @@
     </Compile>
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\GameScore.cs" />
+    <Compile Include="Models\LocationSubmissions.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\StudyGroup.cs" />
     <Compile Include="Models\StudyMaterial.cs" />
@@ -221,6 +225,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="lighttheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LocationSubmissionsAdmin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

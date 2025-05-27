@@ -65,6 +65,14 @@ namespace InspirationLabProjectStanSeyit
             InitializeComponent();
             _httpClient = new HttpClient();
             Loaded += Management_Loaded;
+            
+            // Only show the admin button if the user is an admin
+            if (ReviewSubmissionsButton != null)
+            {
+                ReviewSubmissionsButton.Visibility = Data.IsUserAdmin(Session.CurrentUserId) 
+                    ? Visibility.Visible 
+                    : Visibility.Collapsed;
+            }
         }
 
         private string GetStaticMapUrl()
@@ -75,14 +83,16 @@ namespace InspirationLabProjectStanSeyit
             string size = "600x400";
             string apiKey = "AIzaSyDWRmX1HI6B5-3vxI2f4jVLdmUUPomh3Wc";
 
-            // Add your study locations as markers (address or lat,lng)
-            var markers = new List<string>
+            // Get approved locations from database using Data class
+            var markers = Data.GetApprovedLocations();
+
+            // Add default locations if no approved locations exist
+            if (markers.Count == 0)
             {
-                "Mechelen,Belgium", // City center
-                "Hogeschool Thomas More Mechelen",
-                "Kruidtuin Mechelen"
-                // Add more locations as needed
-            };
+                markers.Add("Mechelen,Belgium"); // City center
+                markers.Add("Hogeschool Thomas More Mechelen");
+                markers.Add("Kruidtuin Mechelen");
+            }
 
             string markerString = string.Join("|", markers.ConvertAll(Uri.EscapeDataString));
             string url = $"https://maps.googleapis.com/maps/api/staticmap?center={Uri.EscapeDataString(center)}&zoom={zoom}&size={size}&markers={markerString}&key={apiKey}";
@@ -206,6 +216,12 @@ namespace InspirationLabProjectStanSeyit
         private void NavImage3_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(NavLabel3.Text);
+        }
+
+        private void ReviewSubmissions_Click(object sender, RoutedEventArgs e)
+        {
+            var adminWindow = new LocationSubmissionsAdmin();
+            adminWindow.Show();
         }
 
         private void NavigateToPage(string pageName)

@@ -115,6 +115,22 @@ BEGIN
 END
 GO
 
+-- Create LocationSubmissions table if it doesn't exist
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'LocationSubmissions')
+BEGIN
+    CREATE TABLE LocationSubmissions (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        Name NVARCHAR(100) NOT NULL,
+        Description NVARCHAR(MAX),
+        Address NVARCHAR(255) NOT NULL,
+        Latitude DECIMAL(9,6) NOT NULL,
+        Longitude DECIMAL(9,6) NOT NULL,
+        Status NVARCHAR(20) NOT NULL DEFAULT 'Pending',
+        SubmittedAt DATETIME NOT NULL DEFAULT GETDATE()
+    );
+END
+GO
+
 -- Create indexes if they don't exist
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Users_Username' AND object_id = OBJECT_ID('Users'))
 BEGIN

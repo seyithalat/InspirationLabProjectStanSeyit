@@ -5,9 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
-        Title="Map" Height="600" Width="800">
-    <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
-        <TextBlock Text="Static Map" FontSize="24" FontWeight="Bold" Foreground="#61be63" HorizontalAlignment="Center" Margin="0,10"/>
-        <Image x:Name="StudyMapImage" Width="600" Height="400" Margin="0,20" Stretch="Uniform"/>
-    </StackPanel>
+        Title="Study Locations Map" Height="600" Width="900">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Study Locations Map" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   Margin="0,0,0,20"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"/>
+
+        <!-- Go Back Button -->
+        <Button Content="← Back to Features" 
+                Click="GoBackToFeatures_Click"
+                Width="150"
+                Height="32"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"/>
+
+        <!-- Left: Map and Refresh Button -->
+        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Button Content="Refresh Map" 
+                    Click="RefreshButton_Click"
+                    Width="150"
+                    Margin="0,0,0,15"
+                    Padding="10,5"
+                    HorizontalAlignment="Center"/>
+            <Border BorderBrush="#bbb" BorderThickness="1" CornerRadius="8" Padding="8" Background="#f8f8f8">
+                <Image x:Name="StudyMapImage" 
+                       Width="500" Height="330"
+                       Stretch="Uniform"/>
+            </Border>
+        </StackPanel>
+
+        <!-- Right: Location Submission Form -->
+        <Border Grid.Row="1" Grid.Column="1" Background="{DynamicResource ControlBackgroundBrush}" CornerRadius="10" Padding="24" Margin="0,0,0,0">
+            <StackPanel>
+                <TextBlock Text="Submit New Location" 
+                           FontSize="18" 
+                           FontWeight="Bold" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Location Name:"/>
+                <TextBox x:Name="LocationNameBox" Margin="0,5,0,10"/>
+                <TextBlock Text="Description:"/>
+                <TextBox x:Name="DescriptionBox" Margin="0,5,0,10" TextWrapping="Wrap" AcceptsReturn="True" Height="60"/>
+                <TextBlock Text="Address:"/>
+                <TextBox x:Name="AddressBox" Margin="0,5,0,10"/>
+                <Button Content="Submit Location" 
+                        Click="SubmitLocation_Click"
+                        Background="#61be63"
+                        Foreground="White"
+                        Padding="10,5"
+                        Margin="0,10,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Admin-only: Approved Locations List with Delete Button -->
+        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,20,0,0" x:Name="AdminPanel" Visibility="Collapsed">
+            <TextBlock Text="Approved Locations (Admin Only)" FontWeight="Bold" Margin="0,0,0,5"/>
+            <ListBox x:Name="ApprovedLocationsList" Width="500">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <TextBlock Text="{Binding Name}" Width="150" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Address}" Width="250" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            <Button Content="Delete" Click="DeleteApprovedLocation_Click" Tag="{Binding Id}" Background="Red" Foreground="White" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
 </Window>

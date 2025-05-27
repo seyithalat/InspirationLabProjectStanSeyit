@@ -171,5 +171,12 @@ namespace InspirationLabProjectStanSeyit
                 MessageBox.Show("Please select a friend to delete.");
             }
         }
+
+        private void GoBackToFeatures_Click(object sender, RoutedEventArgs e)
+        {
+            var featuresWindow = new Features();
+            featuresWindow.Show();
+            this.Close();
+        }
     }
 }

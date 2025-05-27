@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
 
@@ -15,6 +10,14 @@ namespace InspirationLabProjectStanSeyit
         {
             SetBrowserFeatureControl();
             // Database initialization removed; handled elsewhere if needed
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            // Start with the main window instead of login
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
         }
 
         private void SetBrowserFeatureControl()

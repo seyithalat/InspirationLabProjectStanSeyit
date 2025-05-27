@@ -10,13 +10,12 @@
         <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
             <!-- 🔹 HEADER -->
-            <TextBlock Text="FEATURES" FontSize="28" FontWeight="Bold" Foreground="#61be63"
+            <TextBlock Text="FEATURESPAGE" FontSize="28" FontWeight="Bold" Foreground="#61be63"
                        HorizontalAlignment="Center" Margin="0,10"/>
 
             <!-- 🔁 SLIDING IMAGE CAROUSEL -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
                 <Button Content="Back to Settings" Width="150" Margin="10" Click="BackToSettings_Click" />
-                <Button Content="Map" Width="100" Margin="10" Click="OpenMap_Click" />
             </StackPanel>
 
             <!-- 👤 PROFILE -->
@@ -32,7 +31,7 @@
             </Border>
 
             <!-- 📍 NEARBY STUDY LOCATIONS -->
-            <TextBlock Text="Nearby Study Locations" FontSize="22" FontWeight="Bold" Foreground="Gray" Margin="0,20,0,10" TextAlignment="Center"/>
+            <TextBlock Text="FEATURES" FontSize="22" FontWeight="Bold" Foreground="#61be63" Margin="0,20,0,10" TextAlignment="Center"/>
             <WrapPanel HorizontalAlignment="Center" Margin="0,0,0,10">
 
                 <!-- Study Groups -->
