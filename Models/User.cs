@@ -13,7 +13,8 @@ namespace InspirationLabProjectStanSeyit.Models
         public string LastName { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? LastLogin { get; set; }
-        
+        public bool Banned { get; set; }
+
         // Navigation properties
         public virtual ICollection<StudyGroup> StudyGroups { get; set; }
         public virtual ICollection<GameScore> GameScores { get; set; }

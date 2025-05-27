@@ -631,5 +631,112 @@ namespace InspirationLabProjectStanSeyit
             }
             return list;
         }
+
+        public static void AddContactMessage(string name, string email, string subject, string message, int? userId = null)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"INSERT INTO contactmessages (Name, Email, Subject, Message, UserId)
+                                 VALUES (@Name, @Email, @Subject, @Message, @UserId)";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.Parameters.AddWithValue("@Subject", subject ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Message", message);
+                    cmd.Parameters.AddWithValue("@UserId", userId.HasValue ? (object)userId.Value : DBNull.Value);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<ContactMessage> GetAllContactMessages()
+        {
+            var list = new List<ContactMessage>();
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM contactmessages ORDER BY SubmittedAt DESC";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new ContactMessage
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Name = reader.GetString("Name"),
+                            Email = reader.GetString("Email"),
+                            Subject = reader.IsDBNull(reader.GetOrdinal("Subject")) ? null : reader.GetString("Subject"),
+                            Message = reader.GetString("Message"),
+                            SubmittedAt = reader.GetDateTime("SubmittedAt"),
+                            UserId = reader.IsDBNull(reader.GetOrdinal("UserId")) ? (int?)null : reader.GetInt32("UserId"),
+                            Handled = reader.GetBoolean("Handled"),
+                            HandledByAdminId = reader.IsDBNull(reader.GetOrdinal("HandledByAdminId")) ? (int?)null : reader.GetInt32("HandledByAdminId"),
+                            HandledAt = reader.IsDBNull(reader.GetOrdinal("HandledAt")) ? (DateTime?)null : reader.GetDateTime("HandledAt")
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public static void MarkContactMessageHandled(int messageId, int adminId)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"UPDATE contactmessages SET Handled = 1, HandledByAdminId = @AdminId, HandledAt = NOW() WHERE Id = @Id";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", messageId);
+                    cmd.Parameters.AddWithValue("@AdminId", adminId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void BanUser(int userId)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE users SET Banned = 1 WHERE Id = @UserId";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+    
+        public static List<User> GetAllUsers()
+        {
+            var users = new List<User>();
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT Id, Username, Email, Banned FROM users";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        users.Add(new User
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Username = reader.GetString("Username"),
+                            Email = reader.GetString("Email"),
+                            Banned = reader.GetBoolean("Banned")
+                        });
+                    }
+                }
+            }
+            return users;
+        }
+        // ... existing code ...
+
     }
 }
