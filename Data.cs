@@ -40,6 +40,27 @@ namespace InspirationLabProjectStanSeyit
                 }
             }
         }
+        public static void AddLocationSubmission(string name, string description, string address, int submittedById)
+        {
+            string connectionString = "Server=localhost;Port=3307;Database=inspirationlabdb;Uid=root;Pwd=;";
+
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"INSERT INTO locationsubmissions (Name, Description, Address, Status, SubmittedAt, SubmittedById)
+                         VALUES (@Name, @Description, @Address, @Status, @SubmittedAt, @SubmittedById)";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@Description", description ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Address", address);
+                    cmd.Parameters.AddWithValue("@Status", "Pending");
+                    cmd.Parameters.AddWithValue("@SubmittedAt", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@SubmittedById", submittedById);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
         public static bool TestConnection()
         {
             try
@@ -484,6 +505,131 @@ namespace InspirationLabProjectStanSeyit
                 }
             }
             return -1; // Not found
+        }
+        public static List<LocationSubmission> GetPendingLocationSubmissions()
+        {
+            var list = new List<LocationSubmission>();
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM locationsubmissions WHERE Status = 'Pending'";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new LocationSubmission
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Name = reader.GetString("Name"),
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                            Address = reader.GetString("Address"),
+                            Status = reader.GetString("Status"),
+                            SubmittedAt = reader.GetDateTime("SubmittedAt"),
+                            // Add SubmittedById if you want to show it
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public static void UpdateLocationSubmissionStatus(int id, string status)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE locationsubmissions SET Status = @Status WHERE Id = @Id";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Status", status);
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<string> GetApprovedLocations()
+        {
+            var locations = new List<string>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT Address FROM locationsubmissions WHERE Status = 'Approved'";
+                using (var cmd = new MySqlCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string address = reader.GetString("Address");
+                        locations.Add(address);
+                    }
+                }
+            }
+            return locations;
+        }
+
+        public static bool IsUserAdmin(int userId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT Role FROM users WHERE Id = @userId";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string role = reader.GetString("Role");
+                            return role.Equals("Admin", StringComparison.OrdinalIgnoreCase);
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static void DeleteLocationSubmission(int id)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM locationsubmissions WHERE Id = @Id";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<LocationSubmission> GetApprovedLocationSubmissions()
+        {
+            var list = new List<LocationSubmission>();
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM locationsubmissions WHERE Status = 'Approved'";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new LocationSubmission
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Name = reader.GetString("Name"),
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                            Address = reader.GetString("Address"),
+                            Status = reader.GetString("Status"),
+                            SubmittedAt = reader.GetDateTime("SubmittedAt"),
+                        });
+                    }
+                }
+            }
+            return list;
         }
     }
 }

@@ -40,6 +40,14 @@
                 <Button Content="Chat with Selected Friend" Width="200" Click="OpenChat_Click" Margin="0,0,10,0"/>
                 <Button Content="Delete Selected Friend" Width="200" Click="DeleteFriend_Click"/>
             </StackPanel>
+
+            <Button Content="← Back to Features" 
+                    Click="GoBackToFeatures_Click"
+                    Width="150"
+                    Height="32"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
         </StackPanel>
     </ScrollViewer>
 </Window>

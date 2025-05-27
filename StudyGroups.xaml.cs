@@ -9,7 +9,6 @@ namespace InspirationLabProjectStanSeyit
         public StudyGroups()
         {
             InitializeComponent();
-
             // Optional: Load your images here if you want
             // Image1.Source = new BitmapImage(new Uri("path_to_your_image1.png"));
             // Image2.Source = new BitmapImage(new Uri("path_to_your_image2.png"));
@@ -50,6 +49,13 @@ namespace InspirationLabProjectStanSeyit
             {
                 MessageBox.Show("Please enter an email address.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void GoBackToFeatures_Click(object sender, RoutedEventArgs e)
+        {
+            var featuresWindow = new Features();
+            featuresWindow.Show();
+            this.Close();
         }
     }
 }

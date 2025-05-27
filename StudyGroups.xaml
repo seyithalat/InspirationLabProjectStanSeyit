@@ -107,6 +107,14 @@
                 <TextBlock Text="Pending Invitations will appear here..." FontStyle="Italic" Foreground="Gray" />
             </Border>
 
+            <Button Content="← Back to Features" 
+                    Click="GoBackToFeatures_Click"
+                    Width="150"
+                    Height="32"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
+
         </StackPanel>
     </ScrollViewer>
 </Window>
