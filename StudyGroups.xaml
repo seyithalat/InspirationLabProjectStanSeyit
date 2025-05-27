@@ -5,116 +5,93 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
-        Title="Features" Height="800" Width="800">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
-
-            <!-- StudyGroups HEADER -->
-            <TextBlock Text="Study Groups" FontSize="24" FontWeight="Bold" Foreground="#61be63"
-                       HorizontalAlignment="Center" Margin="0,10"/>
-
-            <!-- Multi-Image Carousel -->
-            <TextBlock Text="Explore Features" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
-            <Grid HorizontalAlignment="Center">
+        Title="Study Groups" Height="600" Width="900">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
-
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
-                    <!-- Image 1 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Button Name="ImageButton1" BorderThickness="0" Background="Transparent">
-                            <Image Name="Image1" Stretch="UniformToFill"/>
-                        </Button>
-                        <TextBlock Name="Label1"
-                                   Text="Feature 1"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="12"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="4"
-                                   TextAlignment="Center"/>
-                    </Grid>
-
-                    <!-- Image 2 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Image Name="Image2" Stretch="UniformToFill"/>
-                        <TextBlock Name="Label2"
-                                   Text="Feature 2"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="12"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="4"
-                                   TextAlignment="Center"/>
-                    </Grid>
-
-                    <!-- Image 3 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Image Name="Image3" Stretch="UniformToFill"/>
-                        <TextBlock Name="Label3"
-                                   Text="Feature 3"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="12"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="4"
-                                   TextAlignment="Center"/>
-                    </Grid>
-                </StackPanel>
-
-                <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
-            </Grid>
-
-            <!-- StudyGroups Overview Section -->
-            <TextBlock Text="Study Group Overview" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
-                       HorizontalAlignment="Center"/>
-            <Border Background="{DynamicResource AccentBrush}" CornerRadius="10" Padding="15" Margin="0,0,0,20">
-                <TextBlock Text="Here you can find different study groups based on your interests, subjects, and goals. Join a group, collaborate, and grow together!" 
-                           FontSize="16" Foreground="Black" TextWrapping="Wrap"/>
-            </Border>
-
-            <!-- Invites Section -->
-            <TextBlock Text="Invite Friends" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
-                       HorizontalAlignment="Center"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-
-                <!-- TextBox with Manual Placeholder -->
-                <Grid>
-                    <TextBox Name="InviteEmailTextBox" Width="200" Height="30" Margin="0,0,10,0"
-                             TextChanged="InviteEmailTextBox_TextChanged"/>
-                    <TextBlock Name="PlaceholderText" Text="Enter email..." Foreground="Gray" Margin="5,0,0,0"
-                               VerticalAlignment="Center" IsHitTestVisible="False"
-                               Visibility="Visible"/>
-                </Grid>
-
-                <!-- Send Invite Button -->
-                <Button Content="Send Invite" Width="100" Height="30" Click="SendInvite_Click"/>
-            </StackPanel>
-
-            <!-- List of Invitations (Optional Future Section) -->
-            <Border Background="#f0f0f0" CornerRadius="10" Padding="10" Margin="0,0,0,20">
-                <TextBlock Text="Pending Invitations will appear here..." FontStyle="Italic" Foreground="Gray" />
-            </Border>
-
-            <Button Content="← Back to Features" 
-                    Click="GoBackToFeatures_Click"
-                    Width="150"
-                    Height="32"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"/>
-
+        <!-- Sidebar: Group List -->
+        <StackPanel Grid.Column="0" Background="{DynamicResource BackgroundBrush}" Margin="0,0,10,0">
+            <TextBlock Text="My Groups" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}" Margin="10,10,0,10"/>
+            <ListBox x:Name="AllGroupsListBox" DisplayMemberPath="Name" SelectionChanged="AllGroupsListBox_SelectionChanged" Height="400" Margin="10,0,10,0" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+            <Button Content="+ Create Group" Click="CreateGroupButton_Click" Margin="10,20,10,0" Height="32" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
         </StackPanel>
-    </ScrollViewer>
+
+        <!-- Main Area: Group Details, Chat, Files -->
+        <Border Grid.Column="1" Background="{DynamicResource BackgroundBrush}" CornerRadius="6" Padding="2" Margin="0,10,10,10">
+            <DockPanel LastChildFill="True">
+                <Button Content="Back to Main" Click="GoBackToFeatures_Click" Width="120" HorizontalAlignment="Left" Margin="0,10,0,0" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}" DockPanel.Dock="Bottom"/>
+                <StackPanel x:Name="GroupDetailsPanel" Visibility="Collapsed" Background="{DynamicResource BackgroundBrush}">
+                    <TextBlock x:Name="GroupNameText" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                    <TextBlock x:Name="GroupDescriptionText" FontSize="14" Foreground="{DynamicResource ForegroundBrush}" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Background="{DynamicResource BackgroundBrush}">
+                        <TextBox x:Name="AddMemberTextBox" Width="200" Margin="0,0,10,0" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                        <Button Content="Add Member" Click="AddMemberButton_Click" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                    </StackPanel>
+                    <TextBlock Text="Members" FontWeight="Bold" FontSize="16" Margin="0,10,0,5" Foreground="{DynamicResource ForegroundBrush}"/>
+                    <ListBox x:Name="MembersListBox" Height="80" Margin="0,0,0,10" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="{DynamicResource ControlBackgroundBrush}">
+                                    <TextBlock Text="{Binding Username}" Width="120" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                    <Button Content="Remove" Width="60" Margin="5,0,0,0" Visibility="{Binding ShowRemove, Converter={StaticResource BoolToVisibilityConverter}}" Click="RemoveMemberButton_Click" Tag="{Binding UserId}" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Text="Group Chat" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" Foreground="{DynamicResource ForegroundBrush}"/>
+                    <ListBox x:Name="ChatMessagesListBox" Height="120" Margin="0,0,0,10" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{DynamicResource ControlBackgroundBrush}">
+                                    <TextBlock Text="{Binding Username}" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                    <TextBlock Text="{Binding SentAt}" FontSize="10" Foreground="Gray"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Background="{DynamicResource BackgroundBrush}">
+                        <TextBox x:Name="MessageTextBox" Width="300" Margin="0,0,10,0" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                        <Button Content="Send" Width="80" Click="SendMessageButton_Click" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                    </StackPanel>
+                    <TextBlock Text="Shared Files" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" Foreground="{DynamicResource ForegroundBrush}"/>
+                    <ListBox x:Name="FilesListBox" Height="80" Margin="0,0,0,10" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="{DynamicResource ControlBackgroundBrush}">
+                                    <TextBlock Text="{Binding FileName}" Width="200" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                    <TextBlock Text="{Binding Username}" Width="100" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding UploadedAt}" Width="120" Foreground="Gray"/>
+                                    <Button Content="Download" Click="DownloadFileButton_Click" Tag="{Binding FilePath}" Width="80" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Content="Upload File" Click="UploadFileButton_Click" Width="120" HorizontalAlignment="Left" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                    <TextBlock Text="Study Materials" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" Foreground="{DynamicResource ForegroundBrush}"/>
+                    <ListBox x:Name="MaterialsListBox" Height="80" Margin="0,0,0,10" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="{DynamicResource ControlBackgroundBrush}">
+                                    <TextBlock Text="{Binding Title}" Width="200" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                    <Button Content="Download" Click="DownloadMaterialButton_Click" Tag="{Binding Id}" Width="80" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Background="{DynamicResource BackgroundBrush}">
+                        <Button Content="Upload Material" Click="UploadMaterialButton_Click" Width="120" HorizontalAlignment="Left" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}"/>
+                        <Separator Height="20" Opacity="0"/>
+                    </StackPanel>
+                    <Button Content="Back to Main" Click="GoBackToFeatures_Click" Width="120" HorizontalAlignment="Left" Margin="0,20,0,0" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource ControlForegroundBrush}" DockPanel.Dock="Bottom"/>
+                </StackPanel>
+            </DockPanel>
+            </Border>
+                </Grid>
 </Window>

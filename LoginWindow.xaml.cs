@@ -27,7 +27,7 @@ namespace InspirationLabProjectStanSeyit
             using (var conn = new MySqlConnection(connStr))
             {
                 conn.Open();
-                string query = "SELECT Id, FirstName, PasswordHash, Banned FROM users WHERE Username = @username";
+                string query = "SELECT Id, FirstName, PasswordHash, Banned FROM users WHERE Username = @username AND Deleted IS NULL";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@username", username);

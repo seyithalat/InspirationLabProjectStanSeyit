@@ -43,7 +43,7 @@
                         </StackPanel>
                     </Button>
                 </Border>
-
+                
                 <!-- Friends -->
                 <Border Background="{DynamicResource ControlBackgroundBrush}" Width="120" Height="130" Margin="5" CornerRadius="10" Padding="5">
                     <Button Background="Transparent" BorderThickness="0" Click="FriendsButton_Click">

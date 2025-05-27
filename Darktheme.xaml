@@ -2,7 +2,7 @@
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Dark theme colors -->
     <SolidColorBrush x:Key="BackgroundBrush" Color="#FF1E1E1E"/>
-    <SolidColorBrush x:Key="ForegroundBrush" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="#FF222222"/>
     <SolidColorBrush x:Key="AccentBrush" Color="#FF4CAF50"/>
     <SolidColorBrush x:Key="BorderBrush" Color="#FF333333"/>
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#FF2D2D2D"/>

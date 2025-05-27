@@ -309,11 +309,6 @@
                                  Height="30"
                                  Text="Enter email address"/>
 
-                        <Button Grid.Column="1" 
-                                Content="SEND INVITE" 
-                                Width="120" 
-                                Height="30"
-                                Click="SendInvite_Click"/>
                     </Grid>
                 </StackPanel>
             </Border>

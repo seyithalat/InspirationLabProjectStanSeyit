@@ -8,7 +8,8 @@ namespace InspirationLabProjectStanSeyit.Games
     {
         private Random random = new Random();
         private int score = 0;
-        private int timeLeft = 30;
+        private int lives = 3;
+        private int timeLeft = 60;
         private DispatcherTimer timer;
         private int correctAnswer;
 
@@ -16,6 +17,7 @@ namespace InspirationLabProjectStanSeyit.Games
         {
             InitializeComponent();
             InitializeTimer();
+            LivesText.Text = $"Lives: {lives}";
             GenerateNewProblem();
         }
 
@@ -25,6 +27,7 @@ namespace InspirationLabProjectStanSeyit.Games
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
+            TimerText.Text = $"Time: {timeLeft}";
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -35,16 +38,16 @@ namespace InspirationLabProjectStanSeyit.Games
             if (timeLeft <= 0)
             {
                 timer.Stop();
-                MessageBox.Show($"Game Over! Your final score is: {score}", "Game Over");
-                this.Close();
+                MessageBox.Show($"Time's up! Your final score is: {score}", "Game Over");
+                EndGame();
             }
         }
 
         private void GenerateNewProblem()
         {
-            int num1 = random.Next(1, 20);
-            int num2 = random.Next(1, 20);
-            string[] operators = { "+", "-", "*" };
+            int num1 = random.Next(1, 101);
+            int num2 = random.Next(1, 101);
+            string[] operators = { "+", "-", "*", "/" };
             string op = operators[random.Next(operators.Length)];
 
             switch (op)
@@ -57,6 +60,11 @@ namespace InspirationLabProjectStanSeyit.Games
                     break;
                 case "*":
                     correctAnswer = num1 * num2;
+                    break;
+                case "/":
+                    num2 = random.Next(1, 13);
+                    correctAnswer = random.Next(1, 13);
+                    num1 = correctAnswer * num2;
                     break;
             }
 
@@ -76,7 +84,15 @@ namespace InspirationLabProjectStanSeyit.Games
                 }
                 else
                 {
+                    lives--;
+                    LivesText.Text = $"Lives: {lives}";
                     MessageBox.Show($"Wrong! The correct answer was: {correctAnswer}", "Answer");
+                    if (lives <= 0)
+                    {
+                        MessageBox.Show($"No lives left! Your final score is: {score}", "Game Over");
+                        EndGame();
+                        return;
+                    }
                 }
 
                 ScoreText.Text = $"Score: {score}";
@@ -86,6 +102,13 @@ namespace InspirationLabProjectStanSeyit.Games
             {
                 MessageBox.Show("Please enter a valid number!", "Invalid Input");
             }
+        }
+        private void EndGame()
+        {
+            if (timer != null)
+                timer.Stop();
+            Data.SaveGameScore(Session.CurrentUserId, "Math", score, DateTime.Now);
+            // Show game over UI, etc.
         }
     }
 } 

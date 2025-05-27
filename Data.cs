@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System.Linq;
 using InspirationLabProjectStanSeyit.Models;
+using System.IO;
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -491,7 +492,7 @@ namespace InspirationLabProjectStanSeyit
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Id FROM users WHERE Username = @username LIMIT 1";
+                string query = "SELECT Id FROM users WHERE LOWER(Username) = LOWER(@username) LIMIT 1";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@username", username);
@@ -736,7 +737,411 @@ namespace InspirationLabProjectStanSeyit
             }
             return users;
         }
-        // ... existing code ...
+        public static void DeleteUser(int userId)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE users SET Deleted = NOW() WHERE Id = @UserId";
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public static int CreateStudyGroup(string name, string description, int ownerId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("INSERT INTO studygroups (Name, Description, OwnerId) VALUES (@name, @desc, @ownerId); SELECT LAST_INSERT_ID();", conn);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@desc", description);
+                cmd.Parameters.AddWithValue("@ownerId", ownerId);
+                int groupId = Convert.ToInt32(cmd.ExecuteScalar());
 
+                // Add owner as first member
+                var cmd2 = new MySqlCommand("INSERT INTO studygroupmembers (GroupId, UserId) VALUES (@groupId, @ownerId);", conn);
+                cmd2.Parameters.AddWithValue("@groupId", groupId);
+                cmd2.Parameters.AddWithValue("@ownerId", ownerId);
+                cmd2.ExecuteNonQuery();
+
+                return groupId;
+            }
+        }
+        public static bool AddMemberToGroup(int groupId, int userId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("INSERT IGNORE INTO studygroupmembers (GroupId, UserId) VALUES (@groupId, @userId);", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public static List<int> GetGroupsForUser(int userId)
+        {
+            var groups = new List<int>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("SELECT GroupId FROM studygroupmembers WHERE UserId = @userId;", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        groups.Add(reader.GetInt32(0));
+                }
+            }
+            return groups;
+        }
+        public static List<int> GetMembersOfGroup(int groupId)
+        {
+            var members = new List<int>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("SELECT UserId FROM studygroupmembers WHERE GroupId = @groupId;", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        members.Add(reader.GetInt32(0));
+                }
+            }
+            return members;
+        }
+        public static bool RemoveMemberFromGroup(int groupId, int userId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("DELETE FROM studygroupmembers WHERE GroupId = @groupId AND UserId = @userId;", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public static bool IsUserGroupModerator(int groupId, int userId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("SELECT OwnerId FROM studygroups WHERE Id = @groupId", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                var ownerId = cmd.ExecuteScalar();
+                return ownerId != null && Convert.ToInt32(ownerId) == userId;
+            }
+        }
+        public static bool RemoveMemberFromGroup(int groupId, int userIdToRemove, int actingUserId)
+        {
+            // Only allow if actingUserId is the moderator
+            if (!IsUserGroupModerator(groupId, actingUserId))
+                return false;
+
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("DELETE FROM studygroupmembers WHERE GroupId = @groupId AND UserId = @userId", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                cmd.Parameters.AddWithValue("@userId", userIdToRemove);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public static List<StudyGroup> GetGroupsOwnedByUser(int ownerId)
+        {
+            var groups = new List<StudyGroup>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("SELECT Id, Name, Description FROM studygroups WHERE OwnerId = @ownerId", conn);
+                cmd.Parameters.AddWithValue("@ownerId", ownerId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        groups.Add(new StudyGroup
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Name = reader.GetString("Name"),
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description")
+                        });
+                    }
+                }
+            }
+            return groups;
+        }
+        public static List<StudyGroup> GetAllGroupsForUser(int userId)
+        {
+            var groups = new List<StudyGroup>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand(
+                    @"SELECT g.Id, g.Name, g.Description, g.OwnerId
+                      FROM studygroups g
+                      JOIN studygroupmembers m ON g.Id = m.GroupId
+                      WHERE m.UserId = @userId", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        groups.Add(new StudyGroup
+                        {
+                            Id = reader.GetInt32("Id"),
+                            Name = reader.GetString("Name"),
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                            CreatedById = reader.GetInt32("OwnerId")
+                        });
+                    }
+                }
+            }
+            return groups;
+        }
+        public static void SendGroupMessage(int groupId, int userId, string message)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("INSERT INTO studygroupmessages (GroupId, UserId, Message) VALUES (@groupId, @userId, @message)", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@message", message);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public static List<(string Username, string Message, DateTime SentAt)> GetGroupMessages(int groupId)
+        {
+            var messages = new List<(string, string, DateTime)>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand(
+                    @"SELECT u.Username, m.Message, m.SentAt
+              FROM studygroupmessages m
+              JOIN users u ON m.UserId = u.Id
+              WHERE m.GroupId = @groupId
+              ORDER BY m.SentAt ASC", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        messages.Add((
+                            reader.GetString("Username"),
+                            reader.GetString("Message"),
+                            reader.GetDateTime("SentAt")
+                        ));
+                    }
+                }
+            }
+            return messages;
+        }
+        public static void UploadGroupFile(int groupId, int userId, string fileName, string filePath)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("INSERT INTO studygroupfiles (GroupId, UserId, FileName, FilePath) VALUES (@groupId, @userId, @fileName, @filePath)", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@fileName", fileName);
+                cmd.Parameters.AddWithValue("@filePath", filePath);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public static void AddStudyMinutesToUser(int userId, int minutes)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    "UPDATE userprofiles SET StudyHours = StudyHours + @addHours WHERE UserId = @userId", conn);
+                cmd.Parameters.AddWithValue("@addHours", minutes / 60.0); // Store as hours (float) or change to int if you want only full hours
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public static List<(string FileName, string FilePath, string Username, DateTime UploadedAt)> GetGroupFiles(int groupId)
+        {
+            var files = new List<(string, string, string, DateTime)>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand(
+                    @"SELECT f.FileName, f.FilePath, u.Username, f.UploadedAt
+              FROM studygroupfiles f
+              JOIN users u ON f.UserId = u.Id
+              WHERE f.GroupId = @groupId
+              ORDER BY f.UploadedAt DESC", conn);
+                cmd.Parameters.AddWithValue("@groupId", groupId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        files.Add((
+                            reader.GetString("FileName"),
+                            reader.GetString("FilePath"),
+                            reader.GetString("Username"),
+                            reader.GetDateTime("UploadedAt")
+                        ));
+                    }
+                }
+            }
+            return files;
+        }
+        public static void UploadStudyMaterial(string title, string filePath, int createdById, int studyGroupId)
+        {
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("INSERT INTO studymaterials (Title, Content, FilePath, CreatedById, StudyGroupId, CreatedAt) VALUES (@title, @content, @filePath, @createdById, @studyGroupId, NOW())", conn);
+                cmd.Parameters.AddWithValue("@title", title);
+                cmd.Parameters.AddWithValue("@content", fileBytes);
+                cmd.Parameters.AddWithValue("@filePath", filePath);
+                cmd.Parameters.AddWithValue("@createdById", createdById);
+                cmd.Parameters.AddWithValue("@studyGroupId", studyGroupId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static (string FileName, byte[] Content) GetStudyMaterialFile(int materialId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand("SELECT Title, Content FROM studymaterials WHERE Id = @id", conn);
+                cmd.Parameters.AddWithValue("@id", materialId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read() && !reader.IsDBNull(1))
+                    {
+                        return (reader.GetString("Title"), (byte[])reader["Content"]);
+                    }
+                }
+            }
+            return (null, null);
+        }
+
+        public static string GetConnectionString()
+        {
+            return connectionString;
+        }
+
+        public static UserProfile GetUserProfile(int userId)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM userprofiles WHERE UserId = @userId", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new UserProfile
+                        {
+                            Id = reader.GetInt32("Id"),
+                            UserId = reader.GetInt32("UserId"),
+                            Bio = reader["Bio"] as string,
+                            Birthday = reader["Birthday"] as DateTime?,
+                            Location = reader["Location"] as string,
+                            Name = reader["Name"] as string,
+                            Age = reader["Age"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["Age"]),
+                            School = reader["School"] as string,
+                            Course = reader["Course"] as string,
+                            Year = reader["Year"] as string,
+                            StudyHours = reader["StudyHours"] == DBNull.Value ? 0.0 : Convert.ToDouble(reader["StudyHours"])
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+        public static void SaveGameScore(int userId, string gameType, int score, DateTime playedAt)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    "INSERT INTO gamescores (UserId, GameType, Score, PlayedAt) VALUES (@userId, @gameType, @score, @playedAt)", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@gameType", gameType);
+                cmd.Parameters.AddWithValue("@score", score);
+                cmd.Parameters.AddWithValue("@playedAt", playedAt);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public static void UpdateUserProfile(UserProfile profile)
+        {
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    "UPDATE userprofiles SET Bio = @bio, Birthday = @birthday, Location = @location, Name = @name, Age = @age, School = @school, Course = @course, Year = @year WHERE UserId = @userId", conn);
+                cmd.Parameters.AddWithValue("@bio", (object)profile.Bio ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@birthday", (object)profile.Birthday ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@location", (object)profile.Location ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@name", (object)profile.Name ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@age", (object)profile.Age ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@school", (object)profile.School ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@course", (object)profile.Course ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@year", (object)profile.Year ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@userId", profile.UserId);
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    // Insert if not exists
+                    var insertCmd = new MySql.Data.MySqlClient.MySqlCommand(
+                        "INSERT INTO userprofiles (UserId, Bio, Birthday, Location, Name, Age, School, Course, Year) VALUES (@userId, @bio, @birthday, @location, @name, @age, @school, @course, @year)", conn);
+                    insertCmd.Parameters.AddWithValue("@userId", profile.UserId);
+                    insertCmd.Parameters.AddWithValue("@bio", (object)profile.Bio ?? DBNull.Value);
+                    insertCmd.Parameters.AddWithValue("@birthday", (object)profile.Birthday ?? DBNull.Value);
+                    insertCmd.Parameters.AddWithValue("@location", (object)profile.Location ?? DBNull.Value);
+                    insertCmd.Parameters.AddWithValue("@name", (object)profile.Name ?? DBNull.Value);
+                    insertCmd.Parameters.AddWithValue("@age", (object)profile.Age ?? DBNull.Value);
+                    insertCmd.Parameters.AddWithValue("@school", (object)profile.School ?? DBNull.Value);
+                    insertCmd.Parameters.AddWithValue("@course", (object)profile.Course ?? DBNull.Value);
+                    insertCmd.Parameters.AddWithValue("@year", (object)profile.Year ?? DBNull.Value);
+                    insertCmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public class GameScoreEntry
+        {
+            public string Username { get; set; }
+            public int Score { get; set; }
+        }
+
+        public static List<GameScoreEntry> GetTopGameScores(string gameType, int count)
+        {
+            var scores = new List<GameScoreEntry>();
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    "SELECT gs.Score, u.Username FROM gamescores gs JOIN users u ON gs.UserId = u.Id WHERE gs.GameType = @gameType ORDER BY gs.Score DESC, gs.PlayedAt ASC LIMIT @count", conn);
+                cmd.Parameters.AddWithValue("@gameType", gameType);
+                cmd.Parameters.AddWithValue("@count", count);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        scores.Add(new GameScoreEntry
+                        {
+                            Username = reader.GetString("Username"),
+                            Score = reader.GetInt32("Score")
+                        });
+                    }
+                }
+            }
+            return scores;
+        }
     }
 }

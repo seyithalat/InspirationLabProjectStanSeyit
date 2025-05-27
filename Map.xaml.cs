@@ -55,7 +55,6 @@ namespace InspirationLabProjectStanSeyit
 
             // Get approved locations from database using Data class
             var markers = Data.GetApprovedLocations();
-            string query = "SELECT Address FROM locationsubmissions WHERE Status = 'Approved'";
             // Add default locations if no approved locations exist
             if (markers.Count == 0)
             {
