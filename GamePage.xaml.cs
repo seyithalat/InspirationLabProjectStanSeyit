@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using InspirationLabProjectStanSeyit.Games;
+using InspirationLabProjectStanSeyit.Models;
+using System.Linq;
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -68,7 +70,28 @@ namespace InspirationLabProjectStanSeyit
             "Settings"
         };
 
-        private int startIndex = 0;
+
+        private int currentNavIndex = 0;
+
+        public GamePage()
+        {
+            InitializeComponent();
+            Loaded += GamePage_Loaded;
+        }
+
+        private void GamePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                UpdateNavCarousel();
+                LoadLeaderboards();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during initialization: {ex.Message}", "Initialization Error");
+            }
+        }
+
 
         public void UpdateImageSet()
         {
@@ -158,6 +181,24 @@ namespace InspirationLabProjectStanSeyit
                 this.Close();
             }
 
+        }
+
+        private void EndGame()
+        {
+            // If you have a score variable here, use it. Otherwise, remove or update this method as needed.
+            // Data.SaveGameScore(Session.CurrentUserId, "MemoryGame", score, DateTime.Now);
+            // Show game over UI, etc.
+        }
+
+        private void LoadLeaderboards()
+        {
+            var mathScores = Data.GetTopGameScores("Math", 5);
+            var triviaScores = Data.GetTopGameScores("Trivia", 5);
+            var wordScrambleScores = Data.GetTopGameScores("WordScramble", 5);
+
+            MathLeaderboard.ItemsSource = mathScores.Select((s, i) => $"{i + 1}. {s.Username} - {s.Score} pts").ToList();
+            TriviaLeaderboard.ItemsSource = triviaScores.Select((s, i) => $"{i + 1}. {s.Username} - {s.Score} pts").ToList();
+            WordScrambleLeaderboard.ItemsSource = wordScrambleScores.Select((s, i) => $"{i + 1}. {s.Username} - {s.Score} pts").ToList();
         }
     }
 }

@@ -101,8 +101,14 @@ namespace InspirationLabProjectStanSeyit
                                       "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
-                // TODO: Call backend or service to delete account
+                // Call backend to delete the user account
+                Data.DeleteUser(Session.CurrentUserId);
                 MessageBox.Show("Your account has been deleted.", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Log out the user by clearing the session and opening the login window
+                Session.CurrentUserId = 0;
+                Session.CurrentUsername = null;
+                var loginWindow = new LoginWindow();
+                loginWindow.Show();
                 this.Close();
             }
         }

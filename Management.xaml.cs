@@ -152,10 +152,7 @@ namespace InspirationLabProjectStanSeyit
             MessageBox.Show("New study group created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void SendInvite_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Invitation sent successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
+       
 
         private void CarouselItem1_Click(object sender, RoutedEventArgs e)
         {
