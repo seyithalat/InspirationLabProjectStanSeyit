@@ -1,5 +1,6 @@
-﻿using System.Windows;
+using System.Windows;
 using InspirationLabProjectStanSeyit;
+
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -8,25 +9,98 @@ namespace InspirationLabProjectStanSeyit
         public Contact()
         {
             InitializeComponent();
+            UpdateImageSet();
         }
-
 
         private void PrevImage_Click(object sender, RoutedEventArgs e)
         {
-            // 🔁 Add your previous image logic here
-            MessageBox.Show("Previous image clicked.");
+            startIndex = (startIndex - 1 + imagePaths.Count) % imagePaths.Count;
+            UpdateImageSet();
         }
 
         private void NextImage_Click(object sender, RoutedEventArgs e)
         {
-            // 🔁 Add your next image logic here
-            MessageBox.Show("Next image clicked.");
+            startIndex = (startIndex + 1) % imagePaths.Count;
+            UpdateImageSet();
         }
 
-        private void ImageButton1_Click(object sender, RoutedEventArgs e)
+        private void Image1_Click(object sender, RoutedEventArgs e)
         {
-            // 🔁 Add logic for when ImageButton1 is clicked
-            MessageBox.Show("Image Button 1 clicked.");
+            NavigateToPage(startIndex % imagePaths.Count);
+        }
+
+        private void Image2_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage((startIndex + 1) % imagePaths.Count);
+        }
+
+        private void Image3_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage((startIndex + 2) % imagePaths.Count);
+        }
+
+        private void NavigateToPage(int index)
+        {
+            Window newWindow = null;
+
+            switch (index)
+            {
+                case 0: // Features
+                    newWindow = new Features();
+                    break;
+                case 1: // Profile
+                    newWindow = new Profile();
+                    break;
+                case 2: // Planner
+                    newWindow = new Planner();
+                    break;
+                case 3: // Groups
+                    newWindow = new StudyGroups();
+                    break;
+                case 4: // Focus Games
+                    newWindow = new GamePage();
+                    break;
+                case 5: // Notes
+                    newWindow = new StudyMaterial();
+                    break;
+                case 6: // Management
+                    newWindow = new Management();
+                    break;
+                case 7: // Contact
+                    newWindow = new Contact();
+                    break;
+                case 8: // Settings
+                    newWindow = new Settings();
+                    break;
+                default:
+                    newWindow = new Features();
+                    break;
+            }
+
+            if (newWindow != null)
+            {
+                newWindow.Show();
+                this.Close();
+            }
+        }
+
+        // <== Here is the newly added Submit button click handler
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            string name = NameTextBox.Text;
+            string email = EmailTextBox.Text;
+            string subject = SubjectTextBox.Text;
+            string message = MessageTextBox.Text;
+
+            // Simple confirmation popup
+            MessageBox.Show($"Thank you, {name}! Your message has been submitted.",
+                "Submission Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // Clear the form
+            NameTextBox.Clear();
+            EmailTextBox.Clear();
+            SubjectTextBox.Clear();
+            MessageTextBox.Clear();
         }
         // Example: On Submit button click
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -61,4 +135,3 @@ namespace InspirationLabProjectStanSeyit
         }
     }
 }
-
