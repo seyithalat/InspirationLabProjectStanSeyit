@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using InspirationLabProjectStanSeyit;
+
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -11,56 +10,6 @@ namespace InspirationLabProjectStanSeyit
         {
             InitializeComponent();
             UpdateImageSet();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateImageSet();
-        }
-
-        private readonly List<string> imagePaths = new List<string>
-        {
-            "Images/homepagecarouselimage.jpg",
-            "Images/featurescarouselimage.jpg",
-            "Images/profilecarouselimage.jpg",
-            "Images/plannercarouselimage.jpg",
-            "Images/groupscarouselimage.jpg",
-            "Images/gamescarouselimage.jpg",
-            "Images/notescarouselimage.jpg",
-            "Images/managementcarouselimage.jpg",
-            "Images/contactcarouselimage.jpg"
-        };
-
-        private List<string> imageTitles = new List<string>
-        {
-            "Features",
-            "Profile",
-            "Planner",
-            "Groups",
-            "Focus Games",
-            "Notes",
-            "Management",
-            "Contact",
-            "Settings"
-        };
-
-        private int startIndex = 0;
-
-        public void UpdateImageSet()
-        {
-            if (imagePaths.Count < 3) return;
-
-            int i1 = startIndex % imagePaths.Count;
-            int i2 = (startIndex + 1) % imagePaths.Count;
-            int i3 = (startIndex + 2) % imagePaths.Count;
-
-            Image1.Source = new BitmapImage(new Uri(imagePaths[i1], UriKind.Relative));
-            Image2.Source = new BitmapImage(new Uri(imagePaths[i2], UriKind.Relative));
-            Image3.Source = new BitmapImage(new Uri(imagePaths[i3], UriKind.Relative));
-
-            Label1.Text = imageTitles[i1];
-            Label2.Text = imageTitles[i2];
-            Label3.Text = imageTitles[i3];
         }
 
         private void PrevImage_Click(object sender, RoutedEventArgs e)
@@ -152,6 +101,37 @@ namespace InspirationLabProjectStanSeyit
             EmailTextBox.Clear();
             SubjectTextBox.Clear();
             MessageTextBox.Clear();
+        }
+        // Example: On Submit button click
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            string name = NameTextBox.Text.Trim();
+            string email = EmailTextBox.Text.Trim();
+            string subject = SubjectTextBox.Text.Trim();
+            string message = MessageTextBox.Text.Trim();
+            int? userId = Session.CurrentUserId; // Or null if not logged in
+
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(message))
+            {
+                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            Data.AddContactMessage(name, email, subject, message, userId);
+
+            MessageBox.Show("Your message has been sent!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // Optionally clear the form
+            NameTextBox.Clear();
+            EmailTextBox.Clear();
+            SubjectTextBox.Clear();
+            MessageTextBox.Clear();
+        }
+
+        private void ReviewContactMessages_Click(object sender, RoutedEventArgs e)
+        {
+            var adminWindow = new ContactMessagesAdmin();
+            adminWindow.Show();
         }
     }
 }

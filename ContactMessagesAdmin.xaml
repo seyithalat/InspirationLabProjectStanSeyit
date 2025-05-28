@@ -1,0 +1,31 @@
+﻿<Window x:Class="InspirationLabProjectStanSeyit.ContactMessagesAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Contact Messages Admin" Height="600" Width="1000">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Go Back Button -->
+        <Button Content="← Back to Contact" Click="GoBack_Click" Width="120" Height="28" Margin="0,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <DataGrid x:Name="MessagesGrid" AutoGenerateColumns="False" SelectionMode="Single" Grid.Row="1" Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
+                <DataGridTextColumn Header="Subject" Binding="{Binding Subject}" Width="120"/>
+                <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="200"/>
+                <DataGridTextColumn Header="Submitted At" Binding="{Binding SubmittedAt}" Width="120"/>
+                <DataGridTextColumn Header="UserId" Binding="{Binding UserId}" Width="60"/>
+                <DataGridCheckBoxColumn Header="Handled" Binding="{Binding Handled}" Width="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2">
+            <Button Content="Mark as Handled" Click="MarkHandled_Click" Margin="3" Width="90" Padding="4,2"/>
+            <Button Content="Ban User" Click="BanUser_Click" Margin="3" Width="90" Padding="4,2"/>
+            <Button Content="Refresh" Click="Refresh_Click" Margin="3" Width="80" Padding="4,2"/>
+        </StackPanel>
+    </Grid>
+</Window>

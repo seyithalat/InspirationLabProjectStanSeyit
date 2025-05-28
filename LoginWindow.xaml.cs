@@ -27,20 +27,30 @@ namespace InspirationLabProjectStanSeyit
             using (var conn = new MySqlConnection(connStr))
             {
                 conn.Open();
-                string query = "SELECT Id, FirstName FROM users WHERE Username = @username AND PasswordHash = @password";
+                string query = "SELECT Id, FirstName, PasswordHash, Banned FROM users WHERE Username = @username";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
-
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
+                            bool banned = reader.GetBoolean("Banned");
+                            if (banned)
+                            {
+                                MessageBox.Show("The ban hammer has spoken", "Banned", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            string dbPassword = reader.GetString("PasswordHash");
+                            if (dbPassword != password)
+                            {
+                                MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
                             int userId = reader.GetInt32("Id");
                             string firstName = reader.GetString("FirstName");
-                            Session.CurrentUserId = userId; // <-- Set the current user ID here!
-                            Session.CurrentUsername = username; // Optionally set the username
+                            Session.CurrentUserId = userId;
+                            Session.CurrentUsername = username;
                             MessageBox.Show($"Welcome back, {firstName}!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             var mainWindow = new MainWindow();
                             mainWindow.Show();

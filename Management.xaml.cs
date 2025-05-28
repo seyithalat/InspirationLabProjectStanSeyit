@@ -261,5 +261,10 @@ namespace InspirationLabProjectStanSeyit
                 this.Close();
             }
         }
+        private void ReviewContactMessages_Click(object sender, RoutedEventArgs e)
+        {
+            var adminWindow = new ContactMessagesAdmin();
+            adminWindow.Show();
+        }
     }
 }

@@ -133,6 +133,9 @@
     <Compile Include="Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContactMessagesAdmin.xaml.cs">
+      <DependentUpon>ContactMessagesAdmin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data.cs" />
     <Compile Include="Features.xaml.cs">
       <DependentUpon>Features.xaml</DependentUpon>
@@ -161,6 +164,7 @@
     <Compile Include="Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContactMessage.cs" />
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\GameScore.cs" />
     <Compile Include="Models\LocationSubmissions.cs" />
@@ -188,6 +192,9 @@
     <Compile Include="StudyMaterial.xaml.cs">
       <DependentUpon>StudyMaterial.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserSelectionDialog.xaml.cs">
+      <DependentUpon>UserSelectionDialog.xaml</DependentUpon>
+    </Compile>
     <Page Include="Character.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Contact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContactMessagesAdmin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -284,6 +295,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StudyMaterial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserSelectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
