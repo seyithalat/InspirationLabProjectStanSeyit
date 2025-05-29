@@ -1143,5 +1143,101 @@ namespace InspirationLabProjectStanSeyit
             }
             return scores;
         }
+
+        public static void AddTask(int userId, string title, string priority, string category, DateTime dueDate)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"INSERT INTO tasks (UserId, Title, Priority, Category, DueDate, IsCompleted, CreatedAt)
+                         VALUES (@UserId, @Title, @Priority, @Category, @DueDate, false, NOW())";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@Title", title);
+                    cmd.Parameters.AddWithValue("@Priority", priority);
+                    cmd.Parameters.AddWithValue("@Category", category);
+                    cmd.Parameters.AddWithValue("@DueDate", dueDate);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void UpdateTaskCompletion(int taskId, bool isCompleted)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE tasks SET IsCompleted = @IsCompleted WHERE Id = @TaskId";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TaskId", taskId);
+                    cmd.Parameters.AddWithValue("@IsCompleted", isCompleted);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void DeleteTask(int taskId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM tasks WHERE Id = @TaskId";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TaskId", taskId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<Task> GetTasksForUser(int userId, DateTime? date = null)
+        {
+            var tasks = new List<Task>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"SELECT * FROM tasks 
+                               WHERE UserId = @UserId 
+                               AND (@Date IS NULL OR DATE(DueDate) = DATE(@Date))
+                               ORDER BY DueDate ASC";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@Date", (object)date ?? DBNull.Value);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            tasks.Add(new Task
+                            {
+                                Id = reader.GetInt32("Id"),
+                                UserId = reader.GetInt32("UserId"),
+                                Title = reader.GetString("Title"),
+                                Priority = reader.GetString("Priority"),
+                                Category = reader.GetString("Category"),
+                                DueDate = reader.GetDateTime("DueDate"),
+                                IsCompleted = reader.GetBoolean("IsCompleted"),
+                                CreatedAt = reader.GetDateTime("CreatedAt")
+                            });
+                        }
+                    }
+                }
+            }
+            return tasks;
+        }
+
+        public class Task
+        {
+            public int Id { get; set; }
+            public int UserId { get; set; }
+            public string Title { get; set; }
+            public string Priority { get; set; }
+            public string Category { get; set; }
+            public DateTime DueDate { get; set; }
+            public bool IsCompleted { get; set; }
+            public DateTime CreatedAt { get; set; }
+        }
     }
 }
