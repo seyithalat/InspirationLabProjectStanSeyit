@@ -293,10 +293,10 @@ namespace InspirationLabProjectStanSeyit
             MonthYearText.Text = PlannerCalendar.DisplayDate.ToString("MMMM yyyy");
         }
 
-        private void BackToSettings_Click(object sender, RoutedEventArgs e)
+        private void BackToMain_Click(object sender, RoutedEventArgs e)
         {
-            var settingsWindow = new Settings();
-            settingsWindow.Show();
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
         }
 

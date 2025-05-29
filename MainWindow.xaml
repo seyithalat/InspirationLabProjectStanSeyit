@@ -36,71 +36,115 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Text="Explore App Pages" FontSize="24" FontWeight="Bold" Foreground="Gray" Margin="0,20,0,20" TextAlignment="Center"/>
+                <!-- Navigation Carousel -->
+<TextBlock Text="Navigate to Pages" 
+           FontSize="20" 
+           FontWeight="Bold" 
+           Foreground="Gray" 
+           Margin="0,20,0,10" 
+           TextAlignment="Center"/>
 
-                <Grid HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+<Grid HorizontalAlignment="Center">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
+    <Button Grid.Column="0" 
+            Content="◀" 
+            Width="40" 
+            Height="40"
+            FontSize="20"
+            Background="#61be63"
+            Foreground="White"
+            BorderThickness="0"
+            Click="NavPrevImage_Click"/>
 
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
+    <StackPanel Grid.Column="1" 
+               Orientation="Horizontal" 
+               HorizontalAlignment="Center" 
+               Margin="10,0">
+        <!-- Nav Item 1 -->
+        <Button Click="NavImage1_Click" 
+                BorderThickness="0" 
+                Background="Transparent" 
+                Width="150" 
+                Height="100" 
+                Margin="5">
+            <Grid>
+                <Image Name="NavImage1" 
+                       Stretch="UniformToFill"/>
+                <TextBlock Name="NavLabel1"
+                           Text="Features"
+                           Foreground="White"
+                           Background="#80000000"
+                           FontWeight="Bold"
+                           FontSize="12"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Padding="4"
+                           TextAlignment="Center"/>
+            </Grid>
+        </Button>
 
-                        <Button Click="Image1_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
-                            <Grid>
-                                <Image Name="Image1" Stretch="UniformToFill"/>
-                                <TextBlock Name="Label1"
-                                           Text="Features"
-                                           Foreground="White"
-                                           Background="#80000000"
-                                           FontWeight="Bold"
-                                           FontSize="12"
-                                           VerticalAlignment="Bottom"
-                                           HorizontalAlignment="Center"
-                                           Padding="4"
-                                           TextAlignment="Center"/>
-                            </Grid>
-                        </Button>
+        <!-- Nav Item 2 -->
+        <Button Click="NavImage2_Click" 
+                BorderThickness="0" 
+                Background="Transparent" 
+                Width="150" 
+                Height="100" 
+                Margin="5">
+            <Grid>
+                <Image Name="NavImage2" 
+                       Stretch="UniformToFill"/>
+                <TextBlock Name="NavLabel2"
+                           Text="Profile"
+                           Foreground="White"
+                           Background="#80000000"
+                           FontWeight="Bold"
+                           FontSize="12"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Padding="4"
+                           TextAlignment="Center"/>
+            </Grid>
+        </Button>
 
-                        <Button Click="Image2_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
-                            <Grid>
-                                <Image Name="Image2" Stretch="UniformToFill"/>
-                                <TextBlock Name="Label2"
-                                           Text="Profile"
-                                           Foreground="White"
-                                           Background="#80000000"
-                                           FontWeight="Bold"
-                                           FontSize="12"
-                                           VerticalAlignment="Bottom"
-                                           HorizontalAlignment="Center"
-                                           Padding="4"
-                                           TextAlignment="Center"/>
-                            </Grid>
-                        </Button>
+        <!-- Nav Item 3 -->
+        <Button Click="NavImage3_Click" 
+                BorderThickness="0" 
+                Background="Transparent" 
+                Width="150" 
+                Height="100" 
+                Margin="5">
+            <Grid>
+                <Image Name="NavImage3" 
+                       Stretch="UniformToFill"/>
+                <TextBlock Name="NavLabel3"
+                           Text="Planner"
+                           Foreground="White"
+                           Background="#80000000"
+                           FontWeight="Bold"
+                           FontSize="12"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Padding="4"
+                           TextAlignment="Center"/>
+            </Grid>
+        </Button>
+    </StackPanel>
 
-                        <Button Click="Image3_Click" BorderThickness="0" Background="Transparent" Width="150" Height="100" Margin="5">
-                            <Grid>
-                                <Image Name="Image3" Stretch="UniformToFill"/>
-                                <TextBlock Name="Label3"
-                                           Text="Planner"
-                                           Foreground="White"
-                                           Background="#80000000"
-                                           FontWeight="Bold"
-                                           FontSize="12"
-                                           VerticalAlignment="Bottom"
-                                           HorizontalAlignment="Center"
-                                           Padding="4"
-                                           TextAlignment="Center"/>
-                            </Grid>
-                        </Button>
-
-                    </StackPanel>
-
-                    <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
-                </Grid>
+    <Button Grid.Column="2" 
+            Content="▶" 
+            Width="40" 
+            Height="40"
+            FontSize="20"
+            Background="#61be63"
+            Foreground="White"
+            BorderThickness="0"
+            Click="NavNextImage_Click"/>
+</Grid>
 
                 <Border Background="#bbeaba" CornerRadius="15" Padding="20" Margin="0,30,0,0">
                     <StackPanel>

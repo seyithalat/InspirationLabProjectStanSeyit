@@ -13,8 +13,14 @@
             <TextBlock Text="StudyMaterial" FontSize="24" FontWeight="Bold" Foreground="#61be63"
                        HorizontalAlignment="Center" Margin="0,10"/>
 
-            <!-- MULTI-IMAGE CAROUSEL -->
-            <TextBlock Text="Explore Features" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,10,0,10" TextAlignment="Center"/>
+            <!-- Navigation Carousel -->
+            <TextBlock Text="Navigate to Pages" 
+           FontSize="20" 
+           FontWeight="Bold" 
+           Foreground="Gray" 
+           Margin="0,20,0,10" 
+           TextAlignment="Center"/>
+
             <Grid HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -22,38 +28,101 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Content="◀" Width="40" Click="PrevImage_Click"/>
+                <Button Grid.Column="0" 
+            Content="◀" 
+            Width="40" 
+            Height="40"
+            FontSize="20"
+            Background="#61be63"
+            Foreground="White"
+            BorderThickness="0"
+            Click="NavPrevImage_Click"/>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
-                    <!-- Image 1 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Button Name="ImageButton1" BorderThickness="0" Background="Transparent">
-                            <Image Name="Image1" Stretch="UniformToFill"/>
-                        </Button>
-                        <TextBlock Name="Label1" Text="Feature 1" Foreground="White" Background="#80000000"
-                                   FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
-                    </Grid>
+                <StackPanel Grid.Column="1" 
+               Orientation="Horizontal" 
+               HorizontalAlignment="Center" 
+               Margin="10,0">
+                    <!-- Nav Item 1 -->
+                    <Button Click="NavImage1_Click" 
+                BorderThickness="0" 
+                Background="Transparent" 
+                Width="150" 
+                Height="100" 
+                Margin="5">
+                        <Grid>
+                            <Image Name="NavImage1" 
+                       Stretch="UniformToFill"/>
+                            <TextBlock Name="NavLabel1"
+                           Text="Features"
+                           Foreground="White"
+                           Background="#80000000"
+                           FontWeight="Bold"
+                           FontSize="12"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Padding="4"
+                           TextAlignment="Center"/>
+                        </Grid>
+                    </Button>
 
-                    <!-- Image 2 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Image Name="Image2" Stretch="UniformToFill"/>
-                        <TextBlock Name="Label2" Text="Feature 2" Foreground="White" Background="#80000000"
-                                   FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
-                    </Grid>
+                    <!-- Nav Item 2 -->
+                    <Button Click="NavImage2_Click" 
+                BorderThickness="0" 
+                Background="Transparent" 
+                Width="150" 
+                Height="100" 
+                Margin="5">
+                        <Grid>
+                            <Image Name="NavImage2" 
+                       Stretch="UniformToFill"/>
+                            <TextBlock Name="NavLabel2"
+                           Text="Profile"
+                           Foreground="White"
+                           Background="#80000000"
+                           FontWeight="Bold"
+                           FontSize="12"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Padding="4"
+                           TextAlignment="Center"/>
+                        </Grid>
+                    </Button>
 
-                    <!-- Image 3 -->
-                    <Grid Width="150" Height="100" Margin="5">
-                        <Image Name="Image3" Stretch="UniformToFill"/>
-                        <TextBlock Name="Label3" Text="Feature 3" Foreground="White" Background="#80000000"
-                                   FontWeight="Bold" FontSize="12" VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center" Padding="4" TextAlignment="Center"/>
-                    </Grid>
+                    <!-- Nav Item 3 -->
+                    <Button Click="NavImage3_Click" 
+                BorderThickness="0" 
+                Background="Transparent" 
+                Width="150" 
+                Height="100" 
+                Margin="5">
+                        <Grid>
+                            <Image Name="NavImage3" 
+                       Stretch="UniformToFill"/>
+                            <TextBlock Name="NavLabel3"
+                           Text="Planner"
+                           Foreground="White"
+                           Background="#80000000"
+                           FontWeight="Bold"
+                           FontSize="12"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Padding="4"
+                           TextAlignment="Center"/>
+                        </Grid>
+                    </Button>
                 </StackPanel>
 
-                <Button Grid.Column="2" Content="▶" Width="40" Click="NextImage_Click"/>
+                <Button Grid.Column="2" 
+            Content="▶" 
+            Width="40" 
+            Height="40"
+            FontSize="20"
+            Background="#61be63"
+            Foreground="White"
+            BorderThickness="0"
+            Click="NavNextImage_Click"/>
             </Grid>
+
 
             <!-- Notes Section -->
             <TextBlock Text="Notes" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
@@ -64,8 +133,8 @@
                                HorizontalAlignment="Center"/>
 
                     <!-- My Notes Section -->
-                    <TextBlock Text="My Notes" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,20,0,10"/>
-                    <Border Background="#f0f0f0" CornerRadius="10" Padding="10" Margin="0,0,0,10">
+                    <TextBlock Text="My Notes" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource SectionHeaderBrush}" Margin="0,20,0,10"/>
+                    <Border Background="{DynamicResource CardBrush}" CornerRadius="10" Padding="10" Margin="0,0,0,10">
                         <StackPanel>
                             <Button Content="Upload My Note" Width="150" Margin="0,0,0,10" Click="UploadMyNote_Click"/>
                             <ListBox Name="MyNotesList" Height="200" Margin="0,0,0,10"/>
@@ -77,8 +146,8 @@
                     </Border>
 
                     <!-- Shared Notes Section -->
-                    <TextBlock Text="Shared Notes" FontSize="20" FontWeight="Bold" Foreground="Gray" Margin="0,20,0,10"/>
-                    <Border Background="#e8f5e9" CornerRadius="10" Padding="10">
+                    <TextBlock Text="Shared Notes" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource SectionHeaderBrush}" Margin="0,20,0,10"/>
+                    <Border Background="{DynamicResource CardBrush}" CornerRadius="10" Padding="10">
                         <StackPanel>
                             <ListBox Name="SharedNotesList" Height="200" Margin="0,0,0,10"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">

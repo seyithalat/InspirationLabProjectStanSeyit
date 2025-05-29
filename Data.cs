@@ -1227,7 +1227,41 @@ namespace InspirationLabProjectStanSeyit
             }
             return tasks;
         }
-
+        public static void AddInvitation(int senderId, string recipientEmail)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO invitations (sender_id, recipient_email) VALUES (@senderId, @recipientEmail)";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@senderId", senderId);
+                    cmd.Parameters.AddWithValue("@recipientEmail", recipientEmail);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public static List<string> GetPendingInvitations(int senderId)
+        {
+            var invitations = new List<string>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT recipient_email FROM invitations WHERE sender_id = @senderId AND status = 'pending'";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@senderId", senderId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            invitations.Add(reader.GetString("recipient_email"));
+                        }
+                    }
+                }
+            }
+            return invitations;
+        }
         public class Task
         {
             public int Id { get; set; }

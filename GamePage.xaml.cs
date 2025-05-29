@@ -36,11 +36,7 @@ namespace InspirationLabProjectStanSeyit
 
         private int currentNavIndex = 0;
 
-        public GamePage()
-        {
-            InitializeComponent();
-            Loaded += GamePage_Loaded;
-        }
+      
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -105,7 +101,11 @@ namespace InspirationLabProjectStanSeyit
         {
             NavigateToPage(NavLabel3.Text);
         }
-
+        public GamePage()
+        {
+            InitializeComponent();
+            Loaded += GamePage_Loaded;
+        }
         private void NavigateToPage(string pageName)
         {
             Window newWindow = null;

@@ -141,5 +141,12 @@ namespace InspirationLabProjectStanSeyit
             featuresWindow.Show();
             this.Close();
         }
+
+        private void GoBackToHomepage_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
     }
 }
