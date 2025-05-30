@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -10,8 +10,42 @@ namespace InspirationLabProjectStanSeyit
 {
     public partial class GamePage : Window
     {
-        private List<string> navImages = new List<string>
+
+        
+
+        public GamePage()
         {
+            InitializeComponent();
+            UpdateImageSet();
+        }
+
+        
+
+        private void PlayTrivia_Click(object sender, RoutedEventArgs e)
+        {
+            var triviaGame = new TriviaGame();
+            triviaGame.Show();
+        }
+
+        private void PlayMath_Click(object sender, RoutedEventArgs e)
+        {
+            var mathGame = new MathGame();
+            mathGame.Show();
+        }
+
+        private void PlayWordScramble_Click(object sender, RoutedEventArgs e)
+        {
+            var wordScrambleGame = new WordScrambleGame();
+            wordScrambleGame.Show();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateImageSet();
+        }
+
+        private readonly List<string> imagePaths = new List<string>
+        {
+            "Images/homepagecarouselimage.jpg",
             "Images/featurescarouselimage.jpg",
             "Images/profilecarouselimage.jpg",
             "Images/plannercarouselimage.jpg",
@@ -22,17 +56,20 @@ namespace InspirationLabProjectStanSeyit
             "Images/contactcarouselimage.jpg"
         };
 
-        private List<string> navTitles = new List<string>
+
+        private List<string> imageTitles = new List<string>
         {
             "Features",
             "Profile",
             "Planner",
             "Groups",
-            "Games",
+            "Focus Games",
             "Notes",
             "Management",
-            "Contact"
+            "Contact",
+            "Settings"
         };
+
 
         private int currentNavIndex = 0;
 
@@ -51,56 +88,51 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
-        private void UpdateNavCarousel()
+
+        public void UpdateImageSet()
         {
-            if (navImages.Count < 3) return;
+            if (imagePaths.Count < 3) return;
 
-            int i1 = currentNavIndex % navImages.Count;
-            int i2 = (currentNavIndex + 1) % navImages.Count;
-            int i3 = (currentNavIndex + 2) % navImages.Count;
+            int i1 = startIndex % imagePaths.Count;
+            int i2 = (startIndex + 1) % imagePaths.Count;
+            int i3 = (startIndex + 2) % imagePaths.Count;
 
-            try
-            {
-                NavImage1.Source = new BitmapImage(new Uri(navImages[i1], UriKind.Relative));
-                NavImage2.Source = new BitmapImage(new Uri(navImages[i2], UriKind.Relative));
-                NavImage3.Source = new BitmapImage(new Uri(navImages[i3], UriKind.Relative));
+            Image1.Source = new BitmapImage(new Uri(imagePaths[i1], UriKind.Relative));
+            Image2.Source = new BitmapImage(new Uri(imagePaths[i2], UriKind.Relative));
+            Image3.Source = new BitmapImage(new Uri(imagePaths[i3], UriKind.Relative));
 
-                NavLabel1.Text = navTitles[i1];
-                NavLabel2.Text = navTitles[i2];
-                NavLabel3.Text = navTitles[i3];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading navigation images: {ex.Message}");
-            }
+            Label1.Text = imageTitles[i1];
+            Label2.Text = imageTitles[i2];
+            Label3.Text = imageTitles[i3];
         }
 
-        private void NavPrevImage_Click(object sender, RoutedEventArgs e)
+        private void PrevImage_Click(object sender, RoutedEventArgs e)
         {
-            currentNavIndex = (currentNavIndex - 1 + navImages.Count) % navImages.Count;
-            UpdateNavCarousel();
+            startIndex = (startIndex - 1 + imagePaths.Count) % imagePaths.Count;
+            UpdateImageSet();
         }
 
-        private void NavNextImage_Click(object sender, RoutedEventArgs e)
+        private void NextImage_Click(object sender, RoutedEventArgs e)
         {
-            currentNavIndex = (currentNavIndex + 1) % navImages.Count;
-            UpdateNavCarousel();
+            startIndex = (startIndex + 1) % imagePaths.Count;
+            UpdateImageSet();
         }
 
-        private void NavImage1_Click(object sender, RoutedEventArgs e)
+        private void Image1_Click(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(NavLabel1.Text);
+            NavigateToPage(startIndex % imagePaths.Count);
         }
 
-        private void NavImage2_Click(object sender, RoutedEventArgs e)
+        private void Image2_Click(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(NavLabel2.Text);
+            NavigateToPage((startIndex + 1) % imagePaths.Count);
         }
 
-        private void NavImage3_Click(object sender, RoutedEventArgs e)
+        private void Image3_Click(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(NavLabel3.Text);
+            NavigateToPage((startIndex + 2) % imagePaths.Count);
         }
+
         public GamePage()
         {
             InitializeComponent();
@@ -109,31 +141,38 @@ namespace InspirationLabProjectStanSeyit
         private void NavigateToPage(string pageName)
         {
             Window newWindow = null;
-            switch (pageName.ToLower())
+
+            switch (index)
             {
-                case "features":
+                case 0: // Features
                     newWindow = new Features();
                     break;
-                case "profile":
+                case 1: // Profile
                     newWindow = new Profile();
                     break;
-                case "planner":
+                case 2: // Planner
                     newWindow = new Planner();
                     break;
-                case "groups":
+                case 3: // Groups
                     newWindow = new StudyGroups();
                     break;
-                case "games":
+                case 4: // Focus Games
                     newWindow = new GamePage();
                     break;
-                case "notes":
+                case 5: // Notes
                     newWindow = new StudyMaterial();
                     break;
-                case "management":
+                case 6: // Management
                     newWindow = new Management();
                     break;
-                case "contact":
+                case 7: // Contact
                     newWindow = new Contact();
+                    break;
+                case 8: // Settings
+                    newWindow = new Settings();
+                    break;
+                default:
+                    newWindow = new Features();
                     break;
             }
 
@@ -142,24 +181,7 @@ namespace InspirationLabProjectStanSeyit
                 newWindow.Show();
                 this.Close();
             }
-        }
 
-        private void PlayTrivia_Click(object sender, RoutedEventArgs e)
-        {
-            var triviaGame = new TriviaGame();
-            triviaGame.Show();
-        }
-
-        private void PlayMath_Click(object sender, RoutedEventArgs e)
-        {
-            var mathGame = new MathGame();
-            mathGame.Show();
-        }
-
-        private void PlayWordScramble_Click(object sender, RoutedEventArgs e)
-        {
-            var wordScrambleGame = new WordScrambleGame();
-            wordScrambleGame.Show();
         }
 
         private void EndGame()
