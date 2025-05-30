@@ -12,42 +12,49 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Create Account" FontSize="32" FontWeight="Bold" Foreground="#2e2e2e" 
                    HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
         <StackPanel Grid.Row="1" Margin="0,0,0,15">
-            <Label Content="First Name" FontSize="16" FontWeight="Bold" Foreground="#2e2e2e"/>
-            <TextBox Name="FirstNameBox" Height="40" Padding="10" FontSize="16"
+            <Label Content="First Name" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <TextBox Name="FirstNameBox" Height="40" Padding="10" FontSize="11"
                      BorderBrush="#61be63" BorderThickness="2" Background="White"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Margin="0,0,0,15">
-            <Label Content="Last Name" FontSize="16" FontWeight="Bold" Foreground="#2e2e2e"/>
-            <TextBox Name="LastNameBox" Height="40" Padding="10" FontSize="16"
+            <Label Content="Last Name" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <TextBox Name="LastNameBox" Height="40" Padding="10" FontSize="11"
                      BorderBrush="#61be63" BorderThickness="2" Background="White"/>
         </StackPanel>
 
         <StackPanel Grid.Row="3" Margin="0,0,0,15">
-            <Label Content="Username" FontSize="16" FontWeight="Bold" Foreground="#2e2e2e"/>
-            <TextBox Name="UsernameBox" Height="40" Padding="10" FontSize="16"
+            <Label Content="Username" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <TextBox Name="UsernameBox" Height="40" Padding="10" FontSize="11"
                      BorderBrush="#61be63" BorderThickness="2" Background="White"/>
         </StackPanel>
 
         <StackPanel Grid.Row="4" Margin="0,0,0,15">
-            <Label Content="Email" FontSize="16" FontWeight="Bold" Foreground="#2e2e2e"/>
-            <TextBox Name="EmailBox" Height="40" Padding="10" FontSize="16"
+            <Label Content="Email" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <TextBox Name="EmailBox" Height="40" Padding="10" FontSize="11"
                      BorderBrush="#61be63" BorderThickness="2" Background="White"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="5" Margin="0,0,0,20">
-            <Label Content="Password" FontSize="16" FontWeight="Bold" Foreground="#2e2e2e"/>
-            <PasswordBox Name="PasswordBox" Height="40" Padding="10" FontSize="16"
-                        BorderBrush="#61be63" BorderThickness="2" Background="White"/>
+        <StackPanel Grid.Row="5" Margin="0,0,0,15">
+            <Label Content="Password" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <PasswordBox Name="PasswordBox" Height="40" Padding="10" FontSize="12"
+                         BorderBrush="#61be63" BorderThickness="2" Background="White"/>
         </StackPanel>
 
-        <Button Grid.Row="6" Content="Register" Width="200" Height="50"
+        <StackPanel Grid.Row="6" Margin="0,0,0,15">
+            <Label Content="Confirm Password" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <PasswordBox Name="ConfirmPasswordBox" Height="40" Padding="10" FontSize="12"
+                         BorderBrush="#61be63" BorderThickness="2" Background="White"/>
+        </StackPanel>
+
+        <Button Grid.Row="7" Content="Register" Width="200" Height="50"
                 HorizontalAlignment="Center"
                 Background="#61be63" Foreground="White"
                 FontSize="18" FontWeight="Bold"

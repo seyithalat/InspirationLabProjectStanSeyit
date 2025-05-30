@@ -17,10 +17,6 @@
                        HorizontalAlignment="Center" 
                        Margin="0,10"/>
 
-
-            <!-- Static Map of Mechelen with Study Locations -->
-            <Image x:Name="StudyMapImage" Width="600" Height="400" Margin="0,20" Stretch="Uniform"/>
-
             <!-- Navigation Carousel -->
             <TextBlock Text="Navigate to Pages" 
                        FontSize="20" 
@@ -131,13 +127,23 @@
                         Click="NavNextImage_Click"/>
             </Grid>
 
-            <!-- CAROUSEL -->
-            <TextBlock Text="Explore Study Locations" 
+          
+            <!-- Static Map of Mechelen with Study Locations -->
+            <TextBlock Text="Study Locations Map" 
                        FontSize="20" 
                        FontWeight="Bold" 
                        Foreground="Gray" 
-                       Margin="0,10,0,10" 
+                       Margin="0,20,0,10" 
                        TextAlignment="Center"/>
+            <Button Content="Refresh Map" 
+                    Click="RefreshMap_Click"
+                    Width="150"
+                    Margin="0,0,0,15"
+                    Padding="10,5"
+                    HorizontalAlignment="Center"/>
+            <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="8" Background="{DynamicResource CardBrush}">
+                <Image x:Name="StudyMapImage" Width="600" Height="400" Stretch="Uniform"/>
+            </Border>
 
             <!-- Location Submissions Admin Button -->
             <Button Content="Review Location Submissions" 
@@ -149,81 +155,37 @@
                     Margin="0,20"
                     HorizontalAlignment="Center"/>
 
-            <Grid HorizontalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" 
-                        Content="◀" 
-                        Width="40" 
-                        Height="40"
-                        FontSize="20"
-                        Background="#61be63"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Click="PrevImage_Click"/>
-
-                <StackPanel Grid.Column="1" 
-                           Orientation="Horizontal" 
-                           HorizontalAlignment="Center" 
-                           Margin="10,0">
-                    <!-- Carousel Item 1 -->
-                    <Grid Width="250" Height="150" Margin="5">
-                        <Button x:Name="CarouselButton1" 
-                                BorderThickness="0" 
-                                Background="Transparent" 
-                                Click="CarouselItem1_Click">
-                            <Image x:Name="CarouselImage1" 
-                                   Stretch="UniformToFill"/>
-                        </Button>
-                        <TextBlock x:Name="CarouselLabel1"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="14"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="8"
-                                   TextAlignment="Center"/>
-                    </Grid>
-
-                    <!-- Carousel Item 2 -->
-                    <Grid Width="250" Height="150" Margin="5">
-                        <Button x:Name="CarouselButton2" 
-                                BorderThickness="0" 
-                                Background="Transparent" 
-                                Click="CarouselItem2_Click">
-                            <Image x:Name="CarouselImage2" 
-                                   Stretch="UniformToFill"/>
-                        </Button>
-                        <TextBlock x:Name="CarouselLabel2"
-                                   Foreground="White"
-                                   Background="#80000000"
-                                   FontWeight="Bold"
-                                   FontSize="14"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Padding="8"
-                                   TextAlignment="Center"/>
-                    </Grid>
-                </StackPanel>
-
-                <Button Grid.Column="2" 
-                        Content="▶" 
-                        Width="40" 
-                        Height="40"
-                        FontSize="20"
-                        Background="#61be63"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Click="NextImage_Click"/>
-            </Grid>
+            <!-- Admin Panel -->
+            <StackPanel x:Name="AdminPanel" Visibility="Collapsed" Margin="0,20,0,0">
+                <TextBlock Text="Approved Locations (Admin Only)"
+                           FontWeight="Bold"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Center"/>
+                <DataGrid x:Name="ApprovedLocationsList" 
+                         Width="600" 
+                         AutoGenerateColumns="False" 
+                         SelectionMode="Single">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="250"/>
+                        <DataGridTemplateColumn Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" 
+                                            Click="DeleteApprovedLocation_Click" 
+                                            Tag="{Binding Id}" 
+                                            Background="Red" 
+                                            Foreground="White" 
+                                            Margin="5,0"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
 
             <!-- MY GROUPS SECTION -->
-            <TextBlock Text="MY GROUPS" 
+            <TextBlock Text="STUDY LOCATIONS" 
                        FontSize="22" 
                        Foreground="#61be63" 
                        FontWeight="Bold" 
@@ -234,23 +196,44 @@
                 <ListView>
                     <ListViewItem>
                         <StackPanel>
-                            <TextBlock Text="Study Group Alpha" FontWeight="Bold"/>
+                            <TextBlock Text="Campus Library" FontWeight="Bold"/>
                             <TextBlock Text="Location: Campus Library"/>
-                            <TextBlock Text="Thickness: 85% Attendance"/>
+                            <TextBlock Text="Popularity: High"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem>
                         <StackPanel>
-                            <TextBlock Text="Math Masters" FontWeight="Bold"/>
-                            <TextBlock Text="Location: Online"/>
-                            <TextBlock Text="Thickness: 92% Attendance"/>
+                            <TextBlock Text="Student Lounge" FontWeight="Bold"/>
+                            <TextBlock Text="Location: Student Center"/>
+                            <TextBlock Text="Popularity: Medium"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Text="Study Rooms" FontWeight="Bold"/>
+                            <TextBlock Text="Location: Academic Building"/>
+                            <TextBlock Text="Popularity: High"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Text="Cafeteria" FontWeight="Bold"/>
+                            <TextBlock Text="Location: Student Center"/>
+                            <TextBlock Text="Popularity: Medium"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel>
+                            <TextBlock Text="Outdoor Study Area" FontWeight="Bold"/>
+                            <TextBlock Text="Location: Campus Green"/>
+                            <TextBlock Text="Popularity: Low"/>
                         </StackPanel>
                     </ListViewItem>
                 </ListView>
             </Border>
 
             <!-- REGISTER NEW SECTION -->
-            <TextBlock Text="REGISTER NEW GROUP" 
+            <TextBlock Text="REGISTER NEW LOCATION" 
                        FontSize="22" 
                        Foreground="#61be63" 
                        FontWeight="Bold" 
@@ -259,18 +242,21 @@
 
             <Border Background="#bbeaba" CornerRadius="10" Padding="15">
                 <StackPanel>
-                    <Grid>
+                    <Grid Background="#bbeaba">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                            <TextBlock Text="Location:" Margin="0,0,0,5"/>
-                            <TextBox Width="200" Margin="0,0,0,10"/>
+                            <TextBlock Text="Location Name:" Margin="0,0,0,5" Foreground="#61be63"/>
+                            <TextBox x:Name="LocationNameTextBox" Width="200" Margin="0,0,0,10"/>
 
-                            <TextBlock Text="Population:" Margin="0,0,0,5"/>
-                            <ComboBox Width="200">
+                            <TextBlock Text="Building:" Margin="0,0,0,5" Foreground="#61be63"/>
+                            <TextBox x:Name="BuildingTextBox" Width="200" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Popularity:" Margin="0,0,0,5" Foreground="#61be63"/>
+                            <ComboBox x:Name="PopularityComboBox" Width="200">
                                 <ComboBoxItem>High</ComboBoxItem>
                                 <ComboBoxItem>Medium</ComboBoxItem>
                                 <ComboBoxItem>Low</ComboBoxItem>
@@ -278,37 +264,12 @@
                         </StackPanel>
 
                         <Button Grid.Column="1" 
-                                Content="CREATE GROUP" 
+                                Content="SUBMIT LOCATION" 
                                 Width="150" 
                                 Height="40"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Click="CreateGroup_Click"/>
-                    </Grid>
-                </StackPanel>
-            </Border>
-
-            <!-- INVITE SECTION -->
-            <TextBlock Text="INVITE MEMBERS" 
-                       FontSize="22" 
-                       Foreground="#61be63" 
-                       FontWeight="Bold" 
-                       Margin="0,20,0,10"
-                       HorizontalAlignment="Center"/>
-
-            <Border Background="#bbeaba" CornerRadius="10" Padding="15">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBox Grid.Column="0" 
-                                 Margin="0,0,10,0" 
-                                 Height="30"
-                                 Text="Enter email address"/>
-
+                                Click="SubmitLocation_Click"/>
                     </Grid>
                 </StackPanel>
             </Border>

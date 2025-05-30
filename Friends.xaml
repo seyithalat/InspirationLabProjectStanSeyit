@@ -41,8 +41,8 @@
                 <Button Content="Delete Selected Friend" Width="200" Click="DeleteFriend_Click"/>
             </StackPanel>
 
-            <Button Content="← Back to Features" 
-                    Click="GoBackToFeatures_Click"
+            <Button Content="← Back to Homepage" 
+                    Click="GoBackToMain_Click"
                     Width="150"
                     Height="32"
                     Margin="0,10,0,0"

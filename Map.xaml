@@ -24,14 +24,18 @@
                    Grid.ColumnSpan="2"
                    HorizontalAlignment="Center"/>
 
-        <!-- Go Back Button -->
-        <Button Content="← Back to Features" 
-                Click="GoBackToFeatures_Click"
-                Width="150"
-                Height="32"
-                Margin="0,10,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"/>
+        <!-- Go Back Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Button Content="← Back to Features" 
+                    Click="GoBackToFeatures_Click"
+                    Width="150"
+                    Height="32"
+                    Margin="0,0,10,0"/>
+            <Button Content="← Back to Homepage" 
+                    Click="GoBackToHomepage_Click"
+                    Width="170"
+                    Height="32"/>
+        </StackPanel>
 
         <!-- Left: Map and Refresh Button -->
         <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center">

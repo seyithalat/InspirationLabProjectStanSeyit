@@ -172,10 +172,10 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
-        private void GoBackToFeatures_Click(object sender, RoutedEventArgs e)
+        private void GoBackToMain_Click(object sender, RoutedEventArgs e)
         {
-            var featuresWindow = new Features();
-            featuresWindow.Show();
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
         }
     }

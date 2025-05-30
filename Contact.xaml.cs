@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using InspirationLabProjectStanSeyit;
 
 
@@ -6,74 +9,126 @@ namespace InspirationLabProjectStanSeyit
 {
     public partial class Contact : Window
     {
-        public Contact()
+        private List<string> navImages = new List<string>
+{
+    "Images/featurescarouselimage.jpg",
+    "Images/profilecarouselimage.jpg",
+    "Images/plannercarouselimage.jpg",
+    "Images/groupscarouselimage.jpg",
+    "Images/gamescarouselimage.jpg",
+    "Images/notescarouselimage.jpg",
+    "Images/managementcarouselimage.jpg",
+    "Images/contactcarouselimage.jpg"
+};
+
+        private List<string> navTitles = new List<string>
+{
+    "Features",
+    "Profile",
+    "Planner",
+    "Groups",
+    "Games",
+    "Notes",
+    "Management",
+    "Contact"
+};
+
+        private int currentNavIndex = 0;
+
+        private void Contact_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-            UpdateImageSet();
+            try
+            {
+                UpdateNavCarousel();
+                // Hide the ReviewContactMessages button if the user is not an admin
+                ReviewContactMessagesButton.Visibility = Data.IsUserAdmin(Session.CurrentUserId) ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during initialization: {ex.Message}", "Initialization Error");
+            }
         }
 
-        private void PrevImage_Click(object sender, RoutedEventArgs e)
+        private void UpdateNavCarousel()
         {
-            startIndex = (startIndex - 1 + imagePaths.Count) % imagePaths.Count;
-            UpdateImageSet();
+            if (navImages.Count < 3) return;
+
+            int i1 = currentNavIndex % navImages.Count;
+            int i2 = (currentNavIndex + 1) % navImages.Count;
+            int i3 = (currentNavIndex + 2) % navImages.Count;
+
+            try
+            {
+                NavImage1.Source = new BitmapImage(new Uri(navImages[i1], UriKind.Relative));
+                NavImage2.Source = new BitmapImage(new Uri(navImages[i2], UriKind.Relative));
+                NavImage3.Source = new BitmapImage(new Uri(navImages[i3], UriKind.Relative));
+
+                NavLabel1.Text = navTitles[i1];
+                NavLabel2.Text = navTitles[i2];
+                NavLabel3.Text = navTitles[i3];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading navigation images: {ex.Message}");
+            }
         }
 
-        private void NextImage_Click(object sender, RoutedEventArgs e)
+        private void NavPrevImage_Click(object sender, RoutedEventArgs e)
         {
-            startIndex = (startIndex + 1) % imagePaths.Count;
-            UpdateImageSet();
+            currentNavIndex = (currentNavIndex - 1 + navImages.Count) % navImages.Count;
+            UpdateNavCarousel();
         }
 
-        private void Image1_Click(object sender, RoutedEventArgs e)
+        private void NavNextImage_Click(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(startIndex % imagePaths.Count);
+
+            currentNavIndex = (currentNavIndex + 1) % navImages.Count;
+            UpdateNavCarousel();
         }
 
-        private void Image2_Click(object sender, RoutedEventArgs e)
+        private void NavImage1_Click(object sender, RoutedEventArgs e)
         {
-            NavigateToPage((startIndex + 1) % imagePaths.Count);
+            NavigateToPage(NavLabel1.Text);
+
         }
 
-        private void Image3_Click(object sender, RoutedEventArgs e)
+        private void NavImage2_Click(object sender, RoutedEventArgs e)
         {
-            NavigateToPage((startIndex + 2) % imagePaths.Count);
+            NavigateToPage(NavLabel2.Text);
         }
 
-        private void NavigateToPage(int index)
+        private void NavImage3_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage(NavLabel3.Text);
+        }
+        private void NavigateToPage(string pageName)
         {
             Window newWindow = null;
-
-            switch (index)
+            switch (pageName.ToLower())
             {
-                case 0: // Features
+                case "features":
                     newWindow = new Features();
                     break;
-                case 1: // Profile
+                case "profile":
                     newWindow = new Profile();
                     break;
-                case 2: // Planner
+                case "planner":
                     newWindow = new Planner();
                     break;
-                case 3: // Groups
+                case "groups":
                     newWindow = new StudyGroups();
                     break;
-                case 4: // Focus Games
+                case "games":
                     newWindow = new GamePage();
                     break;
-                case 5: // Notes
+                case "notes":
                     newWindow = new StudyMaterial();
                     break;
-                case 6: // Management
+                case "management":
                     newWindow = new Management();
                     break;
-                case 7: // Contact
+                case "contact":
                     newWindow = new Contact();
-                    break;
-                case 8: // Settings
-                    newWindow = new Settings();
-                    break;
-                default:
-                    newWindow = new Features();
                     break;
             }
 
@@ -83,25 +138,13 @@ namespace InspirationLabProjectStanSeyit
                 this.Close();
             }
         }
-
-        // <== Here is the newly added Submit button click handler
-        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        public Contact()
         {
-            string name = NameTextBox.Text;
-            string email = EmailTextBox.Text;
-            string subject = SubjectTextBox.Text;
-            string message = MessageTextBox.Text;
-
-            // Simple confirmation popup
-            MessageBox.Show($"Thank you, {name}! Your message has been submitted.",
-                "Submission Successful", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            // Clear the form
-            NameTextBox.Clear();
-            EmailTextBox.Clear();
-            SubjectTextBox.Clear();
-            MessageTextBox.Clear();
+            InitializeComponent();
+            Loaded += Contact_Loaded;
         }
+
+
         // Example: On Submit button click
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
