@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Study Locations Map" Height="600" Width="900">
     <Grid Margin="20">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1.2*"/>

@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace InspirationLabProjectStanSeyit
 {
-    // Interaction logic for Settings.xaml
+    // Interaction logic for Settings.xaml.
     public partial class Settings : Window
     {
         public Settings()

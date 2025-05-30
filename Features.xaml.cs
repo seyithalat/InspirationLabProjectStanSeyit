@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 namespace InspirationLabProjectStanSeyit
 {
 
+
     public partial class Features : Window
 
     {

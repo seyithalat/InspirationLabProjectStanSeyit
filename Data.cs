@@ -9,6 +9,7 @@ namespace InspirationLabProjectStanSeyit
 {
     public class ChatMessage
     {
+        // Creation of ChatMessage class with properties to store chat message details
         public int Id { get; set; }
         public int SenderId { get; set; }
         public int ReceiverId { get; set; }
@@ -1301,7 +1302,7 @@ namespace InspirationLabProjectStanSeyit
                             Id = reader.GetInt32("Id"),
                             UserId = reader.GetInt32("UserId"),
                             Title = reader.GetString("Title"),
-                            Content = (byte[])reader["Content"],
+                            Content = reader.IsDBNull(reader.GetOrdinal("Content")) ? null : (byte[])reader["Content"],
                             FilePath = reader.GetString("FilePath"),
                             CreatedAt = reader.GetDateTime("CreatedAt"),
                             UpdatedAt = reader.GetDateTime("UpdatedAt"),
@@ -1369,7 +1370,7 @@ namespace InspirationLabProjectStanSeyit
                             Id = reader.GetInt32("Id"),
                             UserId = reader.GetInt32("UserId"),
                             Title = reader.GetString("Title"),
-                            Content = (byte[])reader["Content"],
+                            Content = reader.IsDBNull(reader.GetOrdinal("Content")) ? null : (byte[])reader["Content"],
                             FilePath = reader.GetString("FilePath"),
                             CreatedAt = reader.GetDateTime("CreatedAt"),
                             UpdatedAt = reader.GetDateTime("UpdatedAt"),
@@ -1419,7 +1420,7 @@ namespace InspirationLabProjectStanSeyit
                             Id = reader.GetInt32("Id"),
                             UserId = reader.GetInt32("UserId"),
                             Title = reader.GetString("Title"),
-                            Content = (byte[])reader["Content"],
+                            Content = reader.IsDBNull(reader.GetOrdinal("Content")) ? null : (byte[])reader["Content"],
                             FilePath = reader.GetString("FilePath"),
                             CreatedAt = reader.GetDateTime("CreatedAt"),
                             UpdatedAt = reader.GetDateTime("UpdatedAt")

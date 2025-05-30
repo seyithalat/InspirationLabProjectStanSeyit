@@ -14,7 +14,7 @@ namespace InspirationLabProjectStanSeyit.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         
-        // Sharing information
+        // Sharing information.
         public string SharedByUsername { get; set; }
         public string SharedWithUsername { get; set; }
         public DateTime? SharedAt { get; set; }

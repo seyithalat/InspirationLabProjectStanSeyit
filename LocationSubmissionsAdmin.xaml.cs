@@ -17,6 +17,7 @@ namespace InspirationLabProjectStanSeyit
 {
     public partial class LocationSubmissionsAdmin : Window
     {
+        // Connection string for phpMyAdmin MySQL database (same as Data.cs)
         public LocationSubmissionsAdmin()
         {
             // Check if the current user is an admin

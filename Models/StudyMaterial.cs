@@ -13,7 +13,7 @@ namespace InspirationLabProjectStanSeyit.Models
         public int CreatedById { get; set; }
         public int? StudyGroupId { get; set; }
         
-        // Navigation properties
+        // Navigation properties.
         public virtual User CreatedBy { get; set; }
         public virtual StudyGroup StudyGroup { get; set; }
     }

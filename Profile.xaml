@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
         Title="Profile" Height="800" Width="800">
+    
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
             <!-- Comment -->

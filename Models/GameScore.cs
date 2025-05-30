@@ -11,7 +11,7 @@ namespace InspirationLabProjectStanSeyit.Models
         public int Score { get; set; }
         public DateTime PlayedAt { get; set; }
         
-        // Navigation property
+        // Navigation property.
         public virtual User User { get; set; }
     }
 } 

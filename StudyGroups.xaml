@@ -10,6 +10,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Window.Resources>
     <Grid>
+        
                 <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="*"/>

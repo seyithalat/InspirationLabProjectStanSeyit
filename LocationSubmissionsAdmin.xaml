@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
         Title="Review Location Submissions" Height="500" Width="800">
+    
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

@@ -144,6 +144,9 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+
+
+
         private void PlayTrivia_Click(object sender, RoutedEventArgs e)
         {
             var triviaGame = new TriviaGame();

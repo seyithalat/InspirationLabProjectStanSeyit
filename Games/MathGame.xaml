@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Math Game" Height="450" Width="800">
     <Grid>
+        
+        
         <StackPanel Margin="20">
             <TextBlock x:Name="TimerText" FontSize="18" HorizontalAlignment="Center" Margin="0,10"/>
             <TextBlock x:Name="LivesText" FontSize="18" HorizontalAlignment="Center" Margin="0,10"/>

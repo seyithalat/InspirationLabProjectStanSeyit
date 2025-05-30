@@ -6,6 +6,7 @@ using System.Windows.Threading;
 
 namespace InspirationLabProjectStanSeyit.Games
 {
+
     public partial class TriviaGame : Window
     {
         private List<TriviaQuestion> questions;

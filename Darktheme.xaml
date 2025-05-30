@@ -11,6 +11,7 @@
     <SolidColorBrush x:Key="InputBrush" Color="#FF2D2D2D"/>
     <SolidColorBrush x:Key="InnerPanelBrush" Color="#FF181818"/>
 
+    
     <!-- Window style -->
     <Style TargetType="Window">
         <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
