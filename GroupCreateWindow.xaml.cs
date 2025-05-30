@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 
 namespace InspirationLabProjectStanSeyit
 {
-    /// <summary>
-    /// Interaction logic for GroupCreateWindow.xaml
-    /// </summary>
+
+    //Interaction logic for GroupCreateWindow.xaml
+
     public partial class GroupCreateWindow : Window
     {
         public GroupCreateWindow()

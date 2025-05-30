@@ -4,6 +4,7 @@ namespace InspirationLabProjectStanSeyit.Models
 {
     public class StudyMaterial
     {
+        // Creation of StudyMaterial class with properties to store study material details
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

@@ -9,7 +9,7 @@ namespace InspirationLabProjectStanSeyit
         public App()
         {
             SetBrowserFeatureControl();
-            // Database initialization removed; handled elsewhere if needed
+            // Database initialization removed; handled elsewhere if necessary
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -19,13 +19,21 @@ namespace InspirationLabProjectStanSeyit
             var mainWindow = new MainWindow();
             mainWindow.Show();
         }
-
+        // Sets the Internet Explorer browser emulation mode for the application.
+        // This ensures that web content is rendered using IE11's rendering engine.
         private void SetBrowserFeatureControl()
         {
+            // Get the name of the current application executable
             string appName = System.IO.Path.GetFileName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            // Create or open the registry key for IE browser emulation settings
+            
             using (var key = Registry.CurrentUser.CreateSubKey(@"Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION"))
             {
-                key.SetValue(appName, 11001, RegistryValueKind.DWord); // 11001 = IE11 mode
+                // Set the browser emulation mode to IE11 (11001)
+                // 11 = IE11
+                // 001 = Standards mode
+                key.SetValue(appName, 11001, RegistryValueKind.DWord);
             }
         }
 

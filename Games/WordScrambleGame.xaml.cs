@@ -166,6 +166,7 @@ namespace InspirationLabProjectStanSeyit.Games
                 LivesText.Text = $"Lives: {lives}";
                 MessageBox.Show($"Wrong! The correct answer was: {correctAnswer}", "Answer");
                 if (lives <= 0)
+                // No lives left, end game
                 {
                     timer.Stop();
                     MessageBox.Show($"No lives left! Your final score is: {score}", "Game Over");
@@ -190,7 +191,7 @@ namespace InspirationLabProjectStanSeyit.Games
             if (timer != null)
                 timer.Stop();
             Data.SaveGameScore(Session.CurrentUserId, "WordScramble", score, DateTime.Now);
-            // Show game over UI, etc.
+            // Show game over UI, etc...
         }
     }
 }

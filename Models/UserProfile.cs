@@ -8,6 +8,7 @@ namespace InspirationLabProjectStanSeyit.Models
 {
     public class UserProfile
     {
+        // Creation of UserProfile class with properties to store user profile details
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Bio { get; set; }
