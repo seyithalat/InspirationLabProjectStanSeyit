@@ -7,6 +7,7 @@ using System.Windows.Media;
 
 namespace InspirationLabProjectStanSeyit
 {
+    
     public class Task
     {
         public string Title { get; set; }

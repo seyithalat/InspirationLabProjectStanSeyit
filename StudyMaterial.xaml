@@ -134,6 +134,16 @@
 
                     <!-- My Notes Section -->
                     <TextBlock Text="My Notes" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource SectionHeaderBrush}" Margin="0,20,0,10"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,-30,0,10">
+                        <Button Content="🔄" 
+                                Width="30" 
+                                Height="30"
+                                FontSize="16"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="RefreshNotes_Click"
+                                ToolTip="Refresh Notes"/>
+                    </StackPanel>
                     <Border Background="{DynamicResource CardBrush}" CornerRadius="10" Padding="10" Margin="0,0,0,10">
                         <StackPanel>
                             <Button Content="Upload My Note" Width="150" Margin="0,0,0,10" Click="UploadMyNote_Click"/>

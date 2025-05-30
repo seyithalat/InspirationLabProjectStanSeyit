@@ -154,12 +154,6 @@ namespace InspirationLabProjectStanSeyit
             this.Hide();
         }
 
-                     
-        private void OpenFriends_Click(object sender, RoutedEventArgs e)
-        {
-            var friendsWindow = new Friends();
-            friendsWindow.Show();
-            this.Close();
-        }
+                  
     }
 }

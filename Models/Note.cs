@@ -5,6 +5,7 @@ namespace InspirationLabProjectStanSeyit.Models
 {
     public class Note
     {
+        // Creation of Note class with properties to store note details
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Title { get; set; }

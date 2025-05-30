@@ -6,10 +6,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-
 namespace InspirationLabProjectStanSeyit
 {
-    
+    // Value converter for message background colors.
+    // Returns a light green background for sent messages and white for received messages.
+   
     public class MessageBackgroundConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -23,6 +24,11 @@ namespace InspirationLabProjectStanSeyit
             throw new NotImplementedException();
         }
     }
+
+   
+    // Value converter for message alignment.
+    // Aligns sent messages to the right and received messages to the left.
+    
     public class MessageAlignmentConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -37,13 +43,28 @@ namespace InspirationLabProjectStanSeyit
         }
     }
 
+    //Chat window that handles real-time messaging between two users.
+    //Features include:
+    //Real-time message updates (with a 2-second refresh interval)
+    //Message history display
+    //Send messages with Enter+Ctrl or Send button
+    //Visual distinction between sent and received messages
+
     public partial class Chat : Window
     {
+        // Store the other user's information
         private int _otherUserId;
         private string _otherUsername;
+        
+        // Collection of messages for the chat window
         private ObservableCollection<ChatMessage> _messages;
+        
+        // Timer for auto-refreshing messages
         private System.Windows.Threading.DispatcherTimer _refreshTimer;
 
+  
+        // Initializes a new chat window with the specified user.
+        
         public Chat(int otherUserId, string otherUsername)
         {
             InitializeComponent();
@@ -58,12 +79,14 @@ namespace InspirationLabProjectStanSeyit
             // Load chat history
             LoadChatHistory();
 
-            // Set up auto-refresh timer
+            // Set up auto-refresh timer (refreshes every 2 seconds)
             _refreshTimer = new System.Windows.Threading.DispatcherTimer();
             _refreshTimer.Interval = TimeSpan.FromSeconds(2);
             _refreshTimer.Tick += RefreshTimer_Tick;
             _refreshTimer.Start();
         }
+
+        //Loads the chat history between the current user and the other user.
 
         private void LoadChatHistory()
         {
@@ -76,16 +99,21 @@ namespace InspirationLabProjectStanSeyit
             ScrollToBottom();
         }
 
+
+        //Timer tick event handler that refreshes the chat messages.
+
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
             LoadChatHistory();
         }
 
+        //Handles the Send button click event.
         private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
             SendMessage();
         }
 
+        //Handles the Enter+Ctrl key combination for sending messages.
         private void MessageInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && Keyboard.Modifiers == ModifierKeys.Control)
@@ -95,6 +123,8 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        //Sends a message to the other user.
+        //Clears the input field and refreshes the chat history on success.
         private void SendMessage()
         {
             string content = MessageInput.Text.Trim();
@@ -112,6 +142,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        //Scrolls the message list to the bottom to show the most recent messages.
         private void ScrollToBottom()
         {
             if (MessagesList.Items.Count > 0)
@@ -120,11 +151,12 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        //Cleans up resources when the chat window is closed.
+        //Stops the refresh timer to prevent memory leaks.
         protected override void OnClosed(EventArgs e)
         {
             _refreshTimer.Stop();
             base.OnClosed(e);
         }
-
     }
 }

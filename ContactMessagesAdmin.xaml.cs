@@ -16,9 +16,9 @@ using InspirationLabProjectStanSeyit.Models;
 
 namespace InspirationLabProjectStanSeyit
 {
-    /// <summary>
-    /// Interaction logic for ContactMessagesAdmin.xaml
-    /// </summary>
+
+    //Interaction logic for ContactMessagesAdmin.xaml
+
     public partial class ContactMessagesAdmin : Window
     {
         public ContactMessagesAdmin()

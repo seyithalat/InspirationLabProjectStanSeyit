@@ -4,6 +4,7 @@ namespace InspirationLabProjectStanSeyit.Models
 {
     public class LocationSubmission
     {
+        // Creation of LocationSubmission class with properties to store location submission details
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

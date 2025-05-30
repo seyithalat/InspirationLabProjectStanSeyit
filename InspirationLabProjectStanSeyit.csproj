@@ -124,9 +124,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Character.xaml.cs">
-      <DependentUpon>Character.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Chat.xaml.cs">
       <DependentUpon>Chat.xaml</DependentUpon>
     </Compile>
@@ -172,7 +169,7 @@
     <Compile Include="Models\GameScore.cs" />
     <Compile Include="Models\LocationSubmissions.cs" />
     <Compile Include="Models\Note.cs" />
-    <Compile Include="Models\StudyGroup.cs" />
+    <Compile Include="StudyGroup.cs" />
     <Compile Include="Models\StudyMaterial.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserProfile.cs" />
@@ -199,10 +196,6 @@
     <Compile Include="UserSelectionDialog.xaml.cs">
       <DependentUpon>UserSelectionDialog.xaml</DependentUpon>
     </Compile>
-    <Page Include="Character.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Chat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

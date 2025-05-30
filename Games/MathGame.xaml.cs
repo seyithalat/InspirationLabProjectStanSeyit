@@ -108,7 +108,7 @@ namespace InspirationLabProjectStanSeyit.Games
             if (timer != null)
                 timer.Stop();
             Data.SaveGameScore(Session.CurrentUserId, "Math", score, DateTime.Now);
-            // Show game over UI, etc.
+            // Show game over UI, etc...
         }
     }
 } 

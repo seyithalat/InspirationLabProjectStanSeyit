@@ -329,6 +329,12 @@ namespace InspirationLabProjectStanSeyit
                 MessageBox.Show("Please select a note from 'My Notes' to share.");
             }
         }
+
+        private void RefreshNotes_Click(object sender, RoutedEventArgs e)
+        {
+            LoadMyNotes();
+            LoadSharedNotes();
+        }
     }
 }
 
