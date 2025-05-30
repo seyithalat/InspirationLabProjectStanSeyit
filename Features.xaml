@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d">
 
+    
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
             

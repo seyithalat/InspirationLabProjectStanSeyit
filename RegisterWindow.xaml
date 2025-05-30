@@ -4,6 +4,7 @@
         Title="Register" Height="600" Width="500"
         Background="#bbeaba" WindowStartupLocation="CenterScreen">
     <Grid Margin="40">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>

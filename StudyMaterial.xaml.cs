@@ -10,40 +10,45 @@ using System.Windows.Media.Imaging;
 
 namespace InspirationLabProjectStanSeyit
 {
+    
+
     public partial class StudyMaterial : Window
     {
+        // List of navigation carousel images
         private List<string> navImages = new List<string>
-{
-    "Images/featurescarouselimage.jpg",
-    "Images/profilecarouselimage.jpg",
-    "Images/plannercarouselimage.jpg",
-    "Images/groupscarouselimage.jpg",
-    "Images/gamescarouselimage.jpg",
-    "Images/notescarouselimage.jpg",
-    "Images/managementcarouselimage.jpg",
-    "Images/contactcarouselimage.jpg"
-};
+        {
+            "Images/featurescarouselimage.jpg",
+            "Images/profilecarouselimage.jpg",
+            "Images/plannercarouselimage.jpg",
+            "Images/groupscarouselimage.jpg",
+            "Images/gamescarouselimage.jpg",
+            "Images/notescarouselimage.jpg",
+            "Images/managementcarouselimage.jpg",
+            "Images/contactcarouselimage.jpg"
+        };
 
+        // List of navigation page titles corresponding to the images
         private List<string> navTitles = new List<string>
-{
-    "Features",
-    "Profile",
-    "Planner",
-    "Groups",
-    "Games",
-    "Notes",
-    "Management",
-    "Contact"
-};
+        {
+            "Features",
+            "Profile",
+            "Planner",
+            "Groups",
+            "Games",
+            "Notes",
+            "Management",
+            "Contact"
+        };
 
+        // Current index for navigation carousel
         private int currentNavIndex = 0;
 
+        // Event handler for when the Features window is loaded
         private void Features_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 UpdateNavCarousel();
-
             }
             catch (Exception ex)
             {
@@ -51,16 +56,19 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        // Updates the navigation carousel with current images and titles
         private void UpdateNavCarousel()
         {
             if (navImages.Count < 3) return;
 
+            // Calculate indices for three visible items
             int i1 = currentNavIndex % navImages.Count;
             int i2 = (currentNavIndex + 1) % navImages.Count;
             int i3 = (currentNavIndex + 2) % navImages.Count;
 
             try
             {
+                // Update images and labels for the carousel
                 NavImage1.Source = new BitmapImage(new Uri(navImages[i1], UriKind.Relative));
                 NavImage2.Source = new BitmapImage(new Uri(navImages[i2], UriKind.Relative));
                 NavImage3.Source = new BitmapImage(new Uri(navImages[i3], UriKind.Relative));
@@ -75,6 +83,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        // Navigation button click handlers
         private void NavPrevImage_Click(object sender, RoutedEventArgs e)
         {
             currentNavIndex = (currentNavIndex - 1 + navImages.Count) % navImages.Count;
@@ -87,6 +96,7 @@ namespace InspirationLabProjectStanSeyit
             UpdateNavCarousel();
         }
 
+        // Navigation image click handlers
         private void NavImage1_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(NavLabel1.Text);
@@ -101,6 +111,8 @@ namespace InspirationLabProjectStanSeyit
         {
             NavigateToPage(NavLabel3.Text);
         }
+
+        // Navigates to the selected page
         private void NavigateToPage(string pageName)
         {
             Window newWindow = null;
@@ -138,18 +150,21 @@ namespace InspirationLabProjectStanSeyit
                 this.Close();
             }
         }
+
+        // Event handler for when StudyMaterial window is loaded
         private void StudyMaterial_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 UpdateNavCarousel();
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error during initialization: {ex.Message}", "Initialization Error");
             }
         }
+
+        // Constructor - initializes the window and loads notes
         public StudyMaterial()
         {
             InitializeComponent();
@@ -158,6 +173,7 @@ namespace InspirationLabProjectStanSeyit
             Loaded += StudyMaterial_Loaded;
         }
 
+        // Loads user's personal notes from the database
         private void LoadMyNotes()
         {
             MyNotesList.Items.Clear();
@@ -168,8 +184,22 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
-        // ==== MY NOTES ====
 
+        // Loads notes shared with the user from the database
+        private void LoadSharedNotes()
+        {
+            SharedNotesList.Items.Clear();
+            var sharedNotes = Data.GetAllSharedNotesForUser(Session.CurrentUserId);
+            foreach (var note in sharedNotes)
+            {
+                SharedNotesList.Items.Add(note);
+            }
+        }
+
+        // ==== MY NOTES SECTION ====
+
+
+        // Handles uploading new notes
         private void UploadMyNote_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog
@@ -202,6 +232,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        // Opens the selected note in the default application
         private void OpenMyNote_Click(object sender, RoutedEventArgs e)
         {
             if (MyNotesList.SelectedItem is Note note && File.Exists(note.FilePath))
@@ -214,6 +245,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        // Deletes the selected note from the database
         private void DeleteMyNote_Click(object sender, RoutedEventArgs e)
         {
             if (MyNotesList.SelectedItem is Note note)
@@ -230,19 +262,10 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
-        // ==== SHARED NOTES ====
+        // ==== SHARED NOTES SECTION ====
 
-        private void UploadSharedNote_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog { Multiselect = true };
-            if (dlg.ShowDialog() == true)
-            {
-                foreach (string file in dlg.FileNames)
-                {
-                    SharedNotesList.Items.Add(file);
-                }
-            }
-        }
+
+        // Opens the selected shared note in the default application
 
         private void OpenSharedNote_Click(object sender, RoutedEventArgs e)
         {
@@ -256,6 +279,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        // Removes the selected shared note from user's shared notes list
         private void DeleteSharedNote_Click(object sender, RoutedEventArgs e)
         {
             if (SharedNotesList.SelectedItem != null)
@@ -271,6 +295,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        // Handles sharing a note with another user
         private void ShareNote_Click(object sender, RoutedEventArgs e)
         {
             if (MyNotesList.SelectedItem is Note noteToShare)
@@ -283,7 +308,7 @@ namespace InspirationLabProjectStanSeyit
                     return;
                 }
 
-                // Prompt user to select a friend
+                // Create and show friend selection dialog
                 var selectFriendWindow = new Window
                 {
                     Title = "Select Friend to Share With",
@@ -308,22 +333,16 @@ namespace InspirationLabProjectStanSeyit
                 };
                 if (selectFriendWindow.ShowDialog() == true && !string.IsNullOrEmpty(selectedFriend))
                 {
-                    // Get friend's userId
+                    // Get friend's userId and share the note
                     int friendId = Data.GetUserIdByUsername(selectedFriend);
                     if (friendId == -1)
                     {
                         MessageBox.Show("Could not find the selected friend.");
                         return;
                     }
-                    // Copy note to friend's account
-                    var sharedNote = new Note
-                    {
-                        UserId = friendId,
-                        Title = noteToShare.Title,
-                        Content = noteToShare.Content,
-                        FilePath = noteToShare.FilePath
-                    };
-                    Data.AddNote(sharedNote);
+
+                    Data.ShareNote(noteToShare.Id, friendId);
+
                     MessageBox.Show($"Note shared with {selectedFriend}!");
                     // Add to SharedNotesList for feedback (show title)
                     SharedNotesList.Items.Add(noteToShare.Title);
@@ -335,6 +354,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+        // Handles refreshing both personal and shared notes lists
         private void RefreshNotes_Click(object sender, RoutedEventArgs e)
         {
             LoadMyNotes();

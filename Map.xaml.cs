@@ -15,6 +15,7 @@ using InspirationLabProjectStanSeyit.Models;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
+
 namespace InspirationLabProjectStanSeyit
 {
     public partial class Map : Window

@@ -5,7 +5,7 @@ namespace InspirationLabProjectStanSeyit.Models
 {
     public class User
     {
-        // Creation of User class with properties to store user details
+        // Creation of User class with properties to store user details.
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }

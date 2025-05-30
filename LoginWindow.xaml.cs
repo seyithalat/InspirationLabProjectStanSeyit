@@ -12,6 +12,7 @@ namespace InspirationLabProjectStanSeyit
             InitializeComponent();
         }
 
+
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameBox.Text;

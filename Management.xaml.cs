@@ -22,6 +22,7 @@ namespace InspirationLabProjectStanSeyit
         };
         //Comment
 
+
         private List<string> locationNames = new List<string>
         {
             "Main Campus Library",

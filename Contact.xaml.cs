@@ -12,6 +12,7 @@ namespace InspirationLabProjectStanSeyit
     {
         private List<string> navImages = new List<string>
 {
+
     "Images/featurescarouselimage.jpg",
     "Images/profilecarouselimage.jpg",
     "Images/plannercarouselimage.jpg",

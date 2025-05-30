@@ -2,6 +2,7 @@ using System;
 
 namespace InspirationLabProjectStanSeyit
 {
+    //Interaction logic for ProfileData.cs
     public class ProfileData
     {
         public string Name { get; set; }

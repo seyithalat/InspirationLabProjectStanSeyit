@@ -19,6 +19,7 @@ namespace InspirationLabProjectStanSeyit
 
     public partial class GroupCreateWindow : Window
     {
+        // Connection string for phpMyAdmin MySQL database (same as Data.cs)
         public GroupCreateWindow()
         {
             InitializeComponent();

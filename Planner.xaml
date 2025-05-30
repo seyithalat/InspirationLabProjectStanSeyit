@@ -8,6 +8,7 @@
         Title="Planner" Height="800" Width="1000"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        
         <Style x:Key="ModernButton" TargetType="Button">
             <Setter Property="Background" Value="#61be63"/>
             <Setter Property="Foreground" Value="White"/>

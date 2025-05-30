@@ -4,6 +4,7 @@ using System.Windows.Threading;
 
 namespace InspirationLabProjectStanSeyit.Games
 {
+
     public partial class MathGame : Window
     {
         private Random random = new Random();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System.Linq;
@@ -9,6 +9,7 @@ namespace InspirationLabProjectStanSeyit
 {
     public class ChatMessage
     {
+        // Creation of ChatMessage class with properties to store chat message details
         public int Id { get; set; }
         public int SenderId { get; set; }
         public int ReceiverId { get; set; }
@@ -1272,6 +1273,165 @@ namespace InspirationLabProjectStanSeyit
             public DateTime DueDate { get; set; }
             public bool IsCompleted { get; set; }
             public DateTime CreatedAt { get; set; }
+        }
+        public static List<Note> GetAllSharedNotesForUser(int userId)
+        {
+            var notes = new List<Note>();
+            using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    @"SELECT n.*, 
+                     u_from.Username as SharedByUsername, 
+                     u_to.Username as SharedWithUsername, 
+                     sn.SharedAt,
+                     CASE WHEN sn.SharedWithUserId = @userId THEN 0 ELSE 1 END as IsSender
+              FROM notes n
+              JOIN sharednotes sn ON n.Id = sn.NoteId
+              JOIN users u_from ON n.UserId = u_from.Id
+              JOIN users u_to ON sn.SharedWithUserId = u_to.Id
+              WHERE n.UserId = @userId OR sn.SharedWithUserId = @userId
+              ORDER BY sn.SharedAt DESC", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        notes.Add(new Note
+                        {
+                            Id = reader.GetInt32("Id"),
+                            UserId = reader.GetInt32("UserId"),
+                            Title = reader.GetString("Title"),
+                            Content = reader.IsDBNull(reader.GetOrdinal("Content")) ? null : (byte[])reader["Content"],
+                            FilePath = reader.GetString("FilePath"),
+                            CreatedAt = reader.GetDateTime("CreatedAt"),
+                            UpdatedAt = reader.GetDateTime("UpdatedAt"),
+                            SharedByUsername = reader.GetString("SharedByUsername"),
+                            SharedWithUsername = reader.GetString("SharedWithUsername"),
+                            SharedAt = reader.GetDateTime("SharedAt"),
+                            IsSender = reader.GetInt32("IsSender") == 1
+                        });
+                    }
+                }
+            }
+            return notes;
+        }
+        public static void ShareNote(int noteId, int sharedWithUserId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Check if already shared
+                var checkCmd = new MySqlCommand(
+                    "SELECT COUNT(*) FROM sharednotes WHERE NoteId = @noteId AND SharedWithUserId = @sharedWithUserId",
+                    conn);
+                checkCmd.Parameters.AddWithValue("@noteId", noteId);
+                checkCmd.Parameters.AddWithValue("@sharedWithUserId", sharedWithUserId);
+
+                int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+                if (count > 0)
+                {
+                    // Already shared, optionally show a message to the user
+                    throw new InvalidOperationException("This note is already shared with this user.");
+                }
+
+                // If not, insert
+                var cmd = new MySqlCommand(
+                    "INSERT INTO sharednotes (NoteId, SharedWithUserId, SharedAt) VALUES (@noteId, @sharedWithUserId, NOW())",
+                    conn);
+                cmd.Parameters.AddWithValue("@noteId", noteId);
+                cmd.Parameters.AddWithValue("@sharedWithUserId", sharedWithUserId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static List<Note> GetSharedNotesForUser(int userId)
+        {
+            var notes = new List<Note>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand(
+                    @"SELECT n.*, u.Username as SharedByUsername, sn.SharedAt
+                      FROM notes n 
+                      JOIN sharednotes sn ON n.Id = sn.NoteId 
+                      JOIN users u ON n.UserId = u.Id 
+                      WHERE sn.SharedWithUserId = @userId 
+                      ORDER BY sn.SharedAt DESC",
+                    conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        notes.Add(new Note
+                        {
+                            Id = reader.GetInt32("Id"),
+                            UserId = reader.GetInt32("UserId"),
+                            Title = reader.GetString("Title"),
+                            Content = reader.IsDBNull(reader.GetOrdinal("Content")) ? null : (byte[])reader["Content"],
+                            FilePath = reader.GetString("FilePath"),
+                            CreatedAt = reader.GetDateTime("CreatedAt"),
+                            UpdatedAt = reader.GetDateTime("UpdatedAt"),
+                            SharedByUsername = reader.GetString("SharedByUsername"),
+                            SharedAt = reader.GetDateTime("SharedAt")
+                        });
+                    }
+                }
+            }
+            return notes;
+        }
+
+        public static void DeleteSharedNote(int noteId, int userId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand(
+                    "DELETE FROM sharednotes WHERE NoteId = @noteId AND SharedWithUserId = @userId",
+                    conn);
+                cmd.Parameters.AddWithValue("@noteId", noteId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static List<(Note Note, string SharedWithUsername, DateTime SharedAt)> GetNotesSharedByUser(int userId)
+        {
+            var sharedNotes = new List<(Note, string, DateTime)>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new MySqlCommand(
+                    @"SELECT n.*, u.Username as SharedWithUsername, sn.SharedAt
+                      FROM notes n
+                      JOIN sharednotes sn ON n.Id = sn.NoteId
+                      JOIN users u ON sn.SharedWithUserId = u.Id
+                      WHERE n.UserId = @userId
+                      ORDER BY sn.SharedAt DESC", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var note = new Note
+                        {
+                            Id = reader.GetInt32("Id"),
+                            UserId = reader.GetInt32("UserId"),
+                            Title = reader.GetString("Title"),
+                            Content = reader.IsDBNull(reader.GetOrdinal("Content")) ? null : (byte[])reader["Content"],
+                            FilePath = reader.GetString("FilePath"),
+                            CreatedAt = reader.GetDateTime("CreatedAt"),
+                            UpdatedAt = reader.GetDateTime("UpdatedAt")
+                        };
+                        string sharedWith = reader.GetString("SharedWithUsername");
+                        DateTime sharedAt = reader.GetDateTime("SharedAt");
+                        sharedNotes.Add((note, sharedWith, sharedAt));
+                    }
+                }
+            }
+            return sharedNotes;
         }
     }
 }

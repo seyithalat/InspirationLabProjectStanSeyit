@@ -182,6 +182,25 @@ namespace InspirationLabProjectStanSeyit
                 this.Close();
             }
 
+
+
+        private void PlayTrivia_Click(object sender, RoutedEventArgs e)
+        {
+            var triviaGame = new TriviaGame();
+            triviaGame.Show();
+        }
+
+        private void PlayMath_Click(object sender, RoutedEventArgs e)
+        {
+            var mathGame = new MathGame();
+            mathGame.Show();
+        }
+
+        private void PlayWordScramble_Click(object sender, RoutedEventArgs e)
+        {
+            var wordScrambleGame = new WordScrambleGame();
+            wordScrambleGame.Show();
+
         }
 
         private void EndGame()

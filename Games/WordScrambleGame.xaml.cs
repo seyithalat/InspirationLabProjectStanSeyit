@@ -7,6 +7,8 @@ namespace InspirationLabProjectStanSeyit.Games
 {
     public partial class WordScrambleGame : Window
     {
+
+
         private List<WordPuzzle> puzzles;
         private int currentPuzzleIndex = 0;
         private int score = 0;

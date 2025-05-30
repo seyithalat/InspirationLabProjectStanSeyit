@@ -19,6 +19,7 @@ namespace InspirationLabProjectStanSeyit
     "Images/contactcarouselimage.jpg"
 };
 
+
         private List<string> navTitles = new List<string>
 {
     "Features",

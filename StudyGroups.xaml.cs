@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 
 namespace InspirationLabProjectStanSeyit
 {
+    // Interaction logic for StudyGroups.xaml
     public partial class StudyGroups : Window
     {
         public int? SelectedGroupId = null;

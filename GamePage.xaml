@@ -4,6 +4,7 @@
         Title="Game Page" Height="800" Width="800"
         WindowState="Maximized">
 
+    
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="40">
             <!-- HEADER -->

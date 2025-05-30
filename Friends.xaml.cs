@@ -11,6 +11,7 @@ namespace InspirationLabProjectStanSeyit
         // Connection string for phpMyAdmin MySQL database (same as Data.cs)
         private static string connectionString = "Server=localhost;Port=3307;Database=inspirationlabdb;Uid=root;Pwd=;";
 
+
         public Friends()
         {
             InitializeComponent();

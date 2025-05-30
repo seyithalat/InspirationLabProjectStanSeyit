@@ -14,6 +14,7 @@ namespace InspirationLabProjectStanSeyit
             LoadUsers();
         }
 
+
         private void LoadUsers()
         {
             var users = Data.GetAllUsers(); // You will need to implement this method in Data.cs

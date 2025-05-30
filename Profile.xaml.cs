@@ -13,6 +13,7 @@ namespace InspirationLabProjectStanSeyit
     {
         private UserProfile currentProfile;
 
+
         public Profile()
         {
             InitializeComponent();
