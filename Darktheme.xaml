@@ -1,12 +1,15 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Dark theme colors -->
     <SolidColorBrush x:Key="BackgroundBrush" Color="#FF1E1E1E"/>
-    <SolidColorBrush x:Key="ForegroundBrush" Color="#FF222222"/>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="AccentBrush" Color="#FF4CAF50"/>
     <SolidColorBrush x:Key="BorderBrush" Color="#FF333333"/>
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#FF2D2D2D"/>
     <SolidColorBrush x:Key="ControlForegroundBrush" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="PanelBrush" Color="#FF2D2D2D"/>
+    <SolidColorBrush x:Key="InputBrush" Color="#FF2D2D2D"/>
+    <SolidColorBrush x:Key="InnerPanelBrush" Color="#FF181818"/>
 
     <!-- Window style -->
     <Style TargetType="Window">
@@ -69,5 +72,12 @@
     <!-- ScrollViewer style -->
     <Style TargetType="ScrollViewer">
         <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"/>
+    </Style>
+
+    <!-- ComboBoxItem style -->
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
     </Style>
 </ResourceDictionary>

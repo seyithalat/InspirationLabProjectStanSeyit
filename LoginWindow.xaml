@@ -14,14 +14,14 @@
                    HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
         <StackPanel Grid.Row="1" Margin="0,0,0,20">
-            <Label Content="Username" FontSize="16" FontWeight="Bold" Foreground="#2e2e2e"/>
-            <TextBox Name="UsernameBox" Height="40" Padding="10" FontSize="16"
+            <Label Content="Username" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <TextBox Name="UsernameBox" Height="40" Padding="10" FontSize="11"
                      BorderBrush="#61be63" BorderThickness="2" Background="White"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Margin="0,0,0,30">
-            <Label Content="Password" FontSize="16" FontWeight="Bold" Foreground="#2e2e2e"/>
-            <PasswordBox Name="PasswordBox" Height="40" Padding="10" FontSize="16"
+            <Label Content="Password" FontSize="14" FontWeight="Bold" Foreground="#2e2e2e"/>
+            <PasswordBox Name="PasswordBox" Height="40" Padding="10" FontSize="12"
                         BorderBrush="#61be63" BorderThickness="2" Background="White"/>
         </StackPanel>
 

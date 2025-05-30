@@ -5,56 +5,264 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InspirationLabProjectStanSeyit"
         mc:Ignorable="d"
-        Title="Planner" Height="800" Width="800">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="{StaticResource BackgroundBrush}" Margin="20">
+        Title="Planner" Height="800" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#61be63"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="15,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#4da64d"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
-            <!--  FEATURES HEADER -->
-            <TextBlock Text="Planner" FontSize="24" FontWeight="Bold" Foreground="#61be63"
-                       HorizontalAlignment="Center" Margin="0,10"/>
+    <Grid Background="{DynamicResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <!--  MULTI-IMAGE CAROUSEL (Clickable with Overlay Text) -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-                <Button Content="Back to Settings" Width="150" Margin="10" Click="BackToSettings_Click" />
-                <Button Content="Map" Width="100" Margin="10" Click="OpenMap_Click" />
-            </StackPanel>
+        <!-- Header -->
+        <Grid Background="{DynamicResource ControlBackgroundBrush}" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <!--  Calender SECTION -->
-            <TextBlock Text="Calender" FontSize="22" Foreground="#61be63" FontWeight="Bold" Margin="0,20,0,10"
-                       HorizontalAlignment="Center"/>
-            <Border Background="{StaticResource AccentBrush}" CornerRadius="10" Padding="15">
-                <StackPanel>
-                    <TextBlock Text="Here you can make a planning keep notes and never lose track of your tasks!" HorizontalAlignment="Center" ></TextBlock>
-                </StackPanel>
-            </Border>
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <TextBlock Text="My Planner" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="{DynamicResource AccentBrush}"
+                       VerticalAlignment="Center"/>
 
-                    <TextBlock x:Name="MonthYearText" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="10"/>
-
-                </StackPanel>
-
-                <Calendar 
-    x:Name="PlannerCalendar" 
-    SelectedDatesChanged="PlannerCalendar_SelectedDatesChanged"
-    DisplayDateChanged="PlannerCalendar_DisplayDateChanged"
-    Margin="10" 
-    BorderThickness="1" 
-    BorderBrush="Gray" />
-
-
-                <TextBlock Text="Add Note:" FontWeight="Bold" Margin="10,10,0,5"/>
-                <TextBox x:Name="NoteTextBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Margin="10"/>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Save Note" Width="100" Margin="10" Click="SaveNote_Click"/>
-                    <Button Content="Delete Note" Width="100" Margin="10" Click="DeleteNote_Click"/>
-                </StackPanel>
-
-
-                <TextBlock Text="Notes for Selected Date:" FontWeight="Bold" Margin="10,10,0,5"/>
-                <TextBlock x:Name="SavedNoteText" TextWrapping="Wrap" Margin="10" Background="{StaticResource ControlBackgroundBrush}" Padding="10" />
+            <StackPanel Grid.Column="2" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+                <Button Content="Back to Settings" 
+                        Style="{StaticResource ModernButton}"
+                        Margin="0,0,10,0"
+                        Click="BackToSettings_Click"/>
             </StackPanel>
         </Grid>
-    </ScrollViewer>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel - Calendar -->
+            <Border Background="{DynamicResource ControlBackgroundBrush}" 
+                    CornerRadius="10" 
+                    Padding="15" 
+                    Margin="0,0,20,0"
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Calendar" 
+                               FontSize="20" 
+                               FontWeight="Bold" 
+                               Foreground="{DynamicResource AccentBrush}"
+                               Margin="0,0,0,15"/>
+
+                    <!-- View Toggle -->
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center" 
+                                Margin="0,0,0,15">
+                        <RadioButton Content="Month" 
+                                    IsChecked="True" 
+                                    Margin="5" 
+                                    GroupName="ViewType" 
+                                    Click="MonthView_Click"
+                                    Foreground="{DynamicResource ControlForegroundBrush}"/>
+                        <RadioButton Content="Week" 
+                                    Margin="5" 
+                                    GroupName="ViewType" 
+                                    Click="WeekView_Click"
+                                    Foreground="{DynamicResource ControlForegroundBrush}"/>
+                    </StackPanel>
+
+                    <!-- Calendar Navigation -->
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center" 
+                                Margin="0,0,0,15">
+                        <Button Content="◀" 
+                                Click="PreviousMonth_Click" 
+                                Style="{StaticResource ModernButton}"
+                                Padding="10,5"/>
+                        <TextBlock x:Name="MonthYearText" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   VerticalAlignment="Center" 
+                                   Margin="15,0"
+                                   Foreground="{DynamicResource ControlForegroundBrush}"/>
+                        <Button Content="▶" 
+                                Click="NextMonth_Click" 
+                                Style="{StaticResource ModernButton}"
+                                Padding="10,5"/>
+                    </StackPanel>
+
+                    <!-- Calendar -->
+                    <Calendar x:Name="PlannerCalendar" 
+                              SelectedDatesChanged="PlannerCalendar_SelectedDatesChanged"
+                              DisplayDateChanged="PlannerCalendar_DisplayDateChanged"
+                              BorderThickness="0"
+                              Background="{DynamicResource PanelBrush}"
+                              Foreground="{DynamicResource ControlForegroundBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Right Panel - Tasks -->
+            <Border Grid.Column="1" 
+                    Background="{DynamicResource ControlBackgroundBrush}" 
+                    CornerRadius="10" 
+                    Padding="20"
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Task List Header -->
+                    <TextBlock x:Name="TaskListHeader"
+                               FontSize="18" 
+                               FontWeight="Bold" 
+                               Foreground="{DynamicResource AccentBrush}"
+                               Margin="0,0,0,15"
+                               Grid.Row="0"/>
+
+                    <!-- Add Task Section -->
+                    <Border Background="{DynamicResource InnerPanelBrush}" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,0,0,20"
+                            Grid.Row="1"
+                            BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBox x:Name="TaskTitleTextBox" 
+                                     Grid.Column="0" 
+                                     Grid.Row="0"
+                                     Margin="0,0,10,10"
+                                     Background="{DynamicResource InputBrush}"
+                                     Foreground="{DynamicResource ControlForegroundBrush}"
+                                     BorderBrush="{DynamicResource BorderBrush}"/>
+
+                            <StackPanel Grid.Column="1" 
+                                        Grid.Row="0" 
+                                        Orientation="Horizontal">
+                                <ComboBox x:Name="PriorityComboBox" 
+                                          Width="120" 
+                                          Margin="0,0,10,10"
+                                          Background="{DynamicResource InputBrush}"
+                                          Foreground="{DynamicResource ControlForegroundBrush}"
+                                          BorderBrush="{DynamicResource BorderBrush}">
+                                    <ComboBoxItem Content="High Priority"/>
+                                    <ComboBoxItem Content="Medium Priority"/>
+                                    <ComboBoxItem Content="Low Priority"/>
+                                </ComboBox>
+                                <Button Content="Add Task" 
+                                        Click="AddTask_Click" 
+                                        Style="{StaticResource ModernButton}"
+                                        Width="120"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <ComboBox x:Name="CategoryComboBox" 
+                                      Grid.Column="0" 
+                                      Grid.Row="1" 
+                                      Width="200"
+                                      Background="{DynamicResource InputBrush}"
+                                      Foreground="{DynamicResource ControlForegroundBrush}"
+                                      BorderBrush="{DynamicResource BorderBrush}">
+                                <ComboBoxItem Content="School"/>
+                                <ComboBoxItem Content="Work"/>
+                                <ComboBoxItem Content="Personal"/>
+                            </ComboBox>
+                        </Grid>
+                    </Border>
+
+                    <!-- Week View Host (hidden by default, shown in week view) -->
+                    <ContentControl x:Name="WeekViewHost" Grid.Row="2" Visibility="Collapsed"/>
+
+                    <!-- Task List -->
+                    <ListView x:Name="TaskListView" 
+                              Grid.Row="3" 
+                              BorderThickness="0"
+                              Background="{DynamicResource PanelBrush}"
+                              Foreground="{DynamicResource ControlForegroundBrush}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource InputBrush}" 
+                                        CornerRadius="5" 
+                                        Margin="0,5" 
+                                        Padding="10">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox IsChecked="{Binding IsCompleted}" 
+                                                  Click="TaskCheckBox_Click"
+                                                  VerticalAlignment="Center"
+                                                  Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                        <TextBlock Grid.Column="1" 
+                                                   Text="{Binding Title}" 
+                                                   Margin="10,0"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ControlForegroundBrush}"/>
+                                        <TextBlock Grid.Column="2" 
+                                                   Text="{Binding Priority}" 
+                                                   Foreground="{DynamicResource AccentBrush}"
+                                                   VerticalAlignment="Center"/>
+                                        <Button Grid.Column="3"
+                                                Content="🗑"
+                                                ToolTip="Delete Task"
+                                                Click="DeleteTask_Click"
+                                                Tag="{Binding Id}"
+                                                Style="{StaticResource ModernButton}"
+                                                Width="32"
+                                                Height="32"
+                                                Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
 </Window>
