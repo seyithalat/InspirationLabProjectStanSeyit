@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using InspirationLabProjectStanSeyit;
+
 
 namespace InspirationLabProjectStanSeyit
 {
@@ -82,6 +83,7 @@ namespace InspirationLabProjectStanSeyit
 
         private void NavNextImage_Click(object sender, RoutedEventArgs e)
         {
+
             currentNavIndex = (currentNavIndex + 1) % navImages.Count;
             UpdateNavCarousel();
         }
@@ -89,6 +91,7 @@ namespace InspirationLabProjectStanSeyit
         private void NavImage1_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(NavLabel1.Text);
+
         }
 
         private void NavImage2_Click(object sender, RoutedEventArgs e)
@@ -177,4 +180,3 @@ namespace InspirationLabProjectStanSeyit
         }
     }
 }
-

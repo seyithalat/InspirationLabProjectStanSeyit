@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using InspirationLabProjectStanSeyit.Models;
@@ -178,8 +178,8 @@ namespace InspirationLabProjectStanSeyit
 
         private void GoBackToFeatures_Click(object sender, RoutedEventArgs e)
         {
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
+            var featuresWindow = new Features();
+            featuresWindow.Show();
             this.Close();
         }
 

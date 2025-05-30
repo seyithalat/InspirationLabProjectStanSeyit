@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -170,7 +170,6 @@ namespace InspirationLabProjectStanSeyit
             InitializeComponent();
             MyNotesList.DisplayMemberPath = "Title";
             LoadMyNotes();
-            LoadSharedNotes();
             Loaded += StudyMaterial_Loaded;
         }
 
@@ -185,6 +184,7 @@ namespace InspirationLabProjectStanSeyit
             }
         }
 
+
         // Loads notes shared with the user from the database
         private void LoadSharedNotes()
         {
@@ -197,6 +197,7 @@ namespace InspirationLabProjectStanSeyit
         }
 
         // ==== MY NOTES SECTION ====
+
 
         // Handles uploading new notes
         private void UploadMyNote_Click(object sender, RoutedEventArgs e)
@@ -217,10 +218,8 @@ namespace InspirationLabProjectStanSeyit
                         {
                             UserId = Session.CurrentUserId,
                             Title = Path.GetFileNameWithoutExtension(file),
-                            Content = File.ReadAllBytes(file),
-                            FilePath = file,
-                            CreatedAt = DateTime.Now,
-                            UpdatedAt = DateTime.Now
+                            Content = File.ReadAllBytes(file), // Save file content as byte[]
+                            FilePath = file
                         };
                         Data.AddNote(note);
                     }
@@ -265,12 +264,14 @@ namespace InspirationLabProjectStanSeyit
 
         // ==== SHARED NOTES SECTION ====
 
+
         // Opens the selected shared note in the default application
+
         private void OpenSharedNote_Click(object sender, RoutedEventArgs e)
         {
-            if (SharedNotesList.SelectedItem is Note note && File.Exists(note.FilePath))
+            if (SharedNotesList.SelectedItem is string path && File.Exists(path))
             {
-                Process.Start(new ProcessStartInfo(note.FilePath) { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
             }
             else
             {
@@ -281,12 +282,11 @@ namespace InspirationLabProjectStanSeyit
         // Removes the selected shared note from user's shared notes list
         private void DeleteSharedNote_Click(object sender, RoutedEventArgs e)
         {
-            if (SharedNotesList.SelectedItem is Note note)
+            if (SharedNotesList.SelectedItem != null)
             {
-                if (MessageBox.Show("Delete this shared note from your list?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Delete this shared note from the list?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    Data.DeleteSharedNote(note.Id, Session.CurrentUserId);
-                    LoadSharedNotes();
+                    SharedNotesList.Items.Remove(SharedNotesList.SelectedItem);
                 }
             }
             else
@@ -340,8 +340,12 @@ namespace InspirationLabProjectStanSeyit
                         MessageBox.Show("Could not find the selected friend.");
                         return;
                     }
+
                     Data.ShareNote(noteToShare.Id, friendId);
+
                     MessageBox.Show($"Note shared with {selectedFriend}!");
+                    // Add to SharedNotesList for feedback (show title)
+                    SharedNotesList.Items.Add(noteToShare.Title);
                 }
             }
             else
@@ -358,4 +362,3 @@ namespace InspirationLabProjectStanSeyit
         }
     }
 }
-

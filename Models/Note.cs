@@ -19,5 +19,6 @@ namespace InspirationLabProjectStanSeyit.Models
         public string SharedWithUsername { get; set; }
         public DateTime? SharedAt { get; set; }
         public bool IsSender { get; set; }
+
     }
 }
