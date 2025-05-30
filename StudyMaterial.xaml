@@ -159,26 +159,7 @@
                     <TextBlock Text="Shared Notes" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource SectionHeaderBrush}" Margin="0,20,0,10"/>
                     <Border Background="{DynamicResource CardBrush}" CornerRadius="10" Padding="10">
                         <StackPanel>
-                            <ListBox Name="SharedNotesList" Height="200" Margin="0,0,0,10">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" Margin="5">
-                                            <TextBlock Text="{Binding Title}" Width="200" Foreground="{DynamicResource ControlForegroundBrush}"/>
-                                            <TextBlock x:Name="ShareInfoText" Margin="10,0,0,0" Foreground="Gray"/>
-                                            <TextBlock Text=" on " Foreground="Gray"/>
-                                            <TextBlock Text="{Binding SharedAt, StringFormat={}{0:g}}" Foreground="{DynamicResource ControlForegroundBrush}"/>
-                                        </StackPanel>
-                                        <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsSender}" Value="True">
-                                                <Setter TargetName="ShareInfoText" Property="Text" Value="{Binding SharedWithUsername, StringFormat=Shared with: {0}}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsSender}" Value="False">
-                                                <Setter TargetName="ShareInfoText" Property="Text" Value="{Binding SharedByUsername, StringFormat=Shared by: {0}}"/>
-                                            </DataTrigger>
-                                        </DataTemplate.Triggers>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                            <ListBox Name="SharedNotesList" Height="200" Margin="0,0,0,10"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                 <Button Content="Open Selected Note" Width="170" Margin="0,0,10,0" Click="OpenSharedNote_Click"/>
                                 <Button Content="Delete Note" Width="100" Click="DeleteSharedNote_Click"/>
