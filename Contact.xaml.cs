@@ -7,6 +7,7 @@ using InspirationLabProjectStanSeyit;
 
 namespace InspirationLabProjectStanSeyit
 {
+    // Interaction logic for Contact.xaml
     public partial class Contact : Window
     {
         private List<string> navImages = new List<string>

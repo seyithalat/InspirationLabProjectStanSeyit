@@ -9,7 +9,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Background="{DynamicResource BackgroundBrush}" Margin="20">
 
-            <!--  HEADER -->
+            <!--  HEADER FOR PAGE -->
             <TextBlock Text="Contact" FontSize="28" FontWeight="Bold" Foreground="#61be63"
                        HorizontalAlignment="Center" Margin="0,10"/>
 
