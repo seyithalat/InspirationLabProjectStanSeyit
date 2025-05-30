@@ -155,6 +155,7 @@ namespace InspirationLabProjectStanSeyit
             InitializeComponent();
             MyNotesList.DisplayMemberPath = "Title";
             LoadMyNotes();
+            LoadSharedNotes();
             Loaded += StudyMaterial_Loaded;
         }
 
@@ -167,6 +168,18 @@ namespace InspirationLabProjectStanSeyit
                 MyNotesList.Items.Add(note);
             }
         }
+
+        private void LoadSharedNotes()
+        {
+            SharedNotesList.Items.Clear();
+            var sharedNotes = Data.GetAllSharedNotesForUser(Session.CurrentUserId);
+            foreach (var note in sharedNotes)
+            {
+                SharedNotesList.Items.Add(note);
+            }
+        }
+
+ 
 
         // ==== MY NOTES ====
 
@@ -188,8 +201,10 @@ namespace InspirationLabProjectStanSeyit
                         {
                             UserId = Session.CurrentUserId,
                             Title = Path.GetFileNameWithoutExtension(file),
-                            Content = File.ReadAllBytes(file), // Save file content as byte[]
-                            FilePath = file
+                            Content = File.ReadAllBytes(file),
+                            FilePath = file,
+                            CreatedAt = DateTime.Now,
+                            UpdatedAt = DateTime.Now
                         };
                         Data.AddNote(note);
                     }
@@ -232,23 +247,11 @@ namespace InspirationLabProjectStanSeyit
 
         // ==== SHARED NOTES ====
 
-        private void UploadSharedNote_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog { Multiselect = true };
-            if (dlg.ShowDialog() == true)
-            {
-                foreach (string file in dlg.FileNames)
-                {
-                    SharedNotesList.Items.Add(file);
-                }
-            }
-        }
-
         private void OpenSharedNote_Click(object sender, RoutedEventArgs e)
         {
-            if (SharedNotesList.SelectedItem is string path && File.Exists(path))
+            if (SharedNotesList.SelectedItem is Note note && File.Exists(note.FilePath))
             {
-                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(note.FilePath) { UseShellExecute = true });
             }
             else
             {
@@ -258,11 +261,12 @@ namespace InspirationLabProjectStanSeyit
 
         private void DeleteSharedNote_Click(object sender, RoutedEventArgs e)
         {
-            if (SharedNotesList.SelectedItem != null)
+            if (SharedNotesList.SelectedItem is Note note)
             {
-                if (MessageBox.Show("Delete this shared note from the list?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Delete this shared note from your list?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    SharedNotesList.Items.Remove(SharedNotesList.SelectedItem);
+                    Data.DeleteSharedNote(note.Id, Session.CurrentUserId);
+                    LoadSharedNotes();
                 }
             }
             else
@@ -315,18 +319,9 @@ namespace InspirationLabProjectStanSeyit
                         MessageBox.Show("Could not find the selected friend.");
                         return;
                     }
-                    // Copy note to friend's account
-                    var sharedNote = new Note
-                    {
-                        UserId = friendId,
-                        Title = noteToShare.Title,
-                        Content = noteToShare.Content,
-                        FilePath = noteToShare.FilePath
-                    };
-                    Data.AddNote(sharedNote);
+                    // Share note with friend
+                    Data.ShareNote(noteToShare.Id, friendId);
                     MessageBox.Show($"Note shared with {selectedFriend}!");
-                    // Add to SharedNotesList for feedback (show title)
-                    SharedNotesList.Items.Add(noteToShare.Title);
                 }
             }
             else
